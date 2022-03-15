@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 
+from Portfolio_Gui import *
+
 from urllib.error import URLError
 
 @st.cache
@@ -11,28 +13,41 @@ def get_UN_data():
     df = pd.read_csv(AWS_BUCKET_URL + "/agri.csv.gz")
     return df.set_index("Region")
 
+def get_user_data():
+    portfolio1 = "EVH FB MSFT SPY SPYG INDS EQNR GLNCY AAPL ARE IBN SNAP SDY EMR"
+    num = "8 0.919447 1 1.42 1.01 1.02 3 5 1 1 4 2 1 1"
+    portfolio1 = portfolio1.split()
+    num = num.split()
+    Portfolio = StockPortfolioAnalysis(portfolio=portfolio1,
+                                       num_shares=num,
+                                       start_date='2017-01-01', end_date='2022-02-01', freq='D', index_stock='^GSPC')
+    df = Portfolio.get_price_df(portfolio=portfolio1,
+                                       num_shares=num,
+                                       start_date='2017-01-01', end_date='2022-02-01', freq='D')
+    print(df)
+    return df
+
 try:
-    df = get_UN_data()
+    df = get_user_data()
     countries = st.multiselect(
-        "Choose Countries", list(df.index), ["China", "United States of America"]
+        "Choose Stocks", list(df.columns), ["EVH", "FB"]
     )
     if not countries:
-        st.error("Please select at least one country.")
+        st.error("Please select a stock.")
     else:
-        data = df.loc[countries]
-        data /= 1000000.0
-        st.write("### Gross Agricultural Production ($B)", data.sort_index())
+        data = df[countries]
+        st.write("### Stock Prices", data.sort_index())
 
         data = data.T.reset_index()
         data = pd.melt(data, id_vars=["index"]).rename(
-            columns={"index": "Year", "value": "Gross Agricultural Product ($B)"}
+            columns={"index": "Stocks", "value": "Price"}
         )
         chart = (
             alt.Chart(data)
             .mark_area(opacity=0.3)
             .encode(
                 x="Year:T",
-                y=alt.Y("Gross Agricultural Product ($B):Q", stack=None),
+                y=alt.Y("Stock Prices ($):Q", stack=None),
                 color="Region:N",
             )
         )
