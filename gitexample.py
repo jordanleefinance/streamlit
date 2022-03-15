@@ -11,7 +11,7 @@ def local_css(file_name):
 
 
 # local css sheet
-local_css("style.css")
+local_css("css")
 
 # ticker search feature in sidebar
 st.sidebar.subheader("""Stock Search Web App""")
