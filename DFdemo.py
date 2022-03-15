@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 
-from Portfolio_Gui import *
+from Portfolio_Gui import StockPortfolioAnalysis
 
 from urllib.error import URLError
 
@@ -22,9 +22,8 @@ def get_user_data():
                                        num_shares=num,
                                        start_date='2017-01-01', end_date='2022-02-01', freq='D', index_stock='^GSPC')
     df = Portfolio.get_price_df(portfolio=portfolio1,
-                                       num_shares=num,
-                                       start_date='2017-01-01', end_date='2022-02-01', freq='D')
-    print(df)
+                                num_shares=num,
+                                start_date='2017-01-01', end_date='2022-02-01', freq='D')
     return df
 
 try:
