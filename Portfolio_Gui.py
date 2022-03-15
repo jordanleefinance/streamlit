@@ -1,4 +1,3 @@
-import yfinance as yf
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -10,6 +9,7 @@ import scipy as sp
 import random as random
 import requests
 import time
+import yfinance as yf
 
 data_df = pd.DataFrame()
 
