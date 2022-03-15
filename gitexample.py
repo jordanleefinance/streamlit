@@ -117,7 +117,7 @@ def main():
             st.write("No data available at the moment")
         else:
             st.write(display_analyst_rec)
-            
+
 if button_clicked == "GO":
     main()
 
