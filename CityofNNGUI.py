@@ -379,6 +379,7 @@ def employee():
             info_dict[vis_plan] = 0 * 12
 
     fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(16.5, 10.5), dpi=68)
+    st.pyplot(fig)
     fig.tight_layout()
     fig.set_facecolor('white')
     ax1 = ax[0]
@@ -411,7 +412,6 @@ def employee():
                                                   health_plan, den_plan, vis_plan, ret_plan),
                  x=0.521, y=0.18, fontweight='bold', fontsize=14)
 
-    st.pyplot(fig)
 
     # Initialize Add'tl Benefits Ticket
     benefits_title = 'Additional Benefits'
@@ -442,7 +442,7 @@ def employee():
                                                     one_benefit, one_cost, one_nnva_cost,
                                                     riv_benefit, riv_cost, riv_nnva_cost,
                                                     ret_message, life_message)
-    st.text(text)
+    st.subheader.text(text)
 
 
     try:
