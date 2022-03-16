@@ -1,24 +1,27 @@
 import pandas as pd
 import webbrowser
-import xlsxwriter
-import numpy as np
 import streamlit as st
+import matplotlib as plt
 
 file_path = r'C:/Users/JordanLee/OneDrive/Documents/MFinA/' \
             r'FINC 591 - Integrated Financial Analysis & Strategy/' \
             r'NNPS - Capstone/Compensation Package.xlsx'
 
 
-# ticker search feature in sidebar
 st.sidebar.subheader("""City of Newport News Compensation Package""")
 user_name = st.sidebar.text_input("Name", "")
 user_jobtitle = st.sidebar.text_input("Job Title", "")
 user_jobtype = st.sidebar.text_input("Job Type", "Full Time")
-user_coverage = st.sidebar.sel("Coverage", "Employee")
-user_name = st.sidebar.text_input("Name", "")
-user_name = st.sidebar.text_input("Name", "")
-user_name = st.sidebar.text_input("Name", "")
-user_name = st.sidebar.text_input("Name", "")
+user_salary = st.number_input("Enter your hourly/annual pay:")
+user_coverage = st.sidebar.selectbox("Coverage", ("Employee", "Employee + 1 child", "Employee + Spouse", "Family"))
+user_health_plan = st.sidebar.selectbox("Health Plan", ('Optima Health POS', 'Optima Health POS + FSA',
+                           'Optima Equity HDHP', 'Optima Equity HDHP + FSA', 'Optima Equity HDHP + HSA', 'None'))
+user_dental_plan = st.sidebar.selectbox("Dental Plan", ('Delta Dental', 'None'))
+user_vision_plan = st.sidebar.selectbox("Vision Plan", ('Vision Service Plan', 'Vision INS City', 'None'))
+user_hire_date = st.sidebar.selectbox("Hire Date", ('On or After March 1, 2010', 'Before March 1, 2010'))
+button_clicked = st.sidebar.button("GO")
+
+
 def open_excel(file = None):
     if file == None:
         file = file_path
@@ -31,16 +34,16 @@ def open_excel_error():
 
 def employee_part_time():
     value = 0
-    weekly_pay = 0
-    monthly_value = 0
-    job_title = user_choice_job_title.get()
+    salary = user_salary
+    job_title = user_jobtitle
     try:
-        hourly_pay = float(user_choice_base_salary.get())
+        hourly_pay = float(salary)
         weekly_pay = float(hourly_pay * 37)
         monthly_value = float(weekly_pay * 4)
         value += (weekly_pay * 52)
+
     except ValueError:
-        additional_benefits_lbl['text'] = 'Enter Hourly Rate Above'
+        open_excel_error()
 
     fig = plt.figure(figsize=(18, 10.5), dpi=68)
     fig.tight_layout()
@@ -50,11 +53,7 @@ def employee_part_time():
                  'A(n){:s} at NNVA earns ${:,.2f} weekly.'.format(job_title, value, job_title, monthly_value, job_title, weekly_pay),
                  x=0.5, y=0.5, fontweight='bold', fontsize=30)
 
-    canvasbar = FigureCanvasTkAgg(fig, master=window)
-    canvasbar.draw()
-    canvasbar.get_tk_widget().place(relx=0.64, rely=0.49, anchor=CENTER)
-
-    additional_benefits_lbl['text'] = ''
+    st.pyplot(fig)
 
 def employee():
     ymca_cost = 0
@@ -73,34 +72,20 @@ def employee():
     labels = []
     colors = ['lightblue', 'white', 'orange', 'green', 'purple', 'blue', 'lightgreen']
     explode = [0.02, 0.012, 0.012, 0.012, 0.0012, 0.0012, 0.0012]
-    name = user_choice_name.get()
-    job_title = user_choice_job_title.get()
-    job_type = job_type_menu.get()
-    salary = user_choice_base_salary.get()
-    coverage = coverage_menu.get()
-    health_plan = med_plan_menu.get()
-    den_plan = den_plan_menu.get()
-    vis_plan = vis_plan_menu.get()
-    hire_date = ret_plan_menu.get()
+    name = user_name
+    job_title = user_jobtitle
+    job_type = user_jobtype
+    salary = user_salary
+    coverage = user_coverage
+    health_plan = user_health_plan
+    den_plan = user_dental_plan
+    vis_plan = user_vision_plan
+    hire_date = user_hire_date
     ret_plan = ''
     ret_message = ''
     life_message = ''
 
-    # Default settings
-    if health_plan == 'Health Plan':
-        med_plan_menu.set('Optima Equity HDHP + HSA')
-        health_plan = med_plan_menu.get()
-
-    if den_plan == 'Dental Plan':
-        den_plan_menu.set('Dental')
-        den_plan = den_plan_menu.get()
-
-    if vis_plan == 'Vision Plan':
-        vis_plan_menu.set('Vision Service Plan')
-        vis_plan = vis_plan_menu.get()
-
     if hire_date == 'Hire Date':
-        ret_plan_menu.set('On or After March 1, 2010')
         ret_plan = 'VRS'
         ret_message = 'This plan consists of full-time re-hires and employees' \
                       'hired on or after March 1, 2010,\nand those prior active full-time employees who opted to change ' \
@@ -109,12 +94,8 @@ def employee():
 
     # job type test
     if job_type == 'Part Time':
-        lbl_base_salary['text'] = 'Hourly Rate'
         employee_part_time()
         return None # reset to default ticket
-
-    if job_type == 'Full Time':
-        lbl_base_salary['text'] = 'Base Salary'
 
       # name test
     if name != '':
@@ -394,3 +375,86 @@ def employee():
             value += 0 * 12
             monthly_info_dict[vis_plan] = 0
             info_dict[vis_plan] = 0 * 12
+
+    fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(16.5, 10.5), dpi=68)
+    fig.tight_layout()
+    fig.set_facecolor('grey')
+    ax1 = ax[0]
+    ax2 = ax[1]
+
+    ax1.pie(info_dict.values(), explode=explode[:len(info_dict.values())],
+            labels=[str('${:,.2f}').format(i) for i in info_dict.values()],
+            colors=colors[:len(info_dict.values())], autopct='%1.1f%%', startangle=150,
+            pctdistance=0.7, labeldistance=1.05, radius=0.83)
+
+    ax2.pie(monthly_info_dict.values(), explode=explode[:len(monthly_info_dict.values())],
+            labels=[str('${:,.2f}').format(i) for i in monthly_info_dict.values()],
+            colors=colors[:len(monthly_info_dict.values())], autopct='%1.1f%%', startangle=150,
+            pctdistance=0.7, labeldistance=1.05, radius=0.65)
+
+    ax1.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in zip(info_dict.keys(), info_dict.values())],
+               shadow=True, loc=(0.8, 0.83), fontsize=8.5)
+    ax2.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in
+                       zip(monthly_info_dict.keys(), monthly_info_dict.values())],
+               shadow=True, loc=(0.65, 0.8121), fontsize=8.5)
+
+    ax1.set_title('{:s} Annual Compensation Package\n {:s}'.format(name, job_title), fontweight='bold')
+    ax2.set_title('{:s} Monthly Compensation Package\n {:s}'.format(name, job_title), fontweight='bold')
+    fig.suptitle('A(n) {:s} at NNVA earns ${:,.2f} yearly\n'
+                 'A(n) {:s} at NNVA earns ${:,.2f} monthly\n\n'
+                 'Medical Plan: {:s}\n'
+                 'Dental Plan: {:s}\n'
+                 'Vision Plan: {:s}\n'
+                 'Retirement Plan: {:s}\n'.format(job_title, value, job_title, monthly_value,
+                                                  health_plan, den_plan, vis_plan, ret_plan),
+                 x=0.521, y=0.18, fontweight='bold', fontsize=14)
+
+    st.pyplot(fig)
+
+    # Initialize Add'tl Benefits Ticket
+    benefits_title = 'Additional Benefits'
+    text = "\u0332".join(benefits_title) + \
+                                      "\nFitness Benefits:\n" \
+                                      "YMCA Benefit: ${:.2f} monthly\n" \
+                                      "Original: ${:.2f}\n" \
+                                      "NNVA rate: ${:.2f}\n" \
+                                      "One Life Fitness Benefit: ${:.2f} monthly\n" \
+                                      "Original: ${:.2f}\n" \
+                                      "NNVA rate: ${:.2f}\n" \
+                                      "Riverside Fitness Center Benefit: ${:.2f} monthly\n" \
+                                      "Original: ${:.2f}\n" \
+                                      "NNVA rate: ${:.2f}\n" \
+                                      "\nDisability Benefits:\n" \
+                                      "Short Term Disability (STD)\n" \
+                                      "Employee purchases coverage: 60%\n" \
+                                      "Benefit Waiting Period: 14 days\n" \
+                                      "Maximum Benefit Period: 90 days then to LTD\n" \
+                                      "Long Term Disability (LTD)\n" \
+                                      "City provided core coverage: 40%\n" \
+                                      "Employee buy up: 10%\n" \
+                                      "Benefit Waiting Period: After 90 days\n" \
+                                      "\nRetirement Benefits:\n" \
+                                      "{:s}\n" \
+                                      "\nLife Insurance Benefits:\n" \
+                                      "{:s}".format(ymca_benefit, ymca_cost, ymca_nnva_cost,
+                                                    one_benefit, one_cost, one_nnva_cost,
+                                                    riv_benefit, riv_cost, riv_nnva_cost,
+                                                    ret_message, life_message)
+    st.text(text)
+
+
+    try:
+        # Export data into excel spreadsheet
+        df_annual = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=['Annual Compensation Package'])
+        df_monthly = pd.DataFrame.from_dict(data=monthly_info_dict, orient='index',
+                                            columns=['Monthly Compensation Package'])
+
+        main_df = pd.concat([df_annual, df_monthly], axis=1)
+        st.write(main_df)
+    except PermissionError:
+        open_excel_error()
+if button_clicked == 'GO':
+    employee()
+
+if __name__ == "__main__":
+    employee()
