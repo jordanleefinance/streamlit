@@ -39,18 +39,19 @@ try:
 
         data = data.T.reset_index()
         data = pd.melt(data, id_vars=["index"]).rename(
-            columns={"index": "Stocks", "value": "Price"}
+            columns={"index": "symbols", "value": "Prices"}
         )
         chart = (
             alt.Chart(data)
-            .mark_area(opacity=0.3)
+            .mark_line()
             .encode(
-                x="Year:T",
-                y=alt.Y("Stock Prices ($):Q", stack=None),
-                color="Region:N",
+                x="Date:T",
+                y="Prices:Q",
+                color="symbols:N",
             )
         )
         st.altair_chart(chart, use_container_width=True)
+
 except URLError as e:
     st.error(
         """
