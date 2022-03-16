@@ -132,7 +132,7 @@ with header:
 
 ### First row of indicators: GDP, unemployment, inflation
 
-gdp, unchart, inflchart = st.beta_columns(3)
+gdp, unchart, inflchart = st.columns(3)
 
 plt.style.use('ggplot')
 
@@ -166,7 +166,7 @@ st.markdown('<hr>', unsafe_allow_html=True)
 
 ### Second row of indicators: US Retail sales monthly data, Shiller P/E, 10Y Treasury yield
 
-retus, shiller, treas = st.beta_columns(3)
+retus, shiller, treas = st.columns(3)
 
 with retus:
     st.header('US retail monthly data')
@@ -198,7 +198,7 @@ st.markdown('<hr>', unsafe_allow_html=True)
 
 ### Third row of indicators: VIX Index, Brent oil
 
-vol, oil = st.beta_columns(2)
+vol, oil = st.columns(2)
 
 with vol:
     st.header('Vix Volatility Index')

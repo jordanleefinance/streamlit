@@ -1,13 +1,9 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.cluster import KMeans
-import datetime as dt
-import scipy as sp
 import random as random
-import requests
 import time
 import yfinance as yf
 
