@@ -11,11 +11,13 @@ def local_css(file_name):
 
 
 # local css sheet
-#local_css("css")
+local_css("css")
 
 # ticker search feature in sidebar
 st.sidebar.subheader("""Stock Search Web App""")
-selected_stock = st.sidebar.text_input("Enter a valid stock ticker...", "GOOG")
+selected_stock = st.sidebar.text_input("Enter a valid stock ticker...", "AAPL")
+user_choice = st.sidebar.selectbox("Coverage", ["Employee", "Employee + 1 child", "Employee + Spouse", "Family"],
+                                   "Employee")
 button_clicked = st.sidebar.button("GO")
 
 
@@ -25,7 +27,7 @@ def main():
     # get data on searched ticker
     stock_data = yf.Ticker(selected_stock)
     # get historical data for searched ticker
-    stock_df = stock_data.history(period='1d', start='2020-01-01', end=None)
+    stock_df = stock_data.history(period='1d', start='2015-01-01', end=None)
     # print line chart with daily closing prices for searched ticker
     st.line_chart(stock_df.Close)
 
