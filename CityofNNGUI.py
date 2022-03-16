@@ -99,7 +99,7 @@ def employee():
         employee_part_time()
         return None # reset to default ticket
 
-      # name test
+    # name test
     if name != '':
         name += '\'s'
 
@@ -377,72 +377,72 @@ def employee():
             value += 0 * 12
             monthly_info_dict[vis_plan] = 0
             info_dict[vis_plan] = 0 * 12
+    with st.container():
+        fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(16.5, 10.5), dpi=68)
+        fig.tight_layout()
+        fig.set_facecolor('white')
+        ax1 = ax[0]
+        ax2 = ax[1]
 
-    fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(16.5, 10.5), dpi=68)
-    st.pyplot(fig)
-    fig.tight_layout()
-    fig.set_facecolor('white')
-    ax1 = ax[0]
-    ax2 = ax[1]
+        ax1.pie(info_dict.values(), explode=explode[:len(info_dict.values())],
+                labels=[str('${:,.2f}').format(i) for i in info_dict.values()],
+                colors=colors[:len(info_dict.values())], autopct='%1.1f%%', startangle=150,
+                pctdistance=0.7, labeldistance=1.05, radius=0.83)
 
-    ax1.pie(info_dict.values(), explode=explode[:len(info_dict.values())],
-            labels=[str('${:,.2f}').format(i) for i in info_dict.values()],
-            colors=colors[:len(info_dict.values())], autopct='%1.1f%%', startangle=150,
-            pctdistance=0.7, labeldistance=1.05, radius=0.83)
+        ax2.pie(monthly_info_dict.values(), explode=explode[:len(monthly_info_dict.values())],
+                labels=[str('${:,.2f}').format(i) for i in monthly_info_dict.values()],
+                colors=colors[:len(monthly_info_dict.values())], autopct='%1.1f%%', startangle=150,
+                pctdistance=0.7, labeldistance=1.05, radius=0.65)
 
-    ax2.pie(monthly_info_dict.values(), explode=explode[:len(monthly_info_dict.values())],
-            labels=[str('${:,.2f}').format(i) for i in monthly_info_dict.values()],
-            colors=colors[:len(monthly_info_dict.values())], autopct='%1.1f%%', startangle=150,
-            pctdistance=0.7, labeldistance=1.05, radius=0.65)
+        ax1.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in zip(info_dict.keys(), info_dict.values())],
+                   shadow=True, loc=(0.8, 0.83), fontsize=8.5)
+        ax2.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in
+                           zip(monthly_info_dict.keys(), monthly_info_dict.values())],
+                   shadow=True, loc=(0.65, 0.8121), fontsize=8.5)
 
-    ax1.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in zip(info_dict.keys(), info_dict.values())],
-               shadow=True, loc=(0.8, 0.83), fontsize=8.5)
-    ax2.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in
-                       zip(monthly_info_dict.keys(), monthly_info_dict.values())],
-               shadow=True, loc=(0.65, 0.8121), fontsize=8.5)
-
-    ax1.set_title('{:s} Annual Compensation Package\n {:s}'.format(name, job_title), fontweight='bold')
-    ax2.set_title('{:s} Monthly Compensation Package\n {:s}'.format(name, job_title), fontweight='bold')
-    fig.suptitle('A(n) {:s} at NNVA earns ${:,.2f} yearly\n'
-                 'A(n) {:s} at NNVA earns ${:,.2f} monthly\n\n'
-                 'Medical Plan: {:s}\n'
-                 'Dental Plan: {:s}\n'
-                 'Vision Plan: {:s}\n'
-                 'Retirement Plan: {:s}\n'.format(job_title, value, job_title, monthly_value,
-                                                  health_plan, den_plan, vis_plan, ret_plan),
-                 x=0.521, y=0.18, fontweight='bold', fontsize=14)
+        ax1.set_title('{:s} Annual Compensation Package\n {:s}'.format(name, job_title), fontweight='bold')
+        ax2.set_title('{:s} Monthly Compensation Package\n {:s}'.format(name, job_title), fontweight='bold')
+        fig.suptitle('A(n) {:s} at NNVA earns ${:,.2f} yearly\n'
+                     'A(n) {:s} at NNVA earns ${:,.2f} monthly\n\n'
+                     'Medical Plan: {:s}\n'
+                     'Dental Plan: {:s}\n'
+                     'Vision Plan: {:s}\n'
+                     'Retirement Plan: {:s}\n'.format(job_title, value, job_title, monthly_value,
+                                                      health_plan, den_plan, vis_plan, ret_plan),
+                     x=0.521, y=0.18, fontweight='bold', fontsize=14)
 
 
-    # Initialize Add'tl Benefits Ticket
-    benefits_title = 'Additional Benefits'
-    text = "\u0332".join(benefits_title) + \
-                                      "\nFitness Benefits:\n" \
-                                      "YMCA Benefit: ${:.2f} monthly\n" \
-                                      "Original: ${:.2f}\n" \
-                                      "NNVA rate: ${:.2f}\n" \
-                                      "One Life Fitness Benefit: ${:.2f} monthly\n" \
-                                      "Original: ${:.2f}\n" \
-                                      "NNVA rate: ${:.2f}\n" \
-                                      "Riverside Fitness Center Benefit: ${:.2f} monthly\n" \
-                                      "Original: ${:.2f}\n" \
-                                      "NNVA rate: ${:.2f}\n" \
-                                      "\nDisability Benefits:\n" \
-                                      "Short Term Disability (STD)\n" \
-                                      "Employee purchases coverage: 60%\n" \
-                                      "Benefit Waiting Period: 14 days\n" \
-                                      "Maximum Benefit Period: 90 days then to LTD\n" \
-                                      "Long Term Disability (LTD)\n" \
-                                      "City provided core coverage: 40%\n" \
-                                      "Employee buy up: 10%\n" \
-                                      "Benefit Waiting Period: After 90 days\n" \
-                                      "\nRetirement Benefits:\n" \
-                                      "{:s}\n" \
-                                      "\nLife Insurance Benefits:\n" \
-                                      "{:s}".format(ymca_benefit, ymca_cost, ymca_nnva_cost,
-                                                    one_benefit, one_cost, one_nnva_cost,
-                                                    riv_benefit, riv_cost, riv_nnva_cost,
-                                                    ret_message, life_message)
-    st.subheader.text(text)
+        # Initialize Add'tl Benefits Ticket
+        benefits_title = 'Additional Benefits'
+        text = "\u0332".join(benefits_title) + \
+               "\nFitness Benefits:\n" \
+               "YMCA Benefit: ${:.2f} monthly\n" \
+               "Original: ${:.2f}\n" \
+               "NNVA rate: ${:.2f}\n" \
+               "One Life Fitness Benefit: ${:.2f} monthly\n" \
+               "Original: ${:.2f}\n" \
+               "NNVA rate: ${:.2f}\n" \
+               "Riverside Fitness Center Benefit: ${:.2f} monthly\n" \
+               "Original: ${:.2f}\n" \
+               "NNVA rate: ${:.2f}\n" \
+               "\nDisability Benefits:\n" \
+               "Short Term Disability (STD)\n" \
+               "Employee purchases coverage: 60%\n" \
+               "Benefit Waiting Period: 14 days\n" \
+               "Maximum Benefit Period: 90 days then to LTD\n" \
+               "Long Term Disability (LTD)\n" \
+               "City provided core coverage: 40%\n" \
+               "Employee buy up: 10%\n" \
+               "Benefit Waiting Period: After 90 days\n" \
+               "\nRetirement Benefits:\n" \
+               "{:s}\n" \
+               "\nLife Insurance Benefits:\n" \
+               "{:s}".format(ymca_benefit, ymca_cost, ymca_nnva_cost,
+                             one_benefit, one_cost, one_nnva_cost,
+                             riv_benefit, riv_cost, riv_nnva_cost,
+                             ret_message, life_message)
+        st.pyplot(fig)
+        st.subheader.text(text)
 
 
     try:
@@ -452,7 +452,7 @@ def employee():
                                             columns=['Monthly Compensation Package'])
 
         main_df = pd.concat([df_annual, df_monthly], axis=1)
-        st.write(main_df)
+        st.write("### {:s} Total Compensation Package", main_df)
     except PermissionError:
         open_excel_error()
 if button_clicked == 'GO':
