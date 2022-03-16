@@ -2,6 +2,7 @@ import pandas as pd
 import webbrowser
 import streamlit as st
 import matplotlib as plt
+import altair as alt
 
 file_path = r'C:/Users/JordanLee/OneDrive/Documents/MFinA/' \
             r'FINC 591 - Integrated Financial Analysis & Strategy/' \
@@ -377,8 +378,18 @@ def employee():
             value += 0 * 12
             monthly_info_dict[vis_plan] = 0
             info_dict[vis_plan] = 0 * 12
+    value_df = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=["Annual Compensation"])
+    monthlyvalue_df = pd.DataFrame.from_dict(data=monthly_info_dict, orient='index', columns=["Monthly Compensation"])
+
     with st.container():
-        fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(16.5, 10.5), dpi=68)
+        chart1 = alt.Chart(value_df).encode(
+            theta=alt.Theta('{:.f}:Q'.format(info_dict.values()), stack=True), colors=alt.Color("{:.s}:N".format(info_dict.keys()))
+        )
+        chart2 = alt.Chart(value_df).encode(
+            theta=alt.Theta('{:.f}:Q'.format(monthly_info_dict.values()), stack=True),
+            colors=alt.Color("{:.s}:N".format(monthly_info_dict.keys()))
+        )
+        '''fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(16.5, 10.5), dpi=68)
         fig.tight_layout()
         fig.set_facecolor('white')
         ax1 = ax[0]
@@ -442,7 +453,10 @@ def employee():
                              riv_benefit, riv_cost, riv_nnva_cost,
                              ret_message, life_message)
         st.pyplot(fig)
-        st.subheader.text(text)
+        st.subheader.text(text)'''
+        pie1 = chart1.mark_arc(outerRadius=120)
+        pie1_text = chart1.mark_text(radius=140, size=20).encode(text="{:.s}:N".format(info_dict.keys()))
+        st.altair_chart(pie1 + pie1_text, use_container_width=True)
 
 
     try:
