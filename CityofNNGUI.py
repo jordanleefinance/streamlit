@@ -35,6 +35,8 @@ def open_excel_error():
 def employee_part_time():
     value = 0
     salary = user_salary
+    monthly_value = 0
+    weekly_pay = 0
     job_title = user_jobtitle
     try:
         hourly_pay = float(salary)
@@ -69,7 +71,7 @@ def employee():
     monthly_value = 0
     info_dict = {}
     monthly_info_dict = {}
-    labels = []
+    #labels = []
     colors = ['lightblue', 'white', 'orange', 'green', 'purple', 'blue', 'lightgreen']
     explode = [0.02, 0.012, 0.012, 0.012, 0.0012, 0.0012, 0.0012]
     name = user_name
@@ -456,5 +458,4 @@ def employee():
 if button_clicked == 'GO':
     employee()
 
-if __name__ == "__main__":
-    employee()
+
