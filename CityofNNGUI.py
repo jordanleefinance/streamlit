@@ -111,7 +111,7 @@ def employee():
             info_dict['Annual Salary'] = float(salary)
             monthly_info_dict['Monthly Salary'] = float(salary) / 12
 
-        except ValueError:
+        except AttributeError:
             pass
     elif salary == '':
         salary = 0
@@ -378,7 +378,7 @@ def employee():
 
     fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(16.5, 10.5), dpi=68)
     fig.tight_layout()
-    fig.set_facecolor('grey')
+    fig.set_facecolor('white')
     ax1 = ax[0]
     ax2 = ax[1]
 
