@@ -10,10 +10,10 @@ file_path = r'C:/Users/JordanLee/OneDrive/Documents/MFinA/' \
 
 
 st.sidebar.subheader("""City of Newport News Compensation Package""")
-user_name = st.sidebar.text_input("Name", "")
-user_jobtitle = st.sidebar.text_input("Job Title", "")
+user_name = st.sidebar.text_input("Name", "George Jetson")
+user_jobtitle = st.sidebar.text_input("Job Title", "Treasurer")
 user_jobtype = st.sidebar.text_input("Job Type", "Full Time")
-user_salary = st.sidebar.number_input("Enter your hourly/annual pay:")
+user_salary = st.sidebar.number_input("Enter your hourly/annual pay:", 80587.45)
 user_coverage = st.sidebar.selectbox("Coverage", ("Employee", "Employee + 1 Child", "Employee + Spouse", "Family"))
 user_health_plan = st.sidebar.selectbox("Health Plan", ('Optima Health POS', 'Optima Health POS + FSA',
                            'Optima Equity HDHP', 'Optima Equity HDHP + FSA', 'Optima Equity HDHP + HSA', 'None'))
