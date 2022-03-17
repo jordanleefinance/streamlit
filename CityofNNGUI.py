@@ -9,18 +9,27 @@ file_path = r'C:/Users/JordanLee/OneDrive/Documents/MFinA/' \
             r'NNPS - Capstone/Compensation Package.xlsx'
 
 
-st.sidebar.subheader("""City of Newport News Compensation Package""")
+st.sidebar.subheader("""**City of Newport News Compensation Package**""")
 user_name = st.sidebar.text_input("Name", "George Jetson")
 user_jobtitle = st.sidebar.text_input("Job Title", "Treasurer")
-user_jobtype = st.sidebar.text_input("Job Type", "Full Time")
-user_salary = st.sidebar.number_input("Enter your hourly/annual pay:", 80587.45)
+user_jobtype = st.sidebar.radio("Job Type", ["Full Time", "Part Time"])
+user_salary = st.sidebar.number_input("Enter your hourly/annual pay:", 0.00)
 user_coverage = st.sidebar.selectbox("Coverage", ("Employee", "Employee + 1 Child", "Employee + Spouse", "Family"))
 user_health_plan = st.sidebar.selectbox("Health Plan", ('Optima Health POS', 'Optima Health POS + FSA',
                            'Optima Equity HDHP', 'Optima Equity HDHP + FSA', 'Optima Equity HDHP + HSA', 'None'))
-user_dental_plan = st.sidebar.selectbox("Dental Plan", ('Delta Dental', 'None'))
-user_vision_plan = st.sidebar.selectbox("Vision Plan", ('Vision Service Plan', 'Vision INS City', 'None'))
-user_hire_date = st.sidebar.selectbox("Hire Date", ('On or After March 1, 2010', 'Before March 1, 2010'))
+user_dental_plan = st.sidebar.radio('Dental Plan', ['Delta Dental', 'None'])
+user_vision_plan = st.sidebar.radio("Vision Plan", ['Vision Service Plan', 'Vision INS City', 'None'])
+user_hire_date = st.sidebar.radio("Hire Date", ['On or After March 1, 2010', 'Before March 1, 2010'])
 button_clicked = st.sidebar.button("GO")
+
+PPL_data = [['Up to 5 years', "6 hours", "9.25 hours"],
+            ['Over 5 years', "7.5 hours", "11.75 hours"],
+            ['Over 10 years', "8.5 hours", "12.5 hours"],
+            ['Over 15 years', "9 hours", "13 hours"],
+            ['Over 20 years', "9.25 hours", "14 hours"]]
+
+PPL_df = pd.DataFrame(PPL_data, columns=['YEARS OF SERVICE', 'FULL-TIME EMPLOYEES', '24-HOUR FIRE EMPLOYEES*'])
+
 
 
 def open_excel(file = None):
@@ -50,13 +59,14 @@ def employee_part_time():
 
     fig = plt.figure(figsize=(18, 10.5), dpi=68)
     fig.tight_layout()
-    fig.set_facecolor('grey')
+    fig.set_facecolor('white')
     fig.suptitle('A(n) {:s} at NNVA earns ${:,.2f} yearly.\n'
                  'A(n) {:s} at NNVA earns ${:,.2f} monthly.\n'
                  'A(n){:s} at NNVA earns ${:,.2f} weekly.'.format(job_title, value, job_title, monthly_value, job_title, weekly_pay),
                  x=0.5, y=0.5, fontweight='bold', fontsize=30)
 
     st.pyplot(fig)
+    pass
 
 def employee():
     ymca_cost = 0
@@ -81,13 +91,16 @@ def employee():
     salary = user_salary
     coverage = user_coverage
     health_plan = user_health_plan
-    den_plan = user_dental_plan
+    den_plan = "None"
     vis_plan = user_vision_plan
     hire_date = user_hire_date
     print(user_health_plan)
     ret_plan = ''
     ret_message = ''
     life_message = ''
+
+    if user_dental_plan:
+        den_plan = 'Delta Dental'
 
     if hire_date == 'Hire Date':
         ret_plan = 'VRS'
@@ -400,18 +413,17 @@ def employee():
             colors=colors[:len(info_dict.values())], autopct='%1.1f%%', startangle=150,
             pctdistance=0.7, labeldistance=1.05, radius=0.83)
 
-    ax1.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in zip(labels, info_dict.values())],
-               shadow=True, loc=(0.8, 0.83), fontsize=8.5)
-
-    font = {'family': 'normal',
-            'weight': 'bold',
-            'size': 22}
+    ax1.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in zip(info_dict.keys(), info_dict.values())],
+               shadow=True, loc=(0.8, 0.83), fontsize=12)
 
     ax1.set_title('{:s} Annual Compensation Package\n {:s}'.format(name, job_title), fontweight='bold', fontsize=30)
 
-    fig1.suptitle('A(n) {:s} at NNVA earns ${:,.2f} yearly\n\n'.format(job_title, monthly_value,
-                                                                       health_plan, den_plan, vis_plan, ret_plan),
-                  x=0.521, y=0.08, fontweight='bold', fontsize=14)
+    fig1.suptitle('A(n) {:s} at NNVA earns ${:,.2f} yearly\n'
+                  'Health Plan: {:s}\n'
+                  'Dental Plan: {:s}\n'
+                  'Vision Plan: {:s}'.format(job_title, value,
+                                             health_plan, den_plan, vis_plan, ret_plan),
+                  x=0.521, y=0.08, fontsize=20)
 
     fig2, ax2 = plt.subplots(figsize=(16.5, 10.5), dpi=120)
     fig2.tight_layout()
@@ -422,44 +434,57 @@ def employee():
             colors=colors[:len(monthly_info_dict.values())], autopct='%1.1f%%', startangle=150,
             pctdistance=0.7, labeldistance=1.05, radius=0.65)
 
-    ax2.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in zip(labels, monthly_info_dict.values())],
-               shadow=True, loc=(0.65, 0.8121), fontsize=8.5)
+    ax2.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in zip(monthly_info_dict.keys(), monthly_info_dict.values())],
+               shadow=True, loc=(0.65, 0.8121), fontsize=12)
 
-    ax2.set_title('{:s} Monthly Compensation Package\n {:s}'.format(name, job_title), fontweight='bold', fontsize=30)
+    ax2.set_title('{:s} Monthly Compensation Package\n {:s}'.format(name, job_title), fontweight='bold', fontsize=25)
 
-    fig2.suptitle('A(n) {:s} at NNVA earns ${:,.2f} monthly\n\n'.format(job_title, monthly_value,
+    fig2.suptitle('A(n) {:s} at NNVA earns ${:,.2f} monthly\n'
+                  'Health Plan: {:s}\n'
+                  'Dental Plan: {:s}\n'
+                  'Vision Plan: {:s}'.format(job_title, monthly_value,
                                                                         health_plan, den_plan, vis_plan, ret_plan),
-                  x=0.521, y=0.18, fontweight='bold', fontsize=14)
+                  x=0.521, y=0.18, fontsize=20)
 
 
     # Initialize Add'tl Benefits Ticket
-    benefits_title = 'Additional Benefits'
-    text1 = "\n**Fitness Benefits**\n" \
+    benefits_title = '**Additional Benefits**'
+    text1 = "\n**FITNESS BENEFITS**\n" \
            "YMCA Benefit: ${:.2f} monthly\n" \
-           "Original: ${:.2f}\n" \
-           "NNVA rate: ${:.2f}\n" \
+           "\tOriginal: ${:.2f}\n" \
+           "\tNNVA rate: ${:.2f}\n" \
            "One Life Fitness Benefit: ${:.2f} monthly\n" \
-           "Original: ${:.2f}\n" \
-           "NNVA rate: ${:.2f}\n" \
+           "\tOriginal: ${:.2f}\n" \
+           "\tNNVA rate: ${:.2f}\n" \
            "Riverside Fitness Center Benefit: ${:.2f} monthly\n" \
-           "Original: ${:.2f}\n" \
-           "NNVA rate: ${:.2f}\n" \
-           "\n**Disability Benefits**\n" \
+           "\tOriginal: ${:.2f}\n" \
+           "\tNNVA rate: ${:.2f}\n" \
+           "\n**DISABILITY BENEFITS**\n" \
            "Short Term Disability (STD)\n" \
-           "Employee purchases coverage: 60%\n" \
-           "Benefit Waiting Period: 14 days\n" \
-           "Maximum Benefit Period: 90 days then to LTD\n" \
+           "\tEmployee purchases coverage: 60%\n" \
+           "\tBenefit Waiting Period: 14 days\n" \
+           "\tMaximum Benefit Period: 90 days then to LTD\n" \
            "Long Term Disability (LTD)\n" \
-           "City provided core coverage: 40%\n" \
-           "Employee buy up: 10%\n" \
-           "Benefit Waiting Period: After 90 days\n" \
-           "\n\n" \
-           "{:s}\n" \
-           "\n\n" \
-           "{:s}".format(ymca_benefit, ymca_cost, ymca_nnva_cost,
+           "\tCity provided core coverage: 40%\n" \
+           "\tEmployee buy up: 10%\n" \
+           "\tBenefit Waiting Period: After 90 days\n" \
+            "\n**PAID HOLIDAYS**\n Regular, full-time City employees are eligible for paid holidays,\n provided they are in an active " \
+            "pay status the working day prior to the holiday.\n\t• New Year’s Day (January 1)\n\t• Dr. Martin Luther King’s Birthday (Third Monday in January)\n" \
+            "\t• President’s Day & George Washington’s Birthday (Third Monday in February)\n" \
+            "\t• Memorial Day (Last Monday in May)\n" \
+            "\t• Juneteenth (June 19)\n" \
+            "\t• Independence Day (July 4)\n" \
+            "\t• Labor Day (First Monday in September)\n" \
+            "\t• Veterans Day (November 11)\n" \
+            "\t• Thanksgiving Day (Fourth Thursday in November)\n" \
+            "\t• The Friday following Thanksgiving Day\n" \
+            "\t• Christmas Eve (December 24) – Observed as four hours only, and provided\n\tthat December 24 falls during the normal Monday through Friday work week\n" \
+            "\t• Christmas Day (December 25)\n\n" \
+            "**PAID PERSONAL LEAVE (PPL)**\n" \
+            "Paid personal leave covers vacation, absences for personal business and\nsome medical leave. Regular, full-time employees and 24-hour" \
+            "fire employees\nearn PPL according to the following bi-weekly accrual schedule:".format(ymca_benefit, ymca_cost, ymca_nnva_cost,
                          one_benefit, one_cost, one_nnva_cost,
-                         riv_benefit, riv_cost, riv_nnva_cost,
-                         ret_message, life_message)
+                         riv_benefit, riv_cost, riv_nnva_cost)
 
     df_annual = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=['Annual Compensation Package'])
     df_monthly = pd.DataFrame.from_dict(data=monthly_info_dict, orient='index',
@@ -471,28 +496,35 @@ def employee():
 
     return df_annual, df_monthly, main_df, text1, benefits_title, fig1, fig2
 
+try:
+    user = employee()
+    df = user[0]
+    monthly_df = user[1]
+    total_df = user[2]
+    text = user[3]
+    benefits_title = user[4]
+    annual_fig = user[5]
+    monthly_fig = user[6]
 
-user = employee()
-df = user[0]
-monthly_df = user[1]
-total_df = user[2]
-text = user[3]
-benefits_title = user[4]
-annual_fig = user[5]
-monthly_fig = user[6]
-
-st.pyplot(annual_fig)
-df = df.applymap(lambda x: "${:,.2f}".format(x),
+    st.pyplot(annual_fig)
+    df = df.applymap(lambda x: "${:,.2f}".format(x),
                            na_action='ignore')
-st.write("### Annual Compensation Package", df)
+    st.write("### Annual Compensation Package", df)
 
-st.pyplot(monthly_fig)
-monthly_df = monthly_df.applymap(lambda x: "${:,.2f}".format(x),
+    st.pyplot(monthly_fig)
+    monthly_df = monthly_df.applymap(lambda x: "${:,.2f}".format(x),
                                            na_action='ignore')
-st.write("### Monthly Compensation Package", monthly_df)
-st.subheader(benefits_title)
+    st.write("### Monthly Compensation Package", monthly_df)
+    st.subheader(benefits_title)
 
-st.text(text)
+    st.text(text)
+    st.write(PPL_df.set_index('YEARS OF SERVICE'), unsafe_allow_html=True)
+    st.text("**PAID MEDICAL LEAVE (PML)**\n"
+            "Paid medical leave can be used for certain personal "
+            "and family\nmedical-related absences. Regular, full-time employees accrue 2.75 hours\n"
+            "bi-weekly and 24-hour fire employees accrue 7.5 hours bi-weekly.")
+except TypeError:
+    pass
 
 
 if button_clicked == 'GO':
