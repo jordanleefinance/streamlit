@@ -72,9 +72,9 @@ def employee():
     monthly_value = 0
     info_dict = {}
     monthly_info_dict = {}
-    #labels = []
-    colors = ['lightblue', 'white', 'orange', 'green', 'purple', 'blue', 'lightgreen']
-    explode = [0.02, 0.012, 0.012, 0.012, 0.0012, 0.0012, 0.0012]
+    labels = []
+    colors = ['lightblue', 'grey', 'orange', 'green', 'purple', 'blue', 'lightgreen']
+    explode = [0.002, 0.02, 0.3, 0.4, 0.5, 0.6, 0.7]
     name = user_name
     job_title = user_jobtitle
     job_type = user_jobtype
@@ -378,94 +378,122 @@ def employee():
             monthly_info_dict[vis_plan] = 0
             info_dict[vis_plan] = 0 * 12
 
+    for i in info_dict.keys():
+        labels.append(i)
+    for j in range(len(labels)):
+        if labels[j] == health_plan:
+            labels[j] = "Health"
+        if labels[j] == den_plan:
+            labels[j] = "Dental"
+        if labels[j] == vis_plan:
+            labels[j] = "Vision"
+
+    # Graph results
+    # Set figure and axis with 2 pie charts
+
+    fig1, ax1 = plt.subplots(figsize=(16.5, 10.5), dpi=120)
+    fig1.tight_layout()
+    fig1.set_facecolor('white')
+
+    ax1.pie(info_dict.values(), explode=explode[:len(info_dict.values())],
+            labels=labels,
+            colors=colors[:len(info_dict.values())], autopct='%1.1f%%', startangle=150,
+            pctdistance=0.7, labeldistance=1.05, radius=0.83)
+
+    ax1.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in zip(labels, info_dict.values())],
+               shadow=True, loc=(0.8, 0.83), fontsize=8.5)
+
+    font = {'family': 'normal',
+            'weight': 'bold',
+            'size': 22}
+
+    ax1.set_title('{:s} Annual Compensation Package\n {:s}'.format(name, job_title), fontweight='bold', fontsize=30)
+
+    fig1.suptitle('A(n) {:s} at NNVA earns ${:,.2f} yearly\n\n'.format(job_title, monthly_value,
+                                                                       health_plan, den_plan, vis_plan, ret_plan),
+                  x=0.521, y=0.08, fontweight='bold', fontsize=14)
+
+    fig2, ax2 = plt.subplots(figsize=(16.5, 10.5), dpi=120)
+    fig2.tight_layout()
+    fig2.set_facecolor('white')
+
+    ax2.pie(monthly_info_dict.values(), explode=explode[:len(monthly_info_dict.values())],
+            labels=labels,
+            colors=colors[:len(monthly_info_dict.values())], autopct='%1.1f%%', startangle=150,
+            pctdistance=0.7, labeldistance=1.05, radius=0.65)
+
+    ax2.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in zip(labels, monthly_info_dict.values())],
+               shadow=True, loc=(0.65, 0.8121), fontsize=8.5)
+
+    ax2.set_title('{:s} Monthly Compensation Package\n {:s}'.format(name, job_title), fontweight='bold', fontsize=30)
+
+    fig2.suptitle('A(n) {:s} at NNVA earns ${:,.2f} monthly\n\n'.format(job_title, monthly_value,
+                                                                        health_plan, den_plan, vis_plan, ret_plan),
+                  x=0.521, y=0.18, fontweight='bold', fontsize=14)
+
+
     # Initialize Add'tl Benefits Ticket
     benefits_title = 'Additional Benefits'
-    benefits_title = "\u0332".join(benefits_title)
-    text = "\nFitness Benefits\n" \
-               "YMCA Benefit: ${:.2f} monthly\n" \
-               "Original: ${:.2f}\n" \
-               "NNVA rate: ${:.2f}\n" \
-               "One Life Fitness Benefit: ${:.2f} monthly\n" \
-               "Original: ${:.2f}\n" \
-               "NNVA rate: ${:.2f}\n" \
-               "Riverside Fitness Center Benefit: ${:.2f} monthly\n" \
-               "Original: ${:.2f}\n" \
-               "NNVA rate: ${:.2f}\n" \
-               "\nDisability Benefits:\n" \
-               "Short Term Disability (STD)\n" \
-               "Employee purchases coverage: 60%\n" \
-               "Benefit Waiting Period: 14 days\n" \
-               "Maximum Benefit Period: 90 days then to LTD\n" \
-               "Long Term Disability (LTD)\n" \
-               "City provided core coverage: 40%\n" \
-               "Employee buy up: 10%\n" \
-               "Benefit Waiting Period: After 90 days\n" \
-               "\n\n" \
-               "{:s}\n" \
-               "\n\n" \
-               "{:s}".format(ymca_benefit, ymca_cost, ymca_nnva_cost,
-                             one_benefit, one_cost, one_nnva_cost,
-                             riv_benefit, riv_cost, riv_nnva_cost,
-                             ret_message, life_message)
-
-
+    text1 = "\n**Fitness Benefits**\n" \
+           "YMCA Benefit: ${:.2f} monthly\n" \
+           "Original: ${:.2f}\n" \
+           "NNVA rate: ${:.2f}\n" \
+           "One Life Fitness Benefit: ${:.2f} monthly\n" \
+           "Original: ${:.2f}\n" \
+           "NNVA rate: ${:.2f}\n" \
+           "Riverside Fitness Center Benefit: ${:.2f} monthly\n" \
+           "Original: ${:.2f}\n" \
+           "NNVA rate: ${:.2f}\n" \
+           "\n**Disability Benefits**\n" \
+           "Short Term Disability (STD)\n" \
+           "Employee purchases coverage: 60%\n" \
+           "Benefit Waiting Period: 14 days\n" \
+           "Maximum Benefit Period: 90 days then to LTD\n" \
+           "Long Term Disability (LTD)\n" \
+           "City provided core coverage: 40%\n" \
+           "Employee buy up: 10%\n" \
+           "Benefit Waiting Period: After 90 days\n" \
+           "\n\n" \
+           "{:s}\n" \
+           "\n\n" \
+           "{:s}".format(ymca_benefit, ymca_cost, ymca_nnva_cost,
+                         one_benefit, one_cost, one_nnva_cost,
+                         riv_benefit, riv_cost, riv_nnva_cost,
+                         ret_message, life_message)
 
     df_annual = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=['Annual Compensation Package'])
     df_monthly = pd.DataFrame.from_dict(data=monthly_info_dict, orient='index',
                                         columns=['Monthly Compensation Package'])
     main_df = pd.concat([df_annual, df_monthly], axis=1)
-    main_df.fillna(0, inplace=True)
     main_df = main_df.applymap(lambda x: "${:,.2f}".format(x),
                                na_action='ignore')
-    st.write("### {:s} Total Compensation Package".format(name), main_df)
+    main_df.fillna("", inplace=True)
 
-    return df_annual, df_monthly, text, benefits_title
+    return df_annual, df_monthly, main_df, text1, benefits_title, fig1, fig2
 
 
 user = employee()
-
 df = user[0]
 monthly_df = user[1]
+total_df = user[2]
+text = user[3]
+benefits_title = user[4]
+annual_fig = user[5]
+monthly_fig = user[6]
 
-df = df.T.reset_index()
-df = pd.melt(df, id_vars=["index"]).rename(
-            columns={"index": "attributes", "variable":"Benefits"}
-        )
-chart1 = alt.Chart(df).encode(
-    theta=alt.Theta('value:Q', stack=True),
-    color="Benefits:N"
-).properties(title="Annual Compensation Package")
-pie1 = chart1.mark_arc(outerRadius=70)
-pie1_text = chart1.mark_text(align='center', radius=110, size=9).encode(text="Benefits:N")
-st.altair_chart(pie1 + pie1_text, use_container_width=True)
-df = user[0]
+st.pyplot(annual_fig)
 df = df.applymap(lambda x: "${:,.2f}".format(x),
                            na_action='ignore')
 st.write("### Annual Compensation Package", df)
 
-
-
-monthly_df = monthly_df.T.reset_index()
-monthly_df = pd.melt(monthly_df, id_vars=["index"]).rename(
-            columns={"index": "attributes", "variable":"Benefits"}
-        )
-chart2 = alt.Chart(monthly_df).encode(
-    theta=alt.Theta('value:Q', stack=True),
-    color="Benefits:N"
-).properties(title="Monthly Compensation Package")
-pie2 = chart2.mark_arc(outerRadius=70)
-pie2_text = chart2.mark_text(align='center', radius=110, size=9).encode(text="Benefits:N")
-
-monthly_df = user[1]
+st.pyplot(monthly_fig)
 monthly_df = monthly_df.applymap(lambda x: "${:,.2f}".format(x),
                                            na_action='ignore')
-st.altair_chart(pie2 + pie2_text, use_container_width=True)
 st.write("### Monthly Compensation Package", monthly_df)
+st.subheader(benefits_title)
 
-benefits_subtitle = user[3]
-st.subheader(benefits_subtitle)
+st.text(text)
 
-st.text(user[2])
 
 if button_clicked == 'GO':
     employee()
