@@ -13,7 +13,7 @@ st.sidebar.subheader("""**City of Newport News Compensation Package**""")
 user_name = st.sidebar.text_input("Name", "George Jetson")
 user_jobtitle = st.sidebar.text_input("Job Title", "Treasurer")
 user_jobtype = st.sidebar.radio("Job Type", ["Full Time", "Part Time"])
-user_salary = st.sidebar.number_input("Enter your hourly/annual pay:", 0.00)
+user_salary = st.sidebar.number_input("Enter your hourly/annual pay:", value=80857.45)
 user_coverage = st.sidebar.selectbox("Coverage", ("Employee", "Employee + 1 Child", "Employee + Spouse", "Family"))
 user_health_plan = st.sidebar.selectbox("Health Plan", ('Optima Health POS', 'Optima Health POS + FSA',
                            'Optima Equity HDHP', 'Optima Equity HDHP + FSA', 'Optima Equity HDHP + HSA', 'None'))
@@ -22,11 +22,11 @@ user_vision_plan = st.sidebar.radio("Vision Plan", ['Vision Service Plan', 'Visi
 user_hire_date = st.sidebar.radio("Hire Date", ['On or After March 1, 2010', 'Before March 1, 2010'])
 button_clicked = st.sidebar.button("GO")
 
-PPL_data = [['Up to 5 years', "6 hours", "9.25 hours"],
-            ['Over 5 years', "7.5 hours", "11.75 hours"],
-            ['Over 10 years', "8.5 hours", "12.5 hours"],
-            ['Over 15 years', "9 hours", "13 hours"],
-            ['Over 20 years', "9.25 hours", "14 hours"]]
+PPL_data = [['Up to 5 years in service', "6 hours", "9.25 hours"],
+            ['Over 5 years in service', "7.5 hours", "11.75 hours"],
+            ['Over 10 years in service', "8.5 hours", "12.5 hours"],
+            ['Over 15 years in service', "9 hours", "13 hours"],
+            ['Over 20 years in service', "9.25 hours", "14 hours"]]
 
 PPL_df = pd.DataFrame(PPL_data, columns=['YEARS OF SERVICE', 'FULL-TIME EMPLOYEES', '24-HOUR FIRE EMPLOYEES*'])
 
@@ -60,8 +60,8 @@ def employee_part_time():
     fig = plt.figure(figsize=(18, 10.5), dpi=68)
     fig.tight_layout()
     fig.set_facecolor('white')
-    fig.suptitle('A(n) {:s} at NNVA earns ${:,.2f} yearly.\n'
-                 'A(n) {:s} at NNVA earns ${:,.2f} monthly.\n'
+    fig.suptitle('A(n) {:s} at NNVA earns ${:,.2f} yearly.\n\n'
+                 'A(n) {:s} at NNVA earns ${:,.2f} monthly.\n\n'
                  'A(n){:s} at NNVA earns ${:,.2f} weekly.'.format(job_title, value, job_title, monthly_value, job_title, weekly_pay),
                  x=0.5, y=0.5, fontweight='bold', fontsize=30)
 
@@ -91,7 +91,7 @@ def employee():
     salary = user_salary
     coverage = user_coverage
     health_plan = user_health_plan
-    den_plan = "None"
+    den_plan = user_dental_plan
     vis_plan = user_vision_plan
     hire_date = user_hire_date
     print(user_health_plan)
@@ -99,8 +99,6 @@ def employee():
     ret_message = ''
     life_message = ''
 
-    if user_dental_plan:
-        den_plan = 'Delta Dental'
 
     if hire_date == 'Hire Date':
         ret_plan = 'VRS'
@@ -423,7 +421,7 @@ def employee():
                   'Dental Plan: {:s}\n'
                   'Vision Plan: {:s}'.format(job_title, value,
                                              health_plan, den_plan, vis_plan, ret_plan),
-                  x=0.521, y=0.08, fontsize=20)
+                  x=0.521, y=0.15, fontsize=17)
 
     fig2, ax2 = plt.subplots(figsize=(16.5, 10.5), dpi=120)
     fig2.tight_layout()
@@ -444,7 +442,7 @@ def employee():
                   'Dental Plan: {:s}\n'
                   'Vision Plan: {:s}'.format(job_title, monthly_value,
                                                                         health_plan, den_plan, vis_plan, ret_plan),
-                  x=0.521, y=0.18, fontsize=20)
+                  x=0.521, y=0.18, fontsize=15)
 
 
     # Initialize Add'tl Benefits Ticket
@@ -518,7 +516,7 @@ try:
     st.subheader(benefits_title)
 
     st.text(text)
-    st.write(PPL_df.set_index('YEARS OF SERVICE'), unsafe_allow_html=True)
+    st.dataframe(PPL_df.set_index('YEARS OF SERVICE'))
     st.text("**PAID MEDICAL LEAVE (PML)**\n"
             "Paid medical leave can be used for certain personal "
             "and family\nmedical-related absences. Regular, full-time employees accrue 2.75 hours\n"
