@@ -517,7 +517,7 @@ try:
 
     st.text(text)
     st.dataframe(PPL_df.set_index('YEARS OF SERVICE'))
-    st.text("**PAID MEDICAL LEAVE (PML)**\n"
+    st.text("\n**PAID MEDICAL LEAVE (PML)**\n"
             "Paid medical leave can be used for certain personal "
             "and family\nmedical-related absences. Regular, full-time employees accrue 2.75 hours\n"
             "bi-weekly and 24-hour fire employees accrue 7.5 hours bi-weekly.")
