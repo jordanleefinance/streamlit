@@ -11,12 +11,11 @@ def local_css(file_name):
 
 
 # local css sheet
-#local_css("css")
+local_css("../css/custom.css")
 
 # ticker search feature in sidebar
 st.sidebar.subheader("""Stock Search Web App""")
 selected_stock = st.sidebar.text_input("Enter a valid stock ticker...", "AAPL")
-user_choice = st.sidebar.selectbox("Coverage", ("Employee", "Employee + 1 child", "Employee + Spouse", "Family"))
 button_clicked = st.sidebar.button("GO")
 
 

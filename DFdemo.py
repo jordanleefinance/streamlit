@@ -39,7 +39,7 @@ try:
 
         data = data.T.reset_index()
         data = pd.melt(data, id_vars=["index"]).rename(
-            columns={"index": "symbols", "value": "Prices"}
+            columns={"index": "Symbols", "value": "Prices"}
         )
         chart = (
             alt.Chart(data)
@@ -47,7 +47,7 @@ try:
             .encode(
                 x="Date:T",
                 y="Prices:Q",
-                color="symbols:N",
+                color="Symbols:N",
             )
         )
         st.altair_chart(chart, use_container_width=True)
