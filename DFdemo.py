@@ -49,7 +49,7 @@ try:
                 color="Symbols:N",
             )
         )
-        st.altair_chart(chart, use_container_width=True).interactive()
+        st.altair_chart(chart, use_container_width=True)
 
 except URLError as e:
     st.error(
