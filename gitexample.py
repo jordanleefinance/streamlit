@@ -29,7 +29,7 @@ def main():
     # get historical data for searched ticker
     stock_df = stock_data.history(period='1d', start=start_date, end=end_date)
     # print line chart with daily closing prices for searched ticker
-    st.line_chart(stock_df.Close).interactive()
+    st.line_chart(stock_df.Close)
 
     st.subheader("""Last **closing price** for """ + selected_stock)
     # define variable today
@@ -46,7 +46,7 @@ def main():
 
     # get daily volume for searched ticker
     st.subheader("""Daily **volume** for """ + selected_stock)
-    st.line_chart(stock_df.Volume).interactive()
+    st.line_chart(stock_df.Volume)
 
     # additional information feature in sidebar
     st.sidebar.subheader("""Display Additional Information""")
