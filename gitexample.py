@@ -16,7 +16,7 @@ today = datetime.today().strftime('%Y-%m-%d')
 # ticker search feature in sidebar
 st.sidebar.subheader("""Stock Search Web App""")
 selected_stock = st.sidebar.text_input("Enter a valid stock ticker...", "AAPL")
-start_date = st.sidebar.date_input("Start Date", "2015-01-01")
+start_date = st.sidebar.date_input("Start Date", datetime(day=1, month=1, year=2016))
 end_date = st.sidebar.date_input("End Date", today)
 button_clicked = st.sidebar.button("GO")
 
