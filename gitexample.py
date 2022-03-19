@@ -9,13 +9,15 @@ def local_css(file_name):
     with open(file_name) as f:
         st.sidebar.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-
+today = datetime.today().strftime('%Y-%m-%d')
 # local css sheet
 #local_css("../css/custom.css")
 
 # ticker search feature in sidebar
 st.sidebar.subheader("""Stock Search Web App""")
 selected_stock = st.sidebar.text_input("Enter a valid stock ticker...", "AAPL")
+start_date = st.sidebar.date_input("Start Date", "2015-01-01")
+end_date = st.sidebar.date_input("End Date", today)
 button_clicked = st.sidebar.button("GO")
 
 
@@ -25,9 +27,9 @@ def main():
     # get data on searched ticker
     stock_data = yf.Ticker(selected_stock)
     # get historical data for searched ticker
-    stock_df = stock_data.history(period='1d', start='2015-01-01', end=None)
+    stock_df = stock_data.history(period='1d', start=start_date, end=end_date)
     # print line chart with daily closing prices for searched ticker
-    st.line_chart(stock_df.Close)
+    st.line_chart(stock_df.Close).interactive()
 
     st.subheader("""Last **closing price** for """ + selected_stock)
     # define variable today
@@ -44,7 +46,7 @@ def main():
 
     # get daily volume for searched ticker
     st.subheader("""Daily **volume** for """ + selected_stock)
-    st.line_chart(stock_df.Volume)
+    st.line_chart(stock_df.Volume).interactive()
 
     # additional information feature in sidebar
     st.sidebar.subheader("""Display Additional Information""")

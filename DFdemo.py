@@ -22,8 +22,7 @@ def get_user_data():
                                        num_shares=num,
                                        start_date='2017-01-01', end_date='2022-02-01', freq='D', index_stock='^GSPC')
     df = Portfolio.get_price_df(portfolio=portfolio1,
-                                num_shares=num,
-                                start_date='2017-01-01', end_date='2022-02-01', freq='D')
+                                num_shares=num, start_date='2017-01-01', end_date='2022-02-01', freq='D')
     return df
 
 try:
@@ -50,7 +49,7 @@ try:
                 color="Symbols:N",
             )
         )
-        st.altair_chart(chart, use_container_width=True)
+        st.altair_chart(chart, use_container_width=True).interactive()
 
 except URLError as e:
     st.error(
