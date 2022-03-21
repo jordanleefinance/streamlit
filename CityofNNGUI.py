@@ -83,6 +83,7 @@ def employee():
     info_dict = {}
     monthly_info_dict = {}
     labels = []
+    monthly_labels = []
     colors = ['lightblue', 'grey', 'orange', 'green', 'purple', 'blue', 'lightgreen']
     explode = [0.002, 0.02, 0.3, 0.4, 0.5, 0.6, 0.7]
     name = user_name
@@ -391,6 +392,9 @@ def employee():
 
     for i in info_dict.keys():
         labels.append(i)
+    for m in monthly_info_dict.keys():
+        monthly_labels.append(m)
+
     for j in range(len(labels)):
         if labels[j] == health_plan:
             labels[j] = "Health"
@@ -398,6 +402,13 @@ def employee():
             labels[j] = "Dental"
         if labels[j] == vis_plan:
             labels[j] = "Vision"
+    for mj in range(len(monthly_labels)):
+        if monthly_labels[mj] == health_plan:
+            monthly_labels[mj] = "Health"
+        if monthly_labels[mj] == den_plan:
+            monthly_labels[mj] = "Dental"
+        if monthly_labels[mj] == vis_plan:
+            monthly_labels[mj] = "Vision"
 
     # Graph results
     # Set figure and axis with 2 pie charts
@@ -428,7 +439,7 @@ def employee():
     fig2.set_facecolor('white')
 
     ax2.pie(monthly_info_dict.values(), explode=explode[:len(monthly_info_dict.values())],
-            labels=labels,
+            labels=monthly_labels,
             colors=colors[:len(monthly_info_dict.values())], autopct='%1.1f%%', startangle=150,
             pctdistance=0.7, labeldistance=1.05, radius=0.65)
 
@@ -507,12 +518,12 @@ try:
     st.pyplot(annual_fig)
     df = df.applymap(lambda x: "${:,.2f}".format(x),
                            na_action='ignore')
-    st.write("### Annual Compensation Package", df)
+    st.write(df)
 
     st.pyplot(monthly_fig)
     monthly_df = monthly_df.applymap(lambda x: "${:,.2f}".format(x),
                                            na_action='ignore')
-    st.write("### Monthly Compensation Package", monthly_df)
+    st.write(monthly_df)
     st.subheader(benefits_title)
 
     st.text(text)
