@@ -3,6 +3,7 @@ import webbrowser
 import streamlit as st
 import matplotlib.pyplot as plt
 import altair as alt
+import operator
 
 DB_path = r"C:\Users\jorda\OneDrive\Documents\MFinA" \
           r"\FINC 591 - Integrated Financial Analysis & Strategy\NNPS - Capstone\Sample data.xlsx"
@@ -88,7 +89,7 @@ def employee():
     labels = []
     monthly_labels = []
     colors = ['lightblue', 'grey', 'orange', 'green', 'red', 'blue', 'lightgreen']
-    explode = [0.002, 0.1, 0.15, 0.2, 0.15, 0.1, 0.024]
+    explode = [0.002, 0.342, 0.482, 0.382, 0.302, 0.32, 0.262, 0.302]
     name = user_name
     first_name = ''
     last_name = ''
@@ -100,10 +101,8 @@ def employee():
     den_plan = user_dental_plan
     vis_plan = user_vision_plan
     ret_plan = ''
-    ret_message = ''
     ret_health_plan = 'Retiree Health'
     life_plan = 'Basic Life'
-    life_message = ''
 
 
     # job type test
@@ -394,6 +393,7 @@ def employee():
 
     DB = pd.read_excel(DB_path, index_col=[1, 2], header=[1, 2], sheet_name=None)
     df = pd.concat(DB.values(), axis=0)
+    df = df[:8]
 
     for i in range(len(df)):
         if df.iloc[i].name == (last_name, first_name) or \
@@ -449,6 +449,10 @@ def employee():
         monthly_labels.append(m)
 
     for j in range(len(labels)):
+        if labels[j] == "Flexible Spending Account (FSA)":
+            labels[j] = "FSA"
+        if labels[j] == "Health Spending Account (HSA)":
+            labels[j] = "HSA"
         if labels[j] == health_plan:
             labels[j] = "Health"
         if labels[j] == den_plan:
@@ -461,6 +465,10 @@ def employee():
             labels[j] = "Life"
 
     for mj in range(len(monthly_labels)):
+        if monthly_labels[mj] == "Flexible Spending Account (FSA)":
+            monthly_labels[mj] = "FSA"
+        if monthly_labels[mj] == "Health Spending Account (HSA)":
+            monthly_labels[mj] = "HSA"
         if monthly_labels[mj] == health_plan:
             monthly_labels[mj] = "Health"
         if monthly_labels[mj] == den_plan:
@@ -481,7 +489,7 @@ def employee():
 
     ax1.pie(info_dict.values(), explode=explode[:len(info_dict.values())],
             labels=labels,
-            colors=colors[:len(info_dict.values())], autopct='%1.1f%%', startangle=150,
+            colors=colors[:len(info_dict.values())], autopct='%1.1f%%', startangle=190,
             pctdistance=0.7, labeldistance=1.05, radius=0.83)
 
     ax1.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in zip(info_dict.keys(), info_dict.values())],
@@ -504,7 +512,7 @@ def employee():
 
     ax2.pie(monthly_info_dict.values(), explode=explode[:len(monthly_info_dict.values())],
             labels=monthly_labels,
-            colors=colors[:len(monthly_info_dict.values())], autopct='%1.1f%%', startangle=150,
+            colors=colors[:len(monthly_info_dict.values())], autopct='%1.1f%%', startangle=190,
             pctdistance=0.7, labeldistance=1.05, radius=0.65)
 
     ax2.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in zip(monthly_info_dict.keys(), monthly_info_dict.values())],
@@ -515,7 +523,7 @@ def employee():
     fig2.suptitle('A(n) {:s} at NNVA earns ${:,.2f} monthly\n'
                   'Health Plan: {:s}\n'
                   'Dental Plan: {:s}\n'
-                  'Vision Plan: {:s}'
+                  'Vision Plan: {:s}\n'
                   'Retirement Plan: {:s}\n'
                   'Life Plan: {:s}'.format(job_title.capitalize(), monthly_value,
                                            health_plan, den_plan, vis_plan, ret_plan, life_plan),
@@ -554,16 +562,15 @@ def employee():
             "\t• Thanksgiving Day (Fourth Thursday in November)\n" \
             "\t• The Friday following Thanksgiving Day\n" \
             "\t• Christmas Eve (December 24) – Observed as four hours only, and provided\n\tthat December 24 falls during the normal Monday through Friday work week\n" \
-            "\t• Christmas Day (December 25)\n\n" \
-            "**PAID PERSONAL LEAVE (PPL)**\n" \
-            "Paid personal leave covers vacation, absences for personal business and\nsome medical leave. Regular, full-time employees and 24-hour" \
-            "fire employees\nearn PPL according to the following bi-weekly accrual schedule:".format(ymca_benefit, ymca_cost, ymca_nnva_cost,
+            "\t• Christmas Day (December 25)\n\n".format(ymca_benefit, ymca_cost, ymca_nnva_cost,
                          one_benefit, one_cost, one_nnva_cost,
                          riv_benefit, riv_cost, riv_nnva_cost)
 
     df_annual = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=['Annual Compensation Package'])
+    df_annual.loc['Total'] = value
     df_monthly = pd.DataFrame.from_dict(data=monthly_info_dict, orient='index',
                                         columns=['Monthly Compensation Package'])
+    df_monthly.loc['Total'] = monthly_value
     main_df = pd.concat([df_annual, df_monthly], axis=1)
     main_df = main_df.applymap(lambda x: "${:,.2f}".format(x),
                                na_action='ignore')
@@ -590,11 +597,14 @@ try:
     monthly_df = monthly_df.applymap(lambda x: "${:,.2f}".format(x),
                                            na_action='ignore')
     st.write(monthly_df)
-    st.subheader(benefits_title)
+    st.header(benefits_title)
 
     st.text(text)
+    st.subheader("**PAID PERSONAL LEAVE (PPL)**\nPaid personal leave covers vacation, absences for personal business and"
+                 "\nsome medical leave. Regular, full-time employees and 24-hour "
+                 "fire employees\nearn PPL according to the following bi-weekly accrual schedule:")
     st.dataframe(PPL_df.set_index('YEARS OF SERVICE'))
-    st.text("\n**PAID MEDICAL LEAVE (PML)**\n"
+    st.subheader("\n**PAID MEDICAL LEAVE (PML)**\n"
             "Paid medical leave can be used for certain personal "
             "and family\nmedical-related absences. Regular, full-time employees accrue 2.75 hours\n"
             "bi-weekly and 24-hour fire employees accrue 7.5 hours bi-weekly.")
