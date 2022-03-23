@@ -3,10 +3,14 @@ import webbrowser
 import streamlit as st
 import matplotlib.pyplot as plt
 import altair as alt
-import operator
+import os
 
-DB_path = r"C:\Users\jorda\OneDrive\Documents\MFinA" \
+start = r"C:\Users\jorda\OneDrive"
+
+path = r"C:\Users\jorda\OneDrive\Documents\MFinA" \
           r"\FINC 591 - Integrated Financial Analysis & Strategy\NNPS - Capstone\Sample data.xlsx"
+DB_path = os.path.relpath(path, start)
+
 
 file_path = r'C:/Users/JordanLee/OneDrive/Documents/MFinA/' \
             r'FINC 591 - Integrated Financial Analysis & Strategy/' \
