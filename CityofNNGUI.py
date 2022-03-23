@@ -4,6 +4,9 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import altair as alt
 
+DB_path = r"C:\Users\jorda\OneDrive\Documents\MFinA" \
+          r"\FINC 591 - Integrated Financial Analysis & Strategy\NNPS - Capstone\Sample data.xlsx"
+
 file_path = r'C:/Users/JordanLee/OneDrive/Documents/MFinA/' \
             r'FINC 591 - Integrated Financial Analysis & Strategy/' \
             r'NNPS - Capstone/Compensation Package.xlsx'
@@ -19,7 +22,7 @@ user_health_plan = st.sidebar.selectbox("Health Plan", ('Optima Health POS', 'Op
                            'Optima Equity HDHP', 'Optima Equity HDHP + FSA', 'Optima Equity HDHP + HSA', 'None'))
 user_dental_plan = st.sidebar.radio('Dental Plan', ['Delta Dental', 'None'])
 user_vision_plan = st.sidebar.radio("Vision Plan", ['Vision Service Plan', 'Vision INS City', 'None'])
-user_hire_date = st.sidebar.radio("Hire Date", ['On or After March 1, 2010', 'Before March 1, 2010'])
+
 button_clicked = st.sidebar.button("GO")
 
 PPL_data = [['Up to 5 years in service', "6 hours", "9.25 hours"],
@@ -84,28 +87,23 @@ def employee():
     monthly_info_dict = {}
     labels = []
     monthly_labels = []
-    colors = ['lightblue', 'grey', 'orange', 'green', 'purple', 'blue', 'lightgreen']
-    explode = [0.002, 0.02, 0.3, 0.4, 0.5, 0.6, 0.7]
+    colors = ['lightblue', 'grey', 'orange', 'green', 'red', 'blue', 'lightgreen']
+    explode = [0.002, 0.1, 0.15, 0.2, 0.15, 0.1, 0.024]
     name = user_name
-    job_title = user_jobtitle
+    first_name = ''
+    last_name = ''
+    job_title = user_jobtitle.upper()
     job_type = user_jobtype
     salary = user_salary
     coverage = user_coverage
     health_plan = user_health_plan
     den_plan = user_dental_plan
     vis_plan = user_vision_plan
-    hire_date = user_hire_date
-    print(user_health_plan)
     ret_plan = ''
     ret_message = ''
+    ret_health_plan = 'Retiree Health'
+    life_plan = 'Basic Life'
     life_message = ''
-
-
-    if hire_date == 'Hire Date':
-        ret_plan = 'VRS'
-        ret_message = 'This plan consists of full-time re-hires and employees' \
-                      'hired on or after March 1, 2010,\nand those prior active full-time employees who opted to change ' \
-                      'to VRS.\nFor additional information, please refer to www.varetire.org'
 
 
     # job type test
@@ -115,8 +113,12 @@ def employee():
 
     # name test
     if name != '':
+        first_name = name.split()[0]
+        try:
+            last_name = name.split()[1]
+        except IndexError:
+            pass
         name += '\'s'
-
     # no salary test
 
     try:
@@ -390,6 +392,56 @@ def employee():
             monthly_info_dict[vis_plan] = 0
             info_dict[vis_plan] = 0 * 12
 
+    DB = pd.read_excel(DB_path, index_col=[1, 2], header=[1, 2], sheet_name=None)
+    df = pd.concat(DB.values(), axis=0)
+
+    for i in range(len(df)):
+        if df.iloc[i].name == (last_name, first_name) or df.iloc[i].loc[('Unnamed: 3_level_0', 'Location Code Desc')] == job_title:
+            ret_plan = df.iloc[i].loc[('Unnamed: 8_level_0', ['Retirement Plan'])].values
+            if ret_plan == 'NNER  CITY OF NEWPORT NEWS RET':
+                ret_plan = 'NNER'
+            elif ret_plan == 'VRS - VIRGINIA RETIREMENT SYST':
+                ret_plan = 'VRS'
+            elif ret_plan == 'VRSH - VIRGINIA RET SYS HYBRID':
+                hybrid_data = df.iloc[i].loc[('Hybrid Retirement Mandatory & Optional', ['DC Plan City'])].values
+                monthly_value += float(hybrid_data)
+                value += float(hybrid_data) * 12
+                monthly_info_dict['Hybrid Mandatory'] = float(hybrid_data)
+                info_dict['Hybrid Mandatory'] = float(hybrid_data) * 12
+
+                hybrid_optional_data = df.iloc[i].loc[('Hybrid Retirement Mandatory & Optional', ['Opt DC City'])].values
+                monthly_value += float(hybrid_optional_data)
+                value += float(hybrid_optional_data) * 12
+                monthly_info_dict['Hybrid Mandatory (Optional)'] = float(hybrid_optional_data)
+                info_dict['Hybrid Mandatory (Optional)'] = float(hybrid_optional_data) * 12
+
+                VLDP_data = df.iloc[i].loc[('VA Dis. Monthly (Hybrid only)', ['VLDP City'])].values
+                monthly_value += float(VLDP_data)
+                value += float(VLDP_data) * 12
+                monthly_info_dict['Disability (Hybrid Only)'] = float(VLDP_data)
+                info_dict['Disability (Hybrid Only)'] = float(VLDP_data) * 12
+
+                ret_plan = 'VRSH'
+
+            user_data = df.iloc[i].loc[('Mandatory Retirement Monthly', ['DB Retirement City'])].values
+            monthly_value += float(user_data)
+            value += float(user_data) * 12
+            monthly_info_dict[ret_plan] = float(user_data)
+            info_dict[ret_plan] = float(user_data) * 12
+
+            retiree_data = df.iloc[i].loc[('Retiree Health', ['OPEB City or HRA City'])].values
+            monthly_value += float(retiree_data)
+            value += float(retiree_data) * 12
+            monthly_info_dict[ret_health_plan] = float(retiree_data)
+            info_dict[ret_health_plan] = float(retiree_data) * 12
+
+            life_data = df.iloc[i].loc[('Basic Life', ['Life City'])].values
+            monthly_value += float(life_data)
+            value += float(life_data) * 12
+            monthly_info_dict[life_plan] = float(life_data)
+            info_dict[life_plan] = float(life_data) * 12
+
+
     for i in info_dict.keys():
         labels.append(i)
     for m in monthly_info_dict.keys():
@@ -402,6 +454,11 @@ def employee():
             labels[j] = "Dental"
         if labels[j] == vis_plan:
             labels[j] = "Vision"
+        if labels[j] == ret_plan:
+            labels[j] = "Retirement"
+        if labels[j] == life_plan:
+            labels[j] = "Life"
+
     for mj in range(len(monthly_labels)):
         if monthly_labels[mj] == health_plan:
             monthly_labels[mj] = "Health"
@@ -409,6 +466,10 @@ def employee():
             monthly_labels[mj] = "Dental"
         if monthly_labels[mj] == vis_plan:
             monthly_labels[mj] = "Vision"
+        if monthly_labels[mj] == ret_plan:
+            monthly_labels[mj] = "Retirement"
+        if monthly_labels[mj] == life_plan:
+            monthly_labels[mj] = "Life"
 
     # Graph results
     # Set figure and axis with 2 pie charts
@@ -425,13 +486,15 @@ def employee():
     ax1.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in zip(info_dict.keys(), info_dict.values())],
                shadow=True, loc=(0.8, 0.83), fontsize=12)
 
-    ax1.set_title('{:s} Annual Compensation Package\n {:s}'.format(name, job_title), fontweight='bold', fontsize=30)
+    ax1.set_title('{:s} Annual Compensation Package\n {:s}'.format(name, job_title.capitalize()), fontweight='bold', fontsize=30)
 
     fig1.suptitle('A(n) {:s} at NNVA earns ${:,.2f} yearly\n'
                   'Health Plan: {:s}\n'
                   'Dental Plan: {:s}\n'
-                  'Vision Plan: {:s}'.format(job_title, value,
-                                             health_plan, den_plan, vis_plan, ret_plan),
+                  'Vision Plan: {:s}\n'
+                  'Retirement Plan: {:s}\n'
+                  'Life Plan: {:s}'.format(job_title.capitalize(), value,
+                                           health_plan, den_plan, vis_plan, ret_plan, life_plan),
                   x=0.521, y=0.15, fontsize=17)
 
     fig2, ax2 = plt.subplots(figsize=(16.5, 10.5), dpi=120)
@@ -446,13 +509,15 @@ def employee():
     ax2.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in zip(monthly_info_dict.keys(), monthly_info_dict.values())],
                shadow=True, loc=(0.65, 0.8121), fontsize=12)
 
-    ax2.set_title('{:s} Monthly Compensation Package\n {:s}'.format(name, job_title), fontweight='bold', fontsize=25)
+    ax2.set_title('{:s} Monthly Compensation Package\n {:s}'.format(name, job_title.capitalize()), fontweight='bold', fontsize=25)
 
     fig2.suptitle('A(n) {:s} at NNVA earns ${:,.2f} monthly\n'
                   'Health Plan: {:s}\n'
                   'Dental Plan: {:s}\n'
-                  'Vision Plan: {:s}'.format(job_title, monthly_value,
-                                                                        health_plan, den_plan, vis_plan, ret_plan),
+                  'Vision Plan: {:s}'
+                  'Retirement Plan: {:s}\n'
+                  'Life Plan: {:s}'.format(job_title.capitalize(), monthly_value,
+                                           health_plan, den_plan, vis_plan, ret_plan, life_plan),
                   x=0.521, y=0.18, fontsize=15)
 
 
