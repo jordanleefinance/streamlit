@@ -27,7 +27,7 @@ user_health_plan = st.sidebar.selectbox("Health Plan", ('Optima Health POS', 'Op
                            'Optima Equity HDHP', 'Optima Equity HDHP + FSA', 'Optima Equity HDHP + HSA', 'None'))
 user_dental_plan = st.sidebar.radio('Dental Plan', ['Delta Dental', 'None'])
 user_vision_plan = st.sidebar.radio("Vision Plan", ['Vision Service Plan', 'Vision INS City', 'None'])
-
+file = st.file_uploader("Choose an excel file", type="xlsx")
 button_clicked = st.sidebar.button("GO")
 
 PPL_data = [['Up to 5 years in service', "6 hours", "9.25 hours"],
@@ -395,7 +395,8 @@ def employee():
             monthly_info_dict[vis_plan] = 0
             info_dict[vis_plan] = 0 * 12
 
-    DB = pd.read_excel(open(DB_path, 'rb'), index_col=[1, 2], header=[1, 2], sheet_name=None)
+
+    DB = pd.read_excel(open(file), index_col=[1, 2], header=[1, 2], sheet_name=None)
     df = pd.concat(DB.values(), axis=0)
     df = df[:8]
 
