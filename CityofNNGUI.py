@@ -396,7 +396,8 @@ def employee():
     df = pd.concat(DB.values(), axis=0)
 
     for i in range(len(df)):
-        if df.iloc[i].name == (last_name, first_name) or df.iloc[i].loc[('Unnamed: 3_level_0', 'Location Code Desc')] == job_title:
+        if df.iloc[i].name == (last_name, first_name) or \
+                df.iloc[i].loc[('Unnamed: 3_level_0', 'Location Code Desc')] == job_title:
             ret_plan = df.iloc[i].loc[('Unnamed: 8_level_0', ['Retirement Plan'])].values
             if ret_plan == 'NNER  CITY OF NEWPORT NEWS RET':
                 ret_plan = 'NNER'
