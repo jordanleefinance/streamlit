@@ -9,7 +9,7 @@ start = r"C:\Users\jorda\OneDrive"
 
 path = r"C:\Users\jorda\OneDrive\Documents\MFinA" \
           r"\FINC 591 - Integrated Financial Analysis & Strategy\NNPS - Capstone\Sample data.xlsx"
-DB_path = os.path.relpath(path, start)
+DB_path = os.path.join(path)
 
 
 file_path = r'C:/Users/JordanLee/OneDrive/Documents/MFinA/' \
@@ -395,7 +395,7 @@ def employee():
             monthly_info_dict[vis_plan] = 0
             info_dict[vis_plan] = 0 * 12
 
-    DB = pd.read_csv(DB_path, index_col=[1, 2], header=[1, 2], sheet_name=None)
+    DB = pd.read_excel(DB_path, index_col=[1, 2], header=[1, 2], sheet_name=None)
     df = pd.concat(DB.values(), axis=0)
     df = df[:8]
 
