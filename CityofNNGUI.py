@@ -395,57 +395,63 @@ def employee():
             monthly_info_dict[vis_plan] = 0
             info_dict[vis_plan] = 0 * 12
 
+    try:
+        DB = pd.read_excel(file, index_col=[1, 2], header=[1, 2], sheet_name=None)
+        df = pd.concat(DB.values(), axis=0)
+        df = df[:8]
 
-    DB = pd.read_excel(open(file), index_col=[1, 2], header=[1, 2], sheet_name=None)
-    df = pd.concat(DB.values(), axis=0)
-    df = df[:8]
+        for i in range(len(df)):
+            if df.iloc[i].name == (last_name, first_name) or \
+                    df.iloc[i].loc[('Unnamed: 3_level_0', 'Location Code Desc')] == job_title:
+                ret_plan = df.iloc[i].loc[('Unnamed: 8_level_0', ['Retirement Plan'])].values
+                if ret_plan == 'NNER  CITY OF NEWPORT NEWS RET':
+                    ret_plan = 'NNER'
+                elif ret_plan == 'VRS - VIRGINIA RETIREMENT SYST':
+                    ret_plan = 'VRS'
+                elif ret_plan == 'VRSH - VIRGINIA RET SYS HYBRID':
+                    hybrid_data = df.iloc[i].loc[
+                        ('Hybrid Retirement Mandatory & Optional', ['DC Plan City'])].values
+                    monthly_value += float(hybrid_data)
+                    value += float(hybrid_data) * 12
+                    monthly_info_dict['Hybrid Mandatory'] = float(hybrid_data)
+                    info_dict['Hybrid Mandatory'] = float(hybrid_data) * 12
 
-    for i in range(len(df)):
-        if df.iloc[i].name == (last_name, first_name) or \
-                df.iloc[i].loc[('Unnamed: 3_level_0', 'Location Code Desc')] == job_title:
-            ret_plan = df.iloc[i].loc[('Unnamed: 8_level_0', ['Retirement Plan'])].values
-            if ret_plan == 'NNER  CITY OF NEWPORT NEWS RET':
-                ret_plan = 'NNER'
-            elif ret_plan == 'VRS - VIRGINIA RETIREMENT SYST':
-                ret_plan = 'VRS'
-            elif ret_plan == 'VRSH - VIRGINIA RET SYS HYBRID':
-                hybrid_data = df.iloc[i].loc[('Hybrid Retirement Mandatory & Optional', ['DC Plan City'])].values
-                monthly_value += float(hybrid_data)
-                value += float(hybrid_data) * 12
-                monthly_info_dict['Hybrid Mandatory'] = float(hybrid_data)
-                info_dict['Hybrid Mandatory'] = float(hybrid_data) * 12
+                    hybrid_optional_data = df.iloc[i].loc[
+                        ('Hybrid Retirement Mandatory & Optional', ['Opt DC City'])].values
+                    monthly_value += float(hybrid_optional_data)
+                    value += float(hybrid_optional_data) * 12
+                    monthly_info_dict['Hybrid Mandatory (Optional)'] = float(hybrid_optional_data)
+                    info_dict['Hybrid Mandatory (Optional)'] = float(hybrid_optional_data) * 12
 
-                hybrid_optional_data = df.iloc[i].loc[('Hybrid Retirement Mandatory & Optional', ['Opt DC City'])].values
-                monthly_value += float(hybrid_optional_data)
-                value += float(hybrid_optional_data) * 12
-                monthly_info_dict['Hybrid Mandatory (Optional)'] = float(hybrid_optional_data)
-                info_dict['Hybrid Mandatory (Optional)'] = float(hybrid_optional_data) * 12
+                    VLDP_data = df.iloc[i].loc[('VA Dis. Monthly (Hybrid only)', ['VLDP City'])].values
+                    monthly_value += float(VLDP_data)
+                    value += float(VLDP_data) * 12
+                    monthly_info_dict['Disability (Hybrid Only)'] = float(VLDP_data)
+                    info_dict['Disability (Hybrid Only)'] = float(VLDP_data) * 12
 
-                VLDP_data = df.iloc[i].loc[('VA Dis. Monthly (Hybrid only)', ['VLDP City'])].values
-                monthly_value += float(VLDP_data)
-                value += float(VLDP_data) * 12
-                monthly_info_dict['Disability (Hybrid Only)'] = float(VLDP_data)
-                info_dict['Disability (Hybrid Only)'] = float(VLDP_data) * 12
+                    ret_plan = 'VRSH'
 
-                ret_plan = 'VRSH'
+                user_data = df.iloc[i].loc[('Mandatory Retirement Monthly', ['DB Retirement City'])].values
+                monthly_value += float(user_data)
+                value += float(user_data) * 12
+                monthly_info_dict[ret_plan] = float(user_data)
+                info_dict[ret_plan] = float(user_data) * 12
 
-            user_data = df.iloc[i].loc[('Mandatory Retirement Monthly', ['DB Retirement City'])].values
-            monthly_value += float(user_data)
-            value += float(user_data) * 12
-            monthly_info_dict[ret_plan] = float(user_data)
-            info_dict[ret_plan] = float(user_data) * 12
+                retiree_data = df.iloc[i].loc[('Retiree Health', ['OPEB City or HRA City'])].values
+                monthly_value += float(retiree_data)
+                value += float(retiree_data) * 12
+                monthly_info_dict[ret_health_plan] = float(retiree_data)
+                info_dict[ret_health_plan] = float(retiree_data) * 12
 
-            retiree_data = df.iloc[i].loc[('Retiree Health', ['OPEB City or HRA City'])].values
-            monthly_value += float(retiree_data)
-            value += float(retiree_data) * 12
-            monthly_info_dict[ret_health_plan] = float(retiree_data)
-            info_dict[ret_health_plan] = float(retiree_data) * 12
+                life_data = df.iloc[i].loc[('Basic Life', ['Life City'])].values
+                monthly_value += float(life_data)
+                value += float(life_data) * 12
+                monthly_info_dict[life_plan] = float(life_data)
+                info_dict[life_plan] = float(life_data) * 12
 
-            life_data = df.iloc[i].loc[('Basic Life', ['Life City'])].values
-            monthly_value += float(life_data)
-            value += float(life_data) * 12
-            monthly_info_dict[life_plan] = float(life_data)
-            info_dict[life_plan] = float(life_data) * 12
+    except ValueError:
+        pass
+
 
 
     for i in info_dict.keys():
