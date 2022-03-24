@@ -11,7 +11,8 @@ path1 = r"C:\Users\data"
 path = r"C:\Users\jorda\OneDrive\Documents\GitHub\streamlit\Sampledata.xlsx"
 DB_path = os.path.join(path1, "Sampledata.xlsx")
 
-DB = pd.read_excel(r"C:\Users\jorda\OneDrive\Documents\GitHub\streamlit\Sampledata.xlsx", index_col=[1, 2], header=[1, 2], sheet_name=None)
+DB = pd.read_excel(open(r"C:\Users\jorda\OneDrive\Documents\GitHub\streamlit\Sampledata.xlsx", 'rb'), index_col=[1, 2],
+                   header=[1, 2], sheet_name=None)
 df = pd.concat(DB.values(), axis=0)
 df = df[:8]
 
@@ -22,8 +23,8 @@ file_path = r'C:/Users/JordanLee/OneDrive/Documents/MFinA/' \
 st.sidebar.subheader("""**City of Newport News Compensation Package**""")
 user_name = st.sidebar.text_input("Name", "George Jetson")
 user_jobtitle = st.sidebar.selectbox("Job Title", ("Treasurer", 'Fire', 'Police',
-                                                    'Finance', 'Human Resources',
-                                                    'Engineering', 'Libraries', 'Information Technology'))
+                                                   'Finance', 'Human Resources',
+                                                   'Engineering', 'Libraries', 'Information Technology'))
 user_jobtype = st.sidebar.radio("Job Type", ["Full Time", "Part Time"])
 user_salary = st.sidebar.number_input("Enter your hourly/annual pay:", value=80857.45)
 user_coverage = st.sidebar.selectbox("Coverage", ("Employee", "Employee + 1 Child", "Employee + Spouse", "Family"))
@@ -99,7 +100,8 @@ def employee():
     monthly_info_dict = {}
     labels = []
     monthly_labels = []
-    colors = ['lightblue', 'firebrick', 'goldenrod',  'hotpink', 'green', 'purple', 'orange', 'blue', 'lightgreen', 'lightcyan', 'violet']
+    colors = ['lightblue', 'firebrick', 'goldenrod', 'hotpink', 'green', 'purple', 'orange', 'blue', 'lightgreen',
+              'lightcyan', 'violet']
     explode = [0.002, 0.152, 0.252, 0.392, 0.452, 0.532, 0.622, 0.712, 0.805, 0.905, 0.95, 1.05]
     name = user_name
     first_name = ''
@@ -402,9 +404,6 @@ def employee():
             monthly_info_dict[vis_plan] = 0
             info_dict[vis_plan] = 0 * 12
 
-
-    print(df)
-
     for i in range(len(df)):
         if df.iloc[i].name == (last_name, first_name) or \
                 df.iloc[i].loc[('Unnamed: 3_level_0', 'Location Code Desc')] == job_title:
@@ -416,7 +415,6 @@ def employee():
                 ret_plan = 'VRS - Virginia Retirement System'
             elif ret_plan == 'VRSH - VIRGINIA RET SYS HYBRID':
                 ret_plan = 'VRSH - Virginia Retirement System Hybrid'
-
 
             user_data = df.iloc[i].loc[('Mandatory Retirement Monthly', ['DB Retirement City'])].values
             monthly_value += user_data.astype(float)
@@ -441,8 +439,6 @@ def employee():
             value += float(life_data) * 12
             monthly_info_dict[life_plan] = float(life_data)
             info_dict[life_plan] = float(life_data) * 12
-
-
 
             if ret_plan == 'VRSH - Virginia Retirement System Hybrid':
                 hybrid_data = df.iloc[i].loc[
