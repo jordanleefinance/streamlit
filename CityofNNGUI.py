@@ -504,7 +504,7 @@ def employee():
             pctdistance=0.7, labeldistance=1.05, radius=0.83)
 
     ax1.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in zip(info_dict.keys(), info_dict.values())],
-               shadow=True, loc=(0.8, 0.83), fontsize=12)
+               shadow=True, loc=(0.8, 0.78), fontsize=12)
 
     ax1.set_title('{:s} Annual Compensation Package\n {:s}'.format(name, job_title.capitalize()), fontweight='bold', fontsize=30)
 
