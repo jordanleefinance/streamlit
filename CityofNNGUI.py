@@ -48,6 +48,7 @@ except FileNotFoundError:
         df1 = pd.concat(df2.values(), axis=0)
         df = df1[:8]
     elif file is None:
+        st.header("BASE PACKAGE")
         st.error("Please upload a database in the sidebar to calculate entire package.")
         pass
 
