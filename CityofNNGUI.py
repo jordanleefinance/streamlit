@@ -39,7 +39,6 @@ user_dental_plan = st.sidebar.radio('Dental Plan', ['Delta Dental', 'None'])
 user_vision_plan = st.sidebar.radio("Vision Plan", ['Vision Service Plan', 'Vision INS City', 'None'])
 
 file = st.sidebar.file_uploader("Upload Database:", 'xlsx')
-button_clicked = st.sidebar.button("GO")
 try:
     df = load_data()
 except FileNotFoundError:
@@ -47,10 +46,12 @@ except FileNotFoundError:
         df2 = pd.read_excel(file, index_col=[1, 2], header=[2], sheet_name=None)
         df1 = pd.concat(df2.values(), axis=0)
         df = df1[:8]
+        st.sidebar.download_button("Download Database Here", data=pd.DataFrame.to_excek(df, index=False), mime="xlsx")
     elif file is None:
         st.header("BASE PACKAGE")
         st.error("Please upload a database in the sidebar to calculate entire package.")
         pass
+button_clicked = st.sidebar.button("GO")
 
 PPL_data = [['Up to 5 years in service', "6 hours", "9.25 hours"],
             ['Over 5 years in service', "7.5 hours", "11.75 hours"],
