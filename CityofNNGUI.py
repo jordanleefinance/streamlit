@@ -18,7 +18,6 @@ def load_data():
     df1 = df1[:8]
     return df1
 
-df = load_data()
 
 file_path = r'C:/Users/JordanLee/OneDrive/Documents/MFinA/' \
             r'FINC 591 - Integrated Financial Analysis & Strategy/' \
@@ -38,7 +37,18 @@ user_health_plan = st.sidebar.selectbox("Health Plan", ('Optima Health POS', 'Op
 user_dental_plan = st.sidebar.radio('Dental Plan', ['Delta Dental', 'None'])
 user_vision_plan = st.sidebar.radio("Vision Plan", ['Vision Service Plan', 'Vision INS City', 'None'])
 
+file = st.sidebar.file_uploader("Upload Database:", 'xlsx')
 button_clicked = st.sidebar.button("GO")
+try:
+    df = load_data()
+except FileNotFoundError:
+    if file:
+
+        df = pd.read_excel(file, index_col=[1, 2], header=[1, 2], sheet_name=None)
+        df1 = pd.concat(df.values(), axis=0)
+        df1 = df1[:8]
+    else:
+        pass
 
 PPL_data = [['Up to 5 years in service', "6 hours", "9.25 hours"],
             ['Over 5 years in service', "7.5 hours", "11.75 hours"],
