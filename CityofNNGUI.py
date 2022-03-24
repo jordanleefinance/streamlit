@@ -11,6 +11,9 @@ path1 = r"C:\Users\data"
 path = r"C:\Users\jorda\OneDrive\Documents\GitHub\streamlit\Sampledata.xlsx"
 DB_path = os.path.join(path1, "Sampledata.xlsx")
 
+DB = pd.read_excel(r"C:\Users\jorda\OneDrive\Documents\GitHub\streamlit\Sampledata.xlsx", index_col=[1, 2], header=[1, 2], sheet_name=None)
+df = pd.concat(DB.values(), axis=0)
+df = df[:8]
 
 file_path = r'C:/Users/JordanLee/OneDrive/Documents/MFinA/' \
             r'FINC 591 - Integrated Financial Analysis & Strategy/' \
@@ -399,9 +402,7 @@ def employee():
             monthly_info_dict[vis_plan] = 0
             info_dict[vis_plan] = 0 * 12
 
-    DB = pd.read_excel(r"C:\Users\jorda\OneDrive\Documents\GitHub\streamlit\Sampledata.xlsx", index_col=[1, 2], header=[1, 2], sheet_name=None)
-    df = pd.concat(DB.values(), axis=0)
-    df = df[:8]
+
     print(df)
 
     for i in range(len(df)):
