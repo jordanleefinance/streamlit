@@ -420,7 +420,7 @@ def employee():
     for i in range(len(df)):
         if df.iloc[i].name == (last_name, first_name) or \
                 df.iloc[i].loc['Location Code Desc'] == job_title:
-            ret_plan = df.iloc[i].loc['Retirement Plan'].values
+            ret_plan = df.iloc[i].loc['Retirement Plan']
 
             if ret_plan == 'NNER  CITY OF NEWPORT NEWS RET':
                 ret_plan = 'NNER - City of Newport News Ret'
