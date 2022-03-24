@@ -43,7 +43,7 @@ try:
     df = load_data()
 except FileNotFoundError:
     if file:
-        df2 = pd.read_excel(file, index_col=[1, 2], header=[1, 2], sheet_name=None)
+        df2 = pd.read_excel(file, index_col=[1, 2], header=[1], sheet_name=None)
         df1 = pd.concat(df2.values(), axis=0)
         df = df1[:8]
     else:
