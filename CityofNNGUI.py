@@ -96,8 +96,8 @@ def employee():
     monthly_info_dict = {}
     labels = []
     monthly_labels = []
-    colors = ['lightblue', 'firebrick', 'goldenrod',  'hotpink', 'green', 'orange', 'blue', 'lightgreen', 'lightcyan', 'violet']
-    explode = [0.002, 0.152, 0.252, 0.392, 0.452, 0.532, 0.622, 0.712, 0.805, 0.905, 0.95]
+    colors = ['lightblue', 'firebrick', 'goldenrod',  'hotpink', 'green', 'purple', 'orange', 'blue', 'lightgreen', 'lightcyan', 'violet']
+    explode = [0.002, 0.152, 0.252, 0.392, 0.452, 0.532, 0.622, 0.712, 0.805, 0.905, 0.95, 1.05]
     name = user_name
     first_name = ''
     last_name = ''
@@ -109,6 +109,7 @@ def employee():
     den_plan = user_dental_plan
     vis_plan = user_vision_plan
     ret_plan = ''
+    lt_dis_plan = 'Long Term Dis.'
     ret_health_plan = 'Retiree Health'
     life_plan = 'Basic Life'
 
@@ -366,25 +367,25 @@ def employee():
 
     if vis_plan == 'Vision Service Plan':
         if coverage == 'Employee':
-            monthly_value += 1
-            value += 1 * 12
-            monthly_info_dict[vis_plan] = 1
-            info_dict[vis_plan] = 1 * 12
+            monthly_value += 1.8
+            value += 1.8 * 12
+            monthly_info_dict[vis_plan] = 1.8
+            info_dict[vis_plan] = 1.8 * 12
         elif coverage == 'Employee + 1 Child':
-            monthly_value += 2
-            value += 2 * 12
-            monthly_info_dict[vis_plan] = 2
-            info_dict[vis_plan] = 2 * 12
+            monthly_value += 2.8
+            value += 2.8 * 12
+            monthly_info_dict[vis_plan] = 2.8
+            info_dict[vis_plan] = 2.8 * 12
         elif coverage == 'Family':
-            monthly_value += 2
-            value += 2 * 12
-            monthly_info_dict[vis_plan] = 2
-            info_dict[vis_plan] = 2 * 12
+            monthly_value += 2.8
+            value += 2.8 * 12
+            monthly_info_dict[vis_plan] = 2.8
+            info_dict[vis_plan] = 2.8 * 12
         elif coverage == 'Employee + Spouse':
-            monthly_value += 2
-            value += 2 * 12
-            monthly_info_dict[vis_plan] = 2
-            info_dict[vis_plan] = 2 * 12
+            monthly_value += 2.8
+            value += 2.8 * 12
+            monthly_info_dict[vis_plan] = 2.8
+            info_dict[vis_plan] = 2.8 * 12
 
     if vis_plan == 'Vision INS City':
         if coverage == 'Employee':
@@ -398,7 +399,7 @@ def employee():
             monthly_info_dict[vis_plan] = 0
             info_dict[vis_plan] = 0 * 12
 
-    DB = pd.read_excel(path, index_col=[1, 2], header=[1, 2], sheet_name=None)
+    DB = pd.read_excel(r"C:\Users\jorda\OneDrive\Documents\GitHub\streamlit\Sampledata.xlsx", index_col=[1, 2], header=[1, 2], sheet_name=None)
     df = pd.concat(DB.values(), axis=0)
     df = df[:8]
     print(df)
@@ -415,11 +416,18 @@ def employee():
             elif ret_plan == 'VRSH - VIRGINIA RET SYS HYBRID':
                 ret_plan = 'VRSH - Virginia Retirement System Hybrid'
 
+
             user_data = df.iloc[i].loc[('Mandatory Retirement Monthly', ['DB Retirement City'])].values
             monthly_value += user_data.astype(float)
             value += user_data.astype(float) * 12
             monthly_info_dict[ret_plan] = user_data.astype(float)
             info_dict[ret_plan] = float(user_data) * 12
+
+            lt_dis_data = df.iloc[i].loc[('Long Term Dis Monthly', ['LTD City'])].values
+            monthly_value += float(lt_dis_data)
+            value += float(lt_dis_data) * 12
+            monthly_info_dict[lt_dis_plan] = float(lt_dis_data)
+            info_dict[lt_dis_plan] = float(lt_dis_data) * 12
 
             retiree_data = df.iloc[i].loc[('Retiree Health', ['OPEB City or HRA City'])].values
             monthly_value += float(retiree_data)
@@ -432,6 +440,9 @@ def employee():
             value += float(life_data) * 12
             monthly_info_dict[life_plan] = float(life_data)
             info_dict[life_plan] = float(life_data) * 12
+
+
+
             if ret_plan == 'VRSH - Virginia Retirement System Hybrid':
                 hybrid_data = df.iloc[i].loc[
                     ('Hybrid Retirement Mandatory & Optional', ['DC Plan City'])].values
@@ -494,7 +505,7 @@ def employee():
     # Graph results
     # Set figure and axis with 2 pie charts
 
-    fig1, ax1 = plt.subplots(figsize=(16.5, 10.5), dpi=120)
+    fig1, ax1 = plt.subplots(figsize=(12, 9))
     fig1.tight_layout()
     fig1.set_facecolor('white')
 
@@ -504,7 +515,7 @@ def employee():
             pctdistance=0.7, labeldistance=1.05, radius=0.83)
 
     ax1.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in zip(info_dict.keys(), info_dict.values())],
-               shadow=True, loc=(0.8, 0.75), fontsize=12)
+               shadow=True, loc=(0.8, 0.75), fontsize=10)
 
     ax1.set_title('{:s} Annual Compensation Package\n {:s}'.format(name, job_title.capitalize()), fontweight='bold',
                   fontsize=30)
@@ -518,7 +529,7 @@ def employee():
                                            health_plan, den_plan, vis_plan, ret_plan, life_plan),
                   x=0.521, y=0.15, fontsize=17)
 
-    fig2, ax2 = plt.subplots(figsize=(16.5, 10.5), dpi=120)
+    fig2, ax2 = plt.subplots(figsize=(18.5, 12.5))
     fig2.tight_layout()
     fig2.set_facecolor('white')
 
@@ -529,7 +540,7 @@ def employee():
 
     ax2.legend(labels=[str('{:s}, ${:,.2f}').format(i, float(j)) for i, j in
                        zip(monthly_info_dict.keys(), monthly_info_dict.values())],
-               shadow=True, loc=(0.65, 0.75), fontsize=12)
+               shadow=True, loc=(0.65, 0.75), fontsize=13)
 
     ax2.set_title('{:s} Monthly Compensation Package\n {:s}'.format(name, job_title.capitalize()), fontweight='bold',
                   fontsize=25)
