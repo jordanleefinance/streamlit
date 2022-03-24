@@ -8,14 +8,13 @@ import os
 start = r"C:\Users\jorda\OneDrive"
 
 path = r"C:\Users\jorda\OneDrive\Documents\MFinA" \
-          r"\FINC 591 - Integrated Financial Analysis & Strategy\NNPS - Capstone\Sample data.xlsx"
+       r"\FINC 591 - Integrated Financial Analysis & Strategy\NNPS - Capstone\Sample data.xlsx"
 DB_path = os.path.join(path)
 
 
 file_path = r'C:/Users/JordanLee/OneDrive/Documents/MFinA/' \
             r'FINC 591 - Integrated Financial Analysis & Strategy/' \
             r'NNPS - Capstone/Compensation Package.xlsx'
-
 
 st.sidebar.subheader("""**City of Newport News Compensation Package**""")
 user_name = st.sidebar.text_input("Name", "George Jetson")
@@ -24,7 +23,8 @@ user_jobtype = st.sidebar.radio("Job Type", ["Full Time", "Part Time"])
 user_salary = st.sidebar.number_input("Enter your hourly/annual pay:", value=80857.45)
 user_coverage = st.sidebar.selectbox("Coverage", ("Employee", "Employee + 1 Child", "Employee + Spouse", "Family"))
 user_health_plan = st.sidebar.selectbox("Health Plan", ('Optima Health POS', 'Optima Health POS + FSA',
-                           'Optima Equity HDHP', 'Optima Equity HDHP + FSA', 'Optima Equity HDHP + HSA', 'None'))
+                                                        'Optima Equity HDHP', 'Optima Equity HDHP + FSA',
+                                                        'Optima Equity HDHP + HSA', 'None'))
 user_dental_plan = st.sidebar.radio('Dental Plan', ['Delta Dental', 'None'])
 user_vision_plan = st.sidebar.radio("Vision Plan", ['Vision Service Plan', 'Vision INS City', 'None'])
 file = st.sidebar.file_uploader("Choose an excel file", type="xlsx")
@@ -39,11 +39,11 @@ PPL_data = [['Up to 5 years in service', "6 hours", "9.25 hours"],
 PPL_df = pd.DataFrame(PPL_data, columns=['YEARS OF SERVICE', 'FULL-TIME EMPLOYEES', '24-HOUR FIRE EMPLOYEES*'])
 
 
-
-def open_excel(file = None):
+def open_excel(file=None):
     if file == None:
         file = file_path
     return webbrowser.open_new(file)
+
 
 def open_excel_error():
     st.error('Error', 'Please close the file and revalue to see changes.\n\n'
@@ -70,11 +70,13 @@ def employee_part_time():
     fig.set_facecolor('white')
     fig.suptitle('A(n) {:s} at NNVA earns ${:,.2f} yearly.\n\n'
                  'A(n) {:s} at NNVA earns ${:,.2f} monthly.\n\n'
-                 'A(n){:s} at NNVA earns ${:,.2f} weekly.'.format(job_title, value, job_title, monthly_value, job_title, weekly_pay),
+                 'A(n){:s} at NNVA earns ${:,.2f} weekly.'.format(job_title, value, job_title, monthly_value, job_title,
+                                                                  weekly_pay),
                  x=0.5, y=0.5, fontweight='bold', fontsize=30)
 
     st.pyplot(fig)
     pass
+
 
 def employee():
     ymca_cost = 0
@@ -108,11 +110,10 @@ def employee():
     ret_health_plan = 'Retiree Health'
     life_plan = 'Basic Life'
 
-
     # job type test
     if job_type == 'Part Time':
         employee_part_time()
-        return None # reset to default ticket
+        return None  # reset to default ticket
 
     # name test
     if name != '':
@@ -230,7 +231,7 @@ def employee():
     if health_plan == 'Optima Health POS + FSA':
         if coverage == 'Employee':
             monthly_value += 479.43
-            monthly_value += (2750 * .22) / 13 # Tax Benefit
+            monthly_value += (2750 * .22) / 13  # Tax Benefit
             value += 479.43 * 12
             value += (2750 * .22)
             monthly_info_dict[health_plan] = 479.43 + ((2750 * .22) / 13)
@@ -240,7 +241,7 @@ def employee():
 
         elif coverage == 'Employee + 1 Child':
             monthly_value += 861.69
-            monthly_value += (7750 * .22) / 13# Tax Benefit
+            monthly_value += (7750 * .22) / 13  # Tax Benefit
             value += 861.69 * 12
             value += (7750 * .22)
             monthly_info_dict[health_plan] = 861.69 + ((7750 * .22) / 13)
@@ -250,7 +251,7 @@ def employee():
 
         elif coverage == 'Family':
             monthly_value += 1493.78
-            monthly_value += (7750 * .22) / 13# Tax Benefit
+            monthly_value += (7750 * .22) / 13  # Tax Benefit
             value += 1493.78 * 12
             value += (7750 * .22)
             monthly_info_dict[health_plan] = 1493.78 + ((7750 * .22) / 13)
@@ -281,7 +282,7 @@ def employee():
 
         elif coverage == 'Employee + 1 Child':
             monthly_value += 836.47
-            monthly_value += (7750 * .22)/13
+            monthly_value += (7750 * .22) / 13
             value += 836.47 * 12
             value += (7750 * .22) / 13
             monthly_info_dict[health_plan] = 836.47 + ((7750 * .22) / 13)
@@ -291,7 +292,7 @@ def employee():
 
         elif coverage == 'Family':
             monthly_value += 1417.11
-            monthly_value += (7750 * .22) / 13 # Tax Benefit
+            monthly_value += (7750 * .22) / 13  # Tax Benefit
             value += 1417.11 * 12
             value += (7750 * .22)
             monthly_info_dict[health_plan] = 1417.11 + ((7750 * .22) / 13)
@@ -347,7 +348,7 @@ def employee():
     if den_plan == 'Delta Dental':
         if coverage == 'Employee':
             monthly_value += 21.42
-            value += 21.42* 12
+            value += 21.42 * 12
             monthly_info_dict[den_plan] = 21.42
             info_dict[den_plan] = 21.42 * 12
         elif coverage == 'Employee + 1 Child':
@@ -395,63 +396,52 @@ def employee():
             monthly_info_dict[vis_plan] = 0
             info_dict[vis_plan] = 0 * 12
 
-    try:
-        DB = pd.read_excel(file, index_col=[1, 2], header=[1, 2], sheet_name=None)
-        df = pd.concat(DB.values(), axis=0)
-        df = df[:8]
+    DB = pd.read_excel(path, index_col=[1, 2], header=[1, 2], sheet_name=None)
+    df = pd.concat(DB.values(), axis=0)
+    df = df[:8]
+    print(df)
 
-        for i in range(len(df)):
-            if df.iloc[i].name == (last_name, first_name) or \
-                    df.iloc[i].loc[('Unnamed: 3_level_0', 'Location Code Desc')] == job_title:
-                ret_plan = df.iloc[i].loc[('Unnamed: 8_level_0', ['Retirement Plan'])].values
-                if ret_plan == 'NNER  CITY OF NEWPORT NEWS RET':
-                    ret_plan = 'NNER'
-                elif ret_plan == 'VRS - VIRGINIA RETIREMENT SYST':
-                    ret_plan = 'VRS'
-                elif ret_plan == 'VRSH - VIRGINIA RET SYS HYBRID':
-                    hybrid_data = df.iloc[i].loc[
-                        ('Hybrid Retirement Mandatory & Optional', ['DC Plan City'])].values
-                    monthly_value += float(hybrid_data)
-                    value += float(hybrid_data) * 12
-                    monthly_info_dict['Hybrid Mandatory'] = float(hybrid_data)
-                    info_dict['Hybrid Mandatory'] = float(hybrid_data) * 12
+    for i in range(len(df)):
+        if df.iloc[i].name == (last_name, first_name) or \
+                df.iloc[i].loc[('Unnamed: 3_level_0', 'Location Code Desc')] == job_title:
+            ret_plan = df.iloc[i].loc[('Unnamed: 8_level_0', ['Retirement Plan'])].values
+            user_data = df.iloc[i].loc[('Mandatory Retirement Monthly', ['DB Retirement City'])].values
+            monthly_value += float(user_data)
+            value += float(user_data) * 12
+            monthly_info_dict[ret_plan] = float(user_data)
+            info_dict[ret_plan] = float(user_data) * 12
 
-                    hybrid_optional_data = df.iloc[i].loc[
-                        ('Hybrid Retirement Mandatory & Optional', ['Opt DC City'])].values
-                    monthly_value += float(hybrid_optional_data)
-                    value += float(hybrid_optional_data) * 12
-                    monthly_info_dict['Hybrid Mandatory (Optional)'] = float(hybrid_optional_data)
-                    info_dict['Hybrid Mandatory (Optional)'] = float(hybrid_optional_data) * 12
+            retiree_data = df.iloc[i].loc[('Retiree Health', ['OPEB City or HRA City'])].values
+            monthly_value += float(retiree_data)
+            value += float(retiree_data) * 12
+            monthly_info_dict[ret_health_plan] = float(retiree_data)
+            info_dict[ret_health_plan] = float(retiree_data) * 12
 
-                    VLDP_data = df.iloc[i].loc[('VA Dis. Monthly (Hybrid only)', ['VLDP City'])].values
-                    monthly_value += float(VLDP_data)
-                    value += float(VLDP_data) * 12
-                    monthly_info_dict['Disability (Hybrid Only)'] = float(VLDP_data)
-                    info_dict['Disability (Hybrid Only)'] = float(VLDP_data) * 12
+            life_data = df.iloc[i].loc[('Basic Life', ['Life City'])].values
+            monthly_value += float(life_data)
+            value += float(life_data) * 12
+            monthly_info_dict[life_plan] = float(life_data)
+            info_dict[life_plan] = float(life_data) * 12
+            if ret_plan == 'VRSH - VIRGINIA RET SYS HYBRID':
+                hybrid_data = df.iloc[i].loc[
+                    ('Hybrid Retirement Mandatory & Optional', ['DC Plan City'])].values
+                monthly_value += float(hybrid_data)
+                value += float(hybrid_data) * 12
+                monthly_info_dict['Hybrid Mandatory'] = float(hybrid_data)
+                info_dict['Hybrid Mandatory'] = float(hybrid_data) * 12
 
-                    ret_plan = 'VRSH'
+                hybrid_optional_data = df.iloc[i].loc[
+                    ('Hybrid Retirement Mandatory & Optional', ['Opt DC City'])].values
+                monthly_value += float(hybrid_optional_data)
+                value += float(hybrid_optional_data) * 12
+                monthly_info_dict['Hybrid Mandatory (Optional)'] = float(hybrid_optional_data)
+                info_dict['Hybrid Mandatory (Optional)'] = float(hybrid_optional_data) * 12
 
-                user_data = df.iloc[i].loc[('Mandatory Retirement Monthly', ['DB Retirement City'])].values
-                monthly_value += float(user_data)
-                value += float(user_data) * 12
-                monthly_info_dict[ret_plan] = float(user_data)
-                info_dict[ret_plan] = float(user_data) * 12
-
-                retiree_data = df.iloc[i].loc[('Retiree Health', ['OPEB City or HRA City'])].values
-                monthly_value += float(retiree_data)
-                value += float(retiree_data) * 12
-                monthly_info_dict[ret_health_plan] = float(retiree_data)
-                info_dict[ret_health_plan] = float(retiree_data) * 12
-
-                life_data = df.iloc[i].loc[('Basic Life', ['Life City'])].values
-                monthly_value += float(life_data)
-                value += float(life_data) * 12
-                monthly_info_dict[life_plan] = float(life_data)
-                info_dict[life_plan] = float(life_data) * 12
-
-    except ValueError:
-        pass
-
+                VLDP_data = df.iloc[i].loc[('VA Dis. Monthly (Hybrid only)', ['VLDP City'])].values
+                monthly_value += float(VLDP_data)
+                value += float(VLDP_data) * 12
+                monthly_info_dict['Disability (Hybrid Only)'] = float(VLDP_data)
+                info_dict['Disability (Hybrid Only)'] = float(VLDP_data) * 12
 
 
     for i in info_dict.keys():
@@ -506,7 +496,8 @@ def employee():
     ax1.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in zip(info_dict.keys(), info_dict.values())],
                shadow=True, loc=(0.8, 0.78), fontsize=12)
 
-    ax1.set_title('{:s} Annual Compensation Package\n {:s}'.format(name, job_title.capitalize()), fontweight='bold', fontsize=30)
+    ax1.set_title('{:s} Annual Compensation Package\n {:s}'.format(name, job_title.capitalize()), fontweight='bold',
+                  fontsize=30)
 
     fig1.suptitle('A(n) {:s} at NNVA earns ${:,.2f} yearly\n'
                   'Health Plan: {:s}\n'
@@ -526,10 +517,12 @@ def employee():
             colors=colors[:len(monthly_info_dict.values())], autopct='%1.1f%%', startangle=190,
             pctdistance=0.7, labeldistance=1.05, radius=0.65)
 
-    ax2.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in zip(monthly_info_dict.keys(), monthly_info_dict.values())],
+    ax2.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in
+                       zip(monthly_info_dict.keys(), monthly_info_dict.values())],
                shadow=True, loc=(0.65, 0.8121), fontsize=12)
 
-    ax2.set_title('{:s} Monthly Compensation Package\n {:s}'.format(name, job_title.capitalize()), fontweight='bold', fontsize=25)
+    ax2.set_title('{:s} Monthly Compensation Package\n {:s}'.format(name, job_title.capitalize()), fontweight='bold',
+                  fontsize=25)
 
     fig2.suptitle('A(n) {:s} at NNVA earns ${:,.2f} monthly\n'
                   'Health Plan: {:s}\n'
@@ -540,28 +533,27 @@ def employee():
                                            health_plan, den_plan, vis_plan, ret_plan, life_plan),
                   x=0.521, y=0.18, fontsize=15)
 
-
     # Initialize Add'tl Benefits Ticket
     benefits_title = '**Additional Benefits**'
     text1 = "\n**FITNESS BENEFITS**\n" \
-           "YMCA Benefit: ${:.2f} monthly\n" \
-           "\tOriginal: ${:.2f}\n" \
-           "\tNNVA rate: ${:.2f}\n" \
-           "One Life Fitness Benefit: ${:.2f} monthly\n" \
-           "\tOriginal: ${:.2f}\n" \
-           "\tNNVA rate: ${:.2f}\n" \
-           "Riverside Fitness Center Benefit: ${:.2f} monthly\n" \
-           "\tOriginal: ${:.2f}\n" \
-           "\tNNVA rate: ${:.2f}\n" \
-           "\n**DISABILITY BENEFITS**\n" \
-           "Short Term Disability (STD)\n" \
-           "\tEmployee purchases coverage: 60%\n" \
-           "\tBenefit Waiting Period: 14 days\n" \
-           "\tMaximum Benefit Period: 90 days then to LTD\n" \
-           "Long Term Disability (LTD)\n" \
-           "\tCity provided core coverage: 40%\n" \
-           "\tEmployee buy up: 10%\n" \
-           "\tBenefit Waiting Period: After 90 days\n" \
+            "YMCA Benefit: ${:.2f} monthly\n" \
+            "\tOriginal: ${:.2f}\n" \
+            "\tNNVA rate: ${:.2f}\n" \
+            "One Life Fitness Benefit: ${:.2f} monthly\n" \
+            "\tOriginal: ${:.2f}\n" \
+            "\tNNVA rate: ${:.2f}\n" \
+            "Riverside Fitness Center Benefit: ${:.2f} monthly\n" \
+            "\tOriginal: ${:.2f}\n" \
+            "\tNNVA rate: ${:.2f}\n" \
+            "\n**DISABILITY BENEFITS**\n" \
+            "Short Term Disability (STD)\n" \
+            "\tEmployee purchases coverage: 60%\n" \
+            "\tBenefit Waiting Period: 14 days\n" \
+            "\tMaximum Benefit Period: 90 days then to LTD\n" \
+            "Long Term Disability (LTD)\n" \
+            "\tCity provided core coverage: 40%\n" \
+            "\tEmployee buy up: 10%\n" \
+            "\tBenefit Waiting Period: After 90 days\n" \
             "\n**PAID HOLIDAYS**\n Regular, full-time City employees are eligible for paid holidays,\n provided they are in an active " \
             "pay status the working day prior to the holiday.\n\t• New Year’s Day (January 1)\n\t• Dr. Martin Luther King’s Birthday (Third Monday in January)\n" \
             "\t• President’s Day & George Washington’s Birthday (Third Monday in February)\n" \
@@ -574,8 +566,8 @@ def employee():
             "\t• The Friday following Thanksgiving Day\n" \
             "\t• Christmas Eve (December 24) – Observed as four hours only, and provided\n\tthat December 24 falls during the normal Monday through Friday work week\n" \
             "\t• Christmas Day (December 25)\n\n".format(ymca_benefit, ymca_cost, ymca_nnva_cost,
-                         one_benefit, one_cost, one_nnva_cost,
-                         riv_benefit, riv_cost, riv_nnva_cost)
+                                                         one_benefit, one_cost, one_nnva_cost,
+                                                         riv_benefit, riv_cost, riv_nnva_cost)
 
     df_annual = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=['Annual Compensation Package'])
     df_annual.loc['Total'] = value
@@ -589,6 +581,7 @@ def employee():
 
     return df_annual, df_monthly, main_df, text1, benefits_title, fig1, fig2
 
+
 try:
     user = employee()
     df = user[0]
@@ -601,29 +594,27 @@ try:
 
     st.pyplot(annual_fig)
     df = df.applymap(lambda x: "${:,.2f}".format(x),
-                           na_action='ignore')
+                     na_action='ignore')
     st.write(df)
 
     st.pyplot(monthly_fig)
     monthly_df = monthly_df.applymap(lambda x: "${:,.2f}".format(x),
-                                           na_action='ignore')
+                                     na_action='ignore')
     st.write(monthly_df)
     st.header(benefits_title)
 
     st.text(text)
-    st.subheader("**PAID PERSONAL LEAVE (PPL)**\nPaid personal leave covers vacation, absences for personal business and"
-                 "\nsome medical leave. Regular, full-time employees and 24-hour "
-                 "fire employees\nearn PPL according to the following bi-weekly accrual schedule:")
+    st.subheader(
+        "**PAID PERSONAL LEAVE (PPL)**\nPaid personal leave covers vacation, absences for personal business and"
+        "\nsome medical leave. Regular, full-time employees and 24-hour "
+        "fire employees\nearn PPL according to the following bi-weekly accrual schedule:")
     st.dataframe(PPL_df.set_index('YEARS OF SERVICE'))
     st.subheader("\n**PAID MEDICAL LEAVE (PML)**\n"
-            "Paid medical leave can be used for certain personal "
-            "and family\nmedical-related absences. Regular, full-time employees accrue 2.75 hours\n"
-            "bi-weekly and 24-hour fire employees accrue 7.5 hours bi-weekly.")
+                 "Paid medical leave can be used for certain personal "
+                 "and family\nmedical-related absences. Regular, full-time employees accrue 2.75 hours\n"
+                 "bi-weekly and 24-hour fire employees accrue 7.5 hours bi-weekly.")
 except TypeError:
     pass
 
-
 if button_clicked == 'GO':
     employee()
-
-
