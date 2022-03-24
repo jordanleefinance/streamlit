@@ -11,7 +11,6 @@ path1 = r"C:\Users\data"
 path = r"C:\Users\jorda\OneDrive\Documents\GitHub\streamlit\Sampledata.xlsx"
 DB_path = os.path.join(path1, "Sampledata.xlsx")
 
-df_global = pd.read_excel(r"\Sampledata.xlsx", sheet_name=None)
 
 @st.cache
 def load_data():
@@ -40,6 +39,7 @@ user_dental_plan = st.sidebar.radio('Dental Plan', ['Delta Dental', 'None'])
 user_vision_plan = st.sidebar.radio("Vision Plan", ['Vision Service Plan', 'Vision INS City', 'None'])
 
 file = st.sidebar.file_uploader("Upload Database:", 'xlsx')
+button_clicked = st.sidebar.button("GO")
 try:
     df = load_data()
 except FileNotFoundError:
@@ -50,9 +50,7 @@ except FileNotFoundError:
     elif file is None:
         st.header("BASE PACKAGE")
         st.error("Please upload a database in the sidebar to calculate entire package.")
-        st.sidebar.download_button("Download Database Here", data=pd.DataFrame.to_excek(df_global, index=False), mime="xlsx")
         pass
-button_clicked = st.sidebar.button("GO")
 
 PPL_data = [['Up to 5 years in service', "6 hours", "9.25 hours"],
             ['Over 5 years in service', "7.5 hours", "11.75 hours"],
