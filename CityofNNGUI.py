@@ -11,6 +11,7 @@ path1 = r"C:\Users\data"
 path = r"C:\Users\jorda\OneDrive\Documents\GitHub\streamlit\Sampledata.xlsx"
 DB_path = os.path.join(path1, "Sampledata.xlsx")
 
+
 @st.cache
 def load_data():
     df = pd.read_excel(path, index_col=[1, 2], header=[2], sheet_name=None)
@@ -476,11 +477,17 @@ def employee():
     except NameError:
         pass
 
+    for key, val in list(info_dict.items()):
+        if val > 0:
+            labels.append(key)
+        else:
+            info_dict.pop(key)
 
-    for i in info_dict.keys():
-        labels.append(i)
-    for m in monthly_info_dict.keys():
-        monthly_labels.append(m)
+    for mkey, mval in list(monthly_info_dict.items()):
+        if mval > 0:
+            monthly_labels.append(mkey)
+        else:
+            monthly_info_dict.pop(mkey)
 
     for j in range(len(labels)):
         if labels[j] == "Flexible Spending Account (FSA)":
