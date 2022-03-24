@@ -475,7 +475,7 @@ def employee():
                     value += float(VLDP_data) * 12
                     monthly_info_dict['Disability (Hybrid Only)'] = float(VLDP_data)
                     info_dict['Disability (Hybrid Only)'] = float(VLDP_data) * 12
-    except IndexError:
+    except pd.IndexingError:
         for i in range(len(df)):
             if df.iloc[i].name == (last_name, first_name) or \
                     df.iloc[i].loc['Location Code Desc'] == job_title:
