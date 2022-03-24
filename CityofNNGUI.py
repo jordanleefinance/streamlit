@@ -6,10 +6,10 @@ import altair as alt
 import os
 
 start = r"C:\Users\data\Sampledata.xlsx"
+path1 = r"C:\Users\data"
 
-path = r"C:\Users\jorda\OneDrive\Documents\MFinA" \
-       r"\FINC 591 - Integrated Financial Analysis & Strategy\NNPS - Capstone\Sample data.xlsx"
-DB_path = os.path.join(path)
+path = r"C:\Users\jorda\OneDrive\Documents\GitHub\streamlit\Sampledata.xlsx"
+DB_path = os.path.join(path1, "Sampledata.xlsx")
 
 
 file_path = r'C:/Users/JordanLee/OneDrive/Documents/MFinA/' \
@@ -18,7 +18,9 @@ file_path = r'C:/Users/JordanLee/OneDrive/Documents/MFinA/' \
 
 st.sidebar.subheader("""**City of Newport News Compensation Package**""")
 user_name = st.sidebar.text_input("Name", "George Jetson")
-user_jobtitle = st.sidebar.text_input("Job Title", "Treasurer")
+user_jobtitle = st.sidebar.selectbox("Job Title", ("Treasurer", 'Fire', 'Police',
+                                                    'Finance', 'Human Resources',
+                                                    'Engineering', 'Libraries', 'Information Technology'))
 user_jobtype = st.sidebar.radio("Job Type", ["Full Time", "Part Time"])
 user_salary = st.sidebar.number_input("Enter your hourly/annual pay:", value=80857.45)
 user_coverage = st.sidebar.selectbox("Coverage", ("Employee", "Employee + 1 Child", "Employee + Spouse", "Family"))
@@ -27,7 +29,7 @@ user_health_plan = st.sidebar.selectbox("Health Plan", ('Optima Health POS', 'Op
                                                         'Optima Equity HDHP + HSA', 'None'))
 user_dental_plan = st.sidebar.radio('Dental Plan', ['Delta Dental', 'None'])
 user_vision_plan = st.sidebar.radio("Vision Plan", ['Vision Service Plan', 'Vision INS City', 'None'])
-file = st.sidebar.file_uploader("Choose an excel file", type="xlsx")
+
 button_clicked = st.sidebar.button("GO")
 
 PPL_data = [['Up to 5 years in service', "6 hours", "9.25 hours"],
@@ -94,8 +96,8 @@ def employee():
     monthly_info_dict = {}
     labels = []
     monthly_labels = []
-    colors = ['lightblue', 'grey', 'orange', 'green', 'red', 'blue', 'lightgreen']
-    explode = [0.002, 0.292, 0.382, 0.582, 0.502, 0.52, 0.662, 0.702, 0.75, 0.8]
+    colors = ['lightblue', 'firebrick', 'goldenrod',  'hotpink', 'green', 'orange', 'blue', 'lightgreen', 'lightcyan', 'violet']
+    explode = [0.002, 0.152, 0.252, 0.392, 0.452, 0.532, 0.622, 0.712, 0.805, 0.905, 0.95]
     name = user_name
     first_name = ''
     last_name = ''
@@ -108,7 +110,7 @@ def employee():
     vis_plan = user_vision_plan
     ret_plan = ''
     ret_health_plan = 'Retiree Health'
-    life_plan = 'Basic'
+    life_plan = 'Basic Life'
 
     # job type test
     if job_type == 'Part Time':
@@ -396,7 +398,7 @@ def employee():
             monthly_info_dict[vis_plan] = 0
             info_dict[vis_plan] = 0 * 12
 
-    DB = pd.read_excel(start, index_col=[1, 2], header=[1, 2], sheet_name=None)
+    DB = pd.read_excel(DB_path, index_col=[1, 2], header=[1, 2], sheet_name=None)
     df = pd.concat(DB.values(), axis=0)
     df = df[:8]
     print(df)
