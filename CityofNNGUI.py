@@ -429,45 +429,45 @@ def employee():
             elif ret_plan == 'VRSH - VIRGINIA RET SYS HYBRID':
                 ret_plan = 'VRSH - Virginia Retirement System Hybrid'
 
-            user_data = df.iloc[i].loc['DB Retirement City'].values
+            user_data = df.iloc[i].loc['DB Retirement City']
             monthly_value += user_data.astype(float)
             value += user_data.astype(float) * 12
             monthly_info_dict[ret_plan] = user_data.astype(float)
             info_dict[ret_plan] = float(user_data) * 12
 
-            lt_dis_data = df.iloc[i].loc['LTD City'].values
+            lt_dis_data = df.iloc[i].loc['LTD City']
             monthly_value += float(lt_dis_data)
             value += float(lt_dis_data) * 12
             monthly_info_dict[lt_dis_plan] = float(lt_dis_data)
             info_dict[lt_dis_plan] = float(lt_dis_data) * 12
 
-            retiree_data = df.iloc[i].loc['OPEB City or HRA City'].values
+            retiree_data = df.iloc[i].loc['OPEB City or HRA City']
             monthly_value += float(retiree_data)
             value += float(retiree_data) * 12
             monthly_info_dict[ret_health_plan] = float(retiree_data)
             info_dict[ret_health_plan] = float(retiree_data) * 12
 
-            life_data = df.iloc[i].loc['Life City'].values
+            life_data = df.iloc[i].loc['Life City']
             monthly_value += float(life_data)
             value += float(life_data) * 12
             monthly_info_dict[life_plan] = float(life_data)
             info_dict[life_plan] = float(life_data) * 12
 
             if ret_plan == 'VRSH - Virginia Retirement System Hybrid':
-                hybrid_data = df.iloc[i].loc['DC Plan City'].values
+                hybrid_data = df.iloc[i].loc['DC Plan City']
                 monthly_value += float(hybrid_data)
                 value += float(hybrid_data) * 12
                 monthly_info_dict['Hybrid Mandatory'] = float(hybrid_data)
                 info_dict['Hybrid Mandatory'] = float(hybrid_data) * 12
 
-                hybrid_optional_data = df.iloc[i].loc['Opt DC City'].values
+                hybrid_optional_data = df.iloc[i].loc['Opt DC City']
                 print(hybrid_optional_data)
                 monthly_value += float(hybrid_optional_data)
                 value += float(hybrid_optional_data) * 12
                 monthly_info_dict['Hybrid Mandatory (Optional)'] = float(hybrid_optional_data)
                 info_dict['Hybrid Mandatory (Optional)'] = float(hybrid_optional_data) * 12
 
-                VLDP_data = df.iloc[i].loc['VLDP City'].values
+                VLDP_data = df.iloc[i].loc['VLDP City']
                 monthly_value += float(VLDP_data)
                 value += float(VLDP_data) * 12
                 monthly_info_dict['Disability (Hybrid Only)'] = float(VLDP_data)
