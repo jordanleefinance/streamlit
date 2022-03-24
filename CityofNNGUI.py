@@ -11,6 +11,7 @@ path1 = r"C:\Users\data"
 path = r"C:\Users\jorda\OneDrive\Documents\GitHub\streamlit\Sampledata.xlsx"
 DB_path = os.path.join(path1, "Sampledata.xlsx")
 
+df_global = pd.read_excel(r"\Sampledata.xlsx", sheet_name=None)
 
 @st.cache
 def load_data():
@@ -46,10 +47,10 @@ except FileNotFoundError:
         df2 = pd.read_excel(file, index_col=[1, 2], header=[2], sheet_name=None)
         df1 = pd.concat(df2.values(), axis=0)
         df = df1[:8]
-        st.sidebar.download_button("Download Database Here", data=pd.DataFrame.to_excek(df, index=False), mime="xlsx")
     elif file is None:
         st.header("BASE PACKAGE")
         st.error("Please upload a database in the sidebar to calculate entire package.")
+        st.sidebar.download_button("Download Database Here", data=pd.DataFrame.to_excek(df_global, index=False), mime="xlsx")
         pass
 button_clicked = st.sidebar.button("GO")
 
