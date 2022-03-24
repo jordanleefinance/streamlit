@@ -108,7 +108,7 @@ def employee():
     vis_plan = user_vision_plan
     ret_plan = ''
     ret_health_plan = 'Retiree Health'
-    life_plan = 'Basic Life'
+    life_plan = 'Basic'
 
     # job type test
     if job_type == 'Part Time':
@@ -396,7 +396,7 @@ def employee():
             monthly_info_dict[vis_plan] = 0
             info_dict[vis_plan] = 0 * 12
 
-    DB = pd.read_excel(path, index_col=[1, 2], header=[1, 2], sheet_name=None)
+    DB = pd.read_excel(DB_path, index_col=[1, 2], header=[1, 2], sheet_name=None)
     df = pd.concat(DB.values(), axis=0)
     df = df[:8]
     print(df)
@@ -405,10 +405,18 @@ def employee():
         if df.iloc[i].name == (last_name, first_name) or \
                 df.iloc[i].loc[('Unnamed: 3_level_0', 'Location Code Desc')] == job_title:
             ret_plan = df.iloc[i].loc[('Unnamed: 8_level_0', ['Retirement Plan'])].values
+
+            if ret_plan == 'NNER  CITY OF NEWPORT NEWS RET':
+                ret_plan = 'NNER - City of Newport News Ret'
+            elif ret_plan == 'VRS - VIRGINIA RETIREMENT SYST':
+                ret_plan = 'VRS - Virginia Retirement System'
+            elif ret_plan == 'VRSH - VIRGINIA RET SYS HYBRID':
+                ret_plan = 'VRSH - Virginia Retirement System Hybrid'
+
             user_data = df.iloc[i].loc[('Mandatory Retirement Monthly', ['DB Retirement City'])].values
-            monthly_value += float(user_data)
-            value += float(user_data) * 12
-            monthly_info_dict[ret_plan] = float(user_data)
+            monthly_value += user_data.astype(float)
+            value += user_data.astype(float) * 12
+            monthly_info_dict[ret_plan] = user_data.astype(float)
             info_dict[ret_plan] = float(user_data) * 12
 
             retiree_data = df.iloc[i].loc[('Retiree Health', ['OPEB City or HRA City'])].values
@@ -422,7 +430,7 @@ def employee():
             value += float(life_data) * 12
             monthly_info_dict[life_plan] = float(life_data)
             info_dict[life_plan] = float(life_data) * 12
-            if ret_plan == 'VRSH - VIRGINIA RET SYS HYBRID':
+            if ret_plan == 'VRSH - Virginia Retirement System Hybrid':
                 hybrid_data = df.iloc[i].loc[
                     ('Hybrid Retirement Mandatory & Optional', ['DC Plan City'])].values
                 monthly_value += float(hybrid_data)
@@ -442,7 +450,6 @@ def employee():
                 value += float(VLDP_data) * 12
                 monthly_info_dict['Disability (Hybrid Only)'] = float(VLDP_data)
                 info_dict['Disability (Hybrid Only)'] = float(VLDP_data) * 12
-
 
     for i in info_dict.keys():
         labels.append(i)
@@ -504,7 +511,7 @@ def employee():
                   'Dental Plan: {:s}\n'
                   'Vision Plan: {:s}\n'
                   'Retirement Plan: {:s}\n'
-                  'Life Plan: {:s}'.format(job_title.capitalize(), value,
+                  'Life Plan: {:s}'.format(job_title.capitalize(), float(value),
                                            health_plan, den_plan, vis_plan, ret_plan, life_plan),
                   x=0.521, y=0.15, fontsize=17)
 
@@ -517,7 +524,7 @@ def employee():
             colors=colors[:len(monthly_info_dict.values())], autopct='%1.1f%%', startangle=190,
             pctdistance=0.7, labeldistance=1.05, radius=0.65)
 
-    ax2.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in
+    ax2.legend(labels=[str('{:s}, ${:,.2f}').format(i, float(j)) for i, j in
                        zip(monthly_info_dict.keys(), monthly_info_dict.values())],
                shadow=True, loc=(0.65, 0.8121), fontsize=12)
 
@@ -529,7 +536,7 @@ def employee():
                   'Dental Plan: {:s}\n'
                   'Vision Plan: {:s}\n'
                   'Retirement Plan: {:s}\n'
-                  'Life Plan: {:s}'.format(job_title.capitalize(), monthly_value,
+                  'Life Plan: {:s}'.format(job_title.capitalize(), float(monthly_value),
                                            health_plan, den_plan, vis_plan, ret_plan, life_plan),
                   x=0.521, y=0.18, fontsize=15)
 
@@ -575,7 +582,7 @@ def employee():
                                         columns=['Monthly Compensation Package'])
     df_monthly.loc['Total'] = monthly_value
     main_df = pd.concat([df_annual, df_monthly], axis=1)
-    main_df = main_df.applymap(lambda x: "${:,.2f}".format(x),
+    main_df = main_df.applymap(lambda x: "${:,.2f}".format(float(x)),
                                na_action='ignore')
     main_df.fillna("", inplace=True)
 
@@ -593,12 +600,12 @@ try:
     monthly_fig = user[6]
 
     st.pyplot(annual_fig)
-    df = df.applymap(lambda x: "${:,.2f}".format(x),
+    df = df.applymap(lambda x: "${:,.2f}".format(float(x)),
                      na_action='ignore')
     st.write(df)
 
     st.pyplot(monthly_fig)
-    monthly_df = monthly_df.applymap(lambda x: "${:,.2f}".format(x),
+    monthly_df = monthly_df.applymap(lambda x: "${:,.2f}".format(float(x)),
                                      na_action='ignore')
     st.write(monthly_df)
     st.header(benefits_title)
@@ -613,8 +620,8 @@ try:
                  "Paid medical leave can be used for certain personal "
                  "and family\nmedical-related absences. Regular, full-time employees accrue 2.75 hours\n"
                  "bi-weekly and 24-hour fire employees accrue 7.5 hours bi-weekly.")
-except TypeError:
-    pass
+finally:
+    print('done')
 
 if button_clicked == 'GO':
     employee()
