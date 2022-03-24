@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import altair as alt
 import os
 
-start = r"C:\Users\jorda\OneDrive"
+start = r"C:\Users\data\Sampledata.xlsx"
 
 path = r"C:\Users\jorda\OneDrive\Documents\MFinA" \
        r"\FINC 591 - Integrated Financial Analysis & Strategy\NNPS - Capstone\Sample data.xlsx"
@@ -95,7 +95,7 @@ def employee():
     labels = []
     monthly_labels = []
     colors = ['lightblue', 'grey', 'orange', 'green', 'red', 'blue', 'lightgreen']
-    explode = [0.002, 0.342, 0.482, 0.382, 0.302, 0.32, 0.262, 0.302]
+    explode = [0.002, 0.292, 0.382, 0.582, 0.502, 0.52, 0.662, 0.702, 0.75, 0.8]
     name = user_name
     first_name = ''
     last_name = ''
@@ -440,6 +440,7 @@ def employee():
 
                 hybrid_optional_data = df.iloc[i].loc[
                     ('Hybrid Retirement Mandatory & Optional', ['Opt DC City'])].values
+                print(hybrid_optional_data)
                 monthly_value += float(hybrid_optional_data)
                 value += float(hybrid_optional_data) * 12
                 monthly_info_dict['Hybrid Mandatory (Optional)'] = float(hybrid_optional_data)
@@ -501,7 +502,7 @@ def employee():
             pctdistance=0.7, labeldistance=1.05, radius=0.83)
 
     ax1.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in zip(info_dict.keys(), info_dict.values())],
-               shadow=True, loc=(0.8, 0.78), fontsize=12)
+               shadow=True, loc=(0.8, 0.75), fontsize=12)
 
     ax1.set_title('{:s} Annual Compensation Package\n {:s}'.format(name, job_title.capitalize()), fontweight='bold',
                   fontsize=30)
@@ -526,7 +527,7 @@ def employee():
 
     ax2.legend(labels=[str('{:s}, ${:,.2f}').format(i, float(j)) for i, j in
                        zip(monthly_info_dict.keys(), monthly_info_dict.values())],
-               shadow=True, loc=(0.65, 0.8121), fontsize=12)
+               shadow=True, loc=(0.65, 0.75), fontsize=12)
 
     ax2.set_title('{:s} Monthly Compensation Package\n {:s}'.format(name, job_title.capitalize()), fontweight='bold',
                   fontsize=25)
@@ -620,8 +621,7 @@ try:
                  "Paid medical leave can be used for certain personal "
                  "and family\nmedical-related absences. Regular, full-time employees accrue 2.75 hours\n"
                  "bi-weekly and 24-hour fire employees accrue 7.5 hours bi-weekly.")
-finally:
-    print('done')
-
+except TypeError:
+    pass
 if button_clicked == 'GO':
     employee()
