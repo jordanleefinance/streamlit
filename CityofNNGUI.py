@@ -24,7 +24,7 @@ file_path = r'C:/Users/JordanLee/OneDrive/Documents/MFinA/' \
             r'NNPS - Capstone/Compensation Package.xlsx'
 
 st.sidebar.subheader("""**City of Newport News Compensation Package**""")
-user_name = st.sidebar.text_input("Name", "George Jetson")
+user_name = st.sidebar.text_input("Name", "Jetson George")
 user_jobtitle = st.sidebar.selectbox("Job Title", ("Treasurer", 'Fire', 'Police',
                                                    'Finance', 'Human Resources',
                                                    'Engineering', 'Libraries', 'Information Technology'))
@@ -47,7 +47,7 @@ except FileNotFoundError:
         df1 = pd.concat(df2.values(), axis=0)
         df = df1[:8]
     elif file is None:
-        st.error("Please upload a database in the sidebar to begin.")
+        st.error("Please upload a database in the sidebar to calculate entire package.")
         pass
 
 PPL_data = [['Up to 5 years in service', "6 hours", "9.25 hours"],
@@ -474,7 +474,7 @@ def employee():
                     monthly_info_dict['Disability (Hybrid Only)'] = float(VLDP_data)
                     info_dict['Disability (Hybrid Only)'] = float(VLDP_data) * 12
     except NameError:
-        st.error("Please upload a database.")
+        pass
 
 
     for i in info_dict.keys():
@@ -485,7 +485,7 @@ def employee():
     for j in range(len(labels)):
         if labels[j] == "Flexible Spending Account (FSA)":
             labels[j] = "FSA"
-        if labels[j] == "Health Spending Account (HSA)":
+        if labels[j] == "Health Savings Account (HSA)":
             labels[j] = "HSA"
         if labels[j] == health_plan:
             labels[j] = "Health"
@@ -501,7 +501,7 @@ def employee():
     for mj in range(len(monthly_labels)):
         if monthly_labels[mj] == "Flexible Spending Account (FSA)":
             monthly_labels[mj] = "FSA"
-        if monthly_labels[mj] == "Health Spending Account (HSA)":
+        if monthly_labels[mj] == "Health Savings Account (HSA)":
             monthly_labels[mj] = "HSA"
         if monthly_labels[mj] == health_plan:
             monthly_labels[mj] = "Health"
@@ -628,12 +628,12 @@ try:
     st.pyplot(annual_fig)
     df = df.applymap(lambda x: "${:,.2f}".format(float(x)),
                      na_action='ignore')
-    st.write(df)
+    st.table(df)
 
     st.pyplot(monthly_fig)
     monthly_df = monthly_df.applymap(lambda x: "${:,.2f}".format(float(x)),
                                      na_action='ignore')
-    st.write(monthly_df)
+    st.table(monthly_df)
     st.header(benefits_title)
 
     st.text(text)
@@ -641,7 +641,7 @@ try:
         "**PAID PERSONAL LEAVE (PPL)**\nPaid personal leave covers vacation, absences for personal business and"
         "\nsome medical leave. Regular, full-time employees and 24-hour "
         "fire employees\nearn PPL according to the following bi-weekly accrual schedule:")
-    st.dataframe(PPL_df.set_index('YEARS OF SERVICE'))
+    st.table(PPL_df.set_index('YEARS OF SERVICE'))
     st.subheader("\n**PAID MEDICAL LEAVE (PML)**\n"
                  "Paid medical leave can be used for certain personal "
                  "and family\nmedical-related absences. Regular, full-time employees accrue 2.75 hours\n"
