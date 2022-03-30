@@ -9,3 +9,4 @@ flask
 requests
 xlrd
 openpyxl
+emailjs
