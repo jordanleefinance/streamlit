@@ -583,9 +583,12 @@ def employee():
     df_annual = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=['Annual Compensation Package'])
     fig_df = df_annual.drop([df_annual.index[0]])
 
-    fig = go.Figure(data=[go.Pie(values=fig_df['Annual Compensation Package'], labels=labels[1:])])
+    fig = go.Figure(data=[go.Pie(values=fig_df['Annual Compensation Package'], labels=labels[1:],
+                                 title="{:s} Compensation Package".format(name))])
     fig.update_traces(hoverinfo='label+value+percent')
-    fig.update_layout(annotations=[dict(font_size=1000)])
+    fig.update_layout(annotations=[dict(font_size=1000)],
+                      title_font_family="Times New Roman",
+                      title_font_color="blue")
 
     df_annual.loc['Total'] = value
 
