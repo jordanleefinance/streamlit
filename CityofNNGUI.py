@@ -3,6 +3,7 @@ import webbrowser
 import streamlit as st
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
+from openpyxl import load_workbook
 import os
 
 start = r"C:\Users\data\Sampledata.xls"
@@ -11,6 +12,17 @@ path1 = r"C:\Users\data"
 path = r"C:\Users\jorda\OneDrive\Documents\GitHub\streamlit\Sampledata.xlsx"
 DB_path = os.path.join(path1, "Sampledata.xlsx")
 
+workbook = load_workbook(filename="Sampledata.xlsx")
+workbook = workbook['Sheet1']
+data = workbook.values
+df = pd.DataFrame(data)
+header = df.iloc[2]
+df = df.iloc[3:, :]
+df = df.drop([0], axis=1)
+df.columns = header[1:]
+df = df.set_index(['Last Name', 'First Name'])[:8]
+print(header[1:])
+print(df)
 
 @st.cache
 def load_data():
@@ -74,9 +86,6 @@ button_clicked = st.sidebar.button("GO")
 try:
     df = load_data()
 except FileNotFoundError:
-    df = pd.read_excel(r"C:\Users\data\Sampledata.xls", index_col=[1, 2], header=[2], sheet_name='Sheet1')
-    df1 = pd.concat(df.values, axis=0)
-    df1 = df1[:8]
     if file:
         df2 = pd.read_excel(file, index_col=[1, 2], header=[2], sheet_name=None)
         df1 = pd.concat(df2.values(), axis=0)
@@ -469,9 +478,9 @@ def employee():
                     ret_plan = 'VRSH - Virginia Retirement System Hybrid'
 
                 user_data = df.iloc[i].loc['DB Retirement City']
-                monthly_value += user_data.astype(float)
-                value += user_data.astype(float) * 12
-                monthly_info_dict[ret_plan] = user_data.astype(float)
+                monthly_value += float(user_data)
+                value += float(user_data) * 12
+                monthly_info_dict[ret_plan] = float(user_data)
                 info_dict[ret_plan] = float(user_data) * 12
 
                 lt_dis_data = df.iloc[i].loc['LTD City']
