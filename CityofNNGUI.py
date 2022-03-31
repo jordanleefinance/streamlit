@@ -2,11 +2,10 @@ import pandas as pd
 import webbrowser
 import streamlit as st
 import matplotlib.pyplot as plt
-import altair as alt
 import plotly.graph_objects as go
 import os
 
-start = r"C:\Users\data\Sampledata.xlsx"
+start = r"C:\Users\data\Sampledata.xls"
 path1 = r"C:\Users\data"
 
 path = r"C:\Users\jorda\OneDrive\Documents\GitHub\streamlit\Sampledata.xlsx"
@@ -15,7 +14,7 @@ DB_path = os.path.join(path1, "Sampledata.xlsx")
 
 @st.cache
 def load_data():
-    df = pd.read_excel(path, index_col=[1, 2], header=[2], sheet_name=None)
+    df = pd.read_excel(start, index_col=[1, 2], header=[2], sheet_name=None)
     df1 = pd.concat(df.values(), axis=0)
     df1 = df1[:8]
     return df1
@@ -25,12 +24,12 @@ file_path = r'C:/Users/JordanLee/OneDrive/Documents/MFinA/' \
             r'FINC 591 - Integrated Financial Analysis & Strategy/' \
             r'NNPS - Capstone/Compensation Package.xlsx'
 st.title("Calculate Your Total Compensation")
-statement = "Below is a personalized statement prepared specifically for you. This statement shows the "\
-            "contributions made by the City of Newport News "\
-            "toward your total compensation package. As you "\
-            "review this statement, you will see the value of your "\
-            "benefits, added to your annual pay, producing your total "\
-            "compensation. The calculator is most beneficial to full time employees.\n\n" \
+statement = "Below is a personalized statement prepared specifically for you. This statement shows the " \
+            "contributions made by the City of Newport News " \
+            "toward your total compensation package. As you " \
+            "review this statement, you will see the value of your " \
+            "benefits, added to your annual pay, producing your total " \
+            "compensation. The calculator is most beneficial for evaluating full time employees.\n\n" \
             "This tool can help you:\n\n" \
             "\n\t• Budget for yourself or your team" \
             "\n\n\t• Understand how city-paid benefits factor into total compensation" \
@@ -57,17 +56,17 @@ elif user_jobtype == "Part Time":
     user_salary = st.sidebar.number_input("Hourly Rate:", value=15.66, step=0.50)
 
 user_health_coverage = st.sidebar.selectbox("Health Coverage", (
-"Employee (Health)", "Employee + 1 Child (Health)", "Employee + Spouse (Health)", "Family (Health)"))
+    "Employee (Health)", "Employee + 1 Child (Health)", "Employee + Spouse (Health)", "Family (Health)"))
 user_health_plan = st.sidebar.selectbox("Health Plan", ('Optima Health POS', 'Optima Health POS + FSA',
                                                         'Optima Equity HDHP', 'Optima Equity HDHP + FSA',
                                                         'Optima Equity HDHP + HSA', 'None'))
 
 user_dental_coverage = st.sidebar.selectbox("Dental Coverage", (
-"Employee (Dental)", "Employee + 1 Child (Dental)", "Employee + Spouse (Dental)", "Family (Dental)"))
+    "Employee (Dental)", "Employee + 1 Child (Dental)", "Employee + Spouse (Dental)", "Family (Dental)"))
 user_dental_plan = st.sidebar.radio('Dental Plan', ['Delta Dental', 'None'])
 
 user_vision_coverage = st.sidebar.selectbox("Vision Coverage", (
-"Employee (Vision)", "Employee + 1 Child (Vision)", "Employee + Spouse (Vision)", "Family (Vision)"))
+    "Employee (Vision)", "Employee + 1 Child (Vision)", "Employee + Spouse (Vision)", "Family (Vision)"))
 user_vision_plan = st.sidebar.radio("Vision Plan", ['Vision Service Plan', 'Vision INS City', 'None'])
 
 file = st.sidebar.file_uploader("Upload Database:", 'xlsx')
@@ -133,6 +132,7 @@ def employee_part_time():
     pass
 
 
+@st.cache
 def employee():
     ymca_cost = 0
     ymca_nnva_cost = 0
@@ -645,7 +645,6 @@ with st.expander("See Full Breakdown"):
     final_df = final_df.applymap(lambda x: "${:,.2f}".format(float(x)),
                                  na_action='ignore')
     st.table(final_df)
-
 
 st.title(benefits_title)
 
