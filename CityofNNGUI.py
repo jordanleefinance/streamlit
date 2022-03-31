@@ -634,37 +634,38 @@ except TypeError:
     pass
 
 finally:
-    benefits_title = '**Additional Benefits**'
-    st.title(benefits_title)
+    with st.expander("See Additional Benefits"):
+        benefits_title = '**Additional Benefits**'
+        st.title(benefits_title)
 
-    text = "\n**PAID HOLIDAYS**\nRegular, full-time City employees are eligible for paid holidays, provided\nthey are in an active " \
-            "pay status the working day prior to the holiday.\n\n\t• New Year’s Day (January 1)\n\t• Dr. Martin Luther King’s Birthday (Third Monday in January)\n" \
-            "\t• President’s Day & George Washington’s Birthday (Third Monday in February)\n" \
-            "\t• Memorial Day (Last Monday in May)\n" \
-            "\t• Juneteenth (June 19)\n" \
-            "\t• Independence Day (July 4)\n" \
-            "\t• Labor Day (First Monday in September)\n" \
-            "\t• Veterans Day (November 11)\n" \
-            "\t• Thanksgiving Day (Fourth Thursday in November)\n" \
-            "\t• The Friday following Thanksgiving Day\n" \
-            "\t• Christmas Eve (December 24) – Observed as four hours only, and provided\n\tthat December 24 falls during the normal Monday through Friday work week\n" \
-            "\t• Christmas Day (December 25)\n\n"
-    st.subheader(text)
+        text = "\n**PAID HOLIDAYS**\nRegular, full-time City employees are eligible for paid holidays, provided\nthey are in an active " \
+               "pay status the working day prior to the holiday.\n\n\t• New Year’s Day (January 1)\n\t• Dr. Martin Luther King’s Birthday (Third Monday in January)\n" \
+               "\t• President’s Day & George Washington’s Birthday (Third Monday in February)\n" \
+               "\t• Memorial Day (Last Monday in May)\n" \
+               "\t• Juneteenth (June 19)\n" \
+               "\t• Independence Day (July 4)\n" \
+               "\t• Labor Day (First Monday in September)\n" \
+               "\t• Veterans Day (November 11)\n" \
+               "\t• Thanksgiving Day (Fourth Thursday in November)\n" \
+               "\t• The Friday following Thanksgiving Day\n" \
+               "\t• Christmas Eve (December 24) – Observed as four hours only, and provided\n\tthat December 24 falls during the normal Monday through Friday work week\n" \
+               "\t• Christmas Day (December 25)\n\n"
+        st.subheader(text)
 
-    st.subheader(
-        "**PAID PERSONAL LEAVE (PPL)**\nPaid personal leave covers vacation, absences for personal business and"
-        "\nsome medical leave. Regular, full-time employees and 24-hour "
-        "fire employees\nearn PPL according to the following bi-weekly accrual schedule:")
-    st.table(PPL_df.set_index('YEARS OF SERVICE'))
-    st.subheader("\n**PAID MEDICAL LEAVE (PML)**\n"
-                 "Paid medical leave can be used for certain personal "
-                 "and family\nmedical-related absences. Regular, full-time employees accrue 2.75 hours\n"
-                 "bi-weekly and 24-hour fire employees accrue 7.5 hours bi-weekly.\n\n"
-                 "\n**TUITION REIMBURSEMENT**\n"
-                 "Tuition reimbursement is intended to encourage employee development and improve work-related "
-                 "knowledge, skills, and abilities through the pursuit of educational programs leading to a college "
-                 "degree or industry-related certification or licensure that enhances City operations. Tuition "
-                 "reimbursement is a benefit for active full-time employees. ")
+        st.subheader(
+            "**PAID PERSONAL LEAVE (PPL)**\nPaid personal leave covers vacation, absences for personal business and"
+            "\nsome medical leave. Regular, full-time employees and 24-hour "
+            "fire employees\nearn PPL according to the following bi-weekly accrual schedule:")
+        st.table(PPL_df.set_index('YEARS OF SERVICE'))
+        st.subheader("\n**PAID MEDICAL LEAVE (PML)**\n"
+                     "Paid medical leave can be used for certain personal "
+                     "and family\nmedical-related absences. Regular, full-time employees accrue 2.75 hours\n"
+                     "bi-weekly and 24-hour fire employees accrue 7.5 hours bi-weekly.\n\n")
+        st.subheader("\n**TUITION REIMBURSEMENT**\n"
+                     "Tuition reimbursement is intended to encourage employee development and improve work-related "
+                     "knowledge, skills, and abilities through the pursuit of educational programs leading to a college "
+                     "degree or industry-related certification or licensure that enhances City operations. Tuition "
+                     "reimbursement is a benefit for active full-time employees. ")
 
 
 if button_clicked == 'GO':
