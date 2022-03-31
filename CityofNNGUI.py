@@ -661,11 +661,60 @@ finally:
                      "Paid medical leave can be used for certain personal "
                      "and family\nmedical-related absences. Regular, full-time employees accrue 2.75 hours\n"
                      "bi-weekly and 24-hour fire employees accrue 7.5 hours bi-weekly.\n\n")
+
         st.subheader("\n**TUITION REIMBURSEMENT**\n"
                      "Tuition reimbursement is intended to encourage employee development and improve work-related "
                      "knowledge, skills, and abilities through the pursuit of educational programs leading to a college "
                      "degree or industry-related certification or licensure that enhances City operations. Tuition "
                      "reimbursement is a benefit for active full-time employees. ")
+
+        st.subheader("\n**TICKETSATWORK.COM**\n"
+                     "Employees gain access to employee discounts and special "
+                     "offers not available to the general public. "
+                     "Save on Travel, Theme Parks & Attractions, Movie Tickets, Shopping Deals, Hotels, Shows & Events,"
+                     " plus so much more. ")
+
+        st.subheader("\n**FITNESS CENTER DISCOUNTS**\n"
+                     "As part of the City’s Wellness Initiate, the City of Newport News offers all full time "
+                     "employees access to fitness center memberships at a discounted rate. ")
+
+        st.subheader("\n**RENEWAL EMPLOYEE WELLNESS PROGRAM**\n"
+                     "We care about our employees! The City of Newport News offers an amazing Wellness Program "
+                     "entitled Renew. The goal of the Renew Wellness Program is to enrich the significance of life for City "
+                     "of Newport News employees by promoting and implementing remarkable holistic wellness "
+                     "programming. We strive to deliver proactive activities that promote a well-rounded, more engaged, "
+                     "and healthier lifestyle for our employee workforce by exploring the Eight {8} Dimensions of "
+                     "Wellness: Emotional Wellness, Environmental Wellness, Financial Wellness, Intellectual Wellness, "
+                     "Occupational Wellness, Physical Wellness, Social Wellness and Spiritual Wellness.")
+
+        st.subheader("\n**EMPLOYEE ASSISTANCE PROGRAM (EAP)**\n"
+                     "All City of Newport News employees and their immediate family members are eligible for a city-paid "
+                     "benefit called Employee Assistance. An Employee Assistance Program or EAP is a special benefit to "
+                     "help you and your family members with personal, marital, family and job-related problems. The goal"
+                     " of the program is to assist employees in achieving and maintaining happy, healthy and fully"
+                     " productive lives both on and off the job. ")
+
+        st.subheader("\n**iPROPEL**\n"
+                     "iPROPEL is the City’s online employee recognition platform that is available to all full-time"
+                     " and parttime employees. It is a great way to connect with other City employees and to "
+                     "recognize each other for all of the things that we have been doing to keep the "
+                     "City running smoothly, protecting our citizens, putting ourselves on the front line"
+                     " during this crisis, and continuing to prove that the City ofNewport News has the best "
+                     "employees anywhere! iPROPEL is an acronym that identifies the values exemplified by our "
+                     "employees: Integrity, Partnerships, Respect, Opportunities, Performance, Ethics, "
+                     "and Leadership and the platform lets us all join together to celebrate and acknowledge our "
+                     "achievements! When supervisors or Department Directors award recognition badges in the iPROPEL "
+                     "system, employees will be eligible to receive system points that can be used to select the items "
+                     "available in the online catalog.")
+
+        st.subheader("\n**VOLUNTARY WHOLE LIFE INSURANCE**\n"
+                     "Full-time city employees have the option of enrolling in Whole Life Insurance, "
+                     "with Optional Riders, "
+                     "regardless of their retirement plan ")
+
+        st.subheader("\n**VOLUNTARY TAX ADVANTAGE 457 DEFERRED COMPENSATION AND ROTH IRA PLAN OPTIONS**\n"
+                     "Our third party vendor is committed to helping employees build retirement security through "
+                     "retirement programs, investment products, and educational tools and services. ")
 
 
 if button_clicked == 'GO':
