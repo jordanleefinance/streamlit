@@ -14,8 +14,8 @@ DB_path = os.path.join(path1, "Sampledata.xlsx")
 
 @st.cache
 def load_data():
-    df = pd.read_excel(start, index_col=[1, 2], header=[2], sheet_name=None)
-    df1 = pd.concat(df.values(), axis=0)
+    df = pd.read_excel(start, index_col=[1, 2], header=[2], sheet_name='Sheet1')
+    df1 = pd.concat(df.values, axis=0)
     df1 = df1[:8]
     return df1
 
