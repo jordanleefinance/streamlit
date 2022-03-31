@@ -17,7 +17,6 @@ def load_data():
     df = pd.read_excel(start, index_col=[1, 2], header=[2], sheet_name='Sheet1')
     df1 = pd.concat(df.values, axis=0)
     df1 = df1[:8]
-    print(df1)
     return df1
 
 
@@ -80,7 +79,6 @@ except FileNotFoundError:
         df1 = pd.concat(df2.values(), axis=0)
         df = df1[:8]
     elif file is None:
-        st.header("BASE PACKAGE")
         st.error("Please upload the sample data in the left sidebar to calculate entire package.\n"
                  "This is for testing purposes only.")
         pass
@@ -133,7 +131,6 @@ def employee_part_time():
     pass
 
 
-@st.cache
 def employee():
     ymca_cost = 0
     ymca_nnva_cost = 0
@@ -616,49 +613,52 @@ def employee():
 
     return df_annual, df_monthly, main_df, text1, text2, benefits_title, fig
 
+try:
+    user = employee()
+    final_df = user[0]
+    monthly_df = user[1]
+    total_df = user[2]
+    text = user[4]
+    benefits_title = user[5]
+    figure = user[6]
 
-user = employee()
-final_df = user[0]
-monthly_df = user[1]
-total_df = user[2]
-text = user[4]
-benefits_title = user[5]
-figure = user[6]
+    st.plotly_chart(figure, use_container_width=True, sharing='streamlit')
 
-st.plotly_chart(figure, use_container_width=True, sharing='streamlit')
+    with st.expander("See Full Breakdown"):
+        col1, col2, col3, col4, col5 = st.columns(5)
+        with col1:
+            st.write("Base Pay")
+            st.write("${:,.2f}".format(final_df['Annual Compensation Package'].iloc[0]))
+        with col2:
+            st.subheader(" + ")
+        with col3:
+            st.write("City Paid Benefits")
+            st.write("${:,.2f}".format(final_df['Annual Compensation Package'].iloc[1:-1].sum()))
+        with col4:
+            st.subheader("\t=")
+        with col5:
+            st.write("Total Comp.")
+            st.write("${:,.2f}".format(final_df['Annual Compensation Package'].iloc[-1]))
 
-with st.expander("See Full Breakdown"):
-    col1, col2, col3, col4, col5 = st.columns(5)
-    with col1:
-        st.write("Base Pay")
-        st.write("${:,.2f}".format(final_df['Annual Compensation Package'].iloc[0]))
-    with col2:
-        st.subheader(" + ")
-    with col3:
-        st.write("City Paid Benefits")
-        st.write("${:,.2f}".format(final_df['Annual Compensation Package'].iloc[1:-1].sum()))
-    with col4:
-        st.subheader("\t=")
-    with col5:
-        st.write("Total Comp.")
-        st.write("${:,.2f}".format(final_df['Annual Compensation Package'].iloc[-1]))
+        final_df = final_df.applymap(lambda x: "${:,.2f}".format(float(x)),
+                                     na_action='ignore')
+        st.table(final_df)
 
-    final_df = final_df.applymap(lambda x: "${:,.2f}".format(float(x)),
-                                 na_action='ignore')
-    st.table(final_df)
+    st.title(benefits_title)
 
-st.title(benefits_title)
+    st.subheader(text)
+    st.subheader(
+        "**PAID PERSONAL LEAVE (PPL)**\nPaid personal leave covers vacation, absences for personal business and"
+        "\nsome medical leave. Regular, full-time employees and 24-hour "
+        "fire employees\nearn PPL according to the following bi-weekly accrual schedule:")
+    st.table(PPL_df.set_index('YEARS OF SERVICE'))
+    st.subheader("\n**PAID MEDICAL LEAVE (PML)**\n"
+                 "Paid medical leave can be used for certain personal "
+                 "and family\nmedical-related absences. Regular, full-time employees accrue 2.75 hours\n"
+                 "bi-weekly and 24-hour fire employees accrue 7.5 hours bi-weekly.")
+except TypeError:
+    pass
 
-st.subheader(text)
-st.subheader(
-    "**PAID PERSONAL LEAVE (PPL)**\nPaid personal leave covers vacation, absences for personal business and"
-    "\nsome medical leave. Regular, full-time employees and 24-hour "
-    "fire employees\nearn PPL according to the following bi-weekly accrual schedule:")
-st.table(PPL_df.set_index('YEARS OF SERVICE'))
-st.subheader("\n**PAID MEDICAL LEAVE (PML)**\n"
-             "Paid medical leave can be used for certain personal "
-             "and family\nmedical-related absences. Regular, full-time employees accrue 2.75 hours\n"
-             "bi-weekly and 24-hour fire employees accrue 7.5 hours bi-weekly.")
 
 if button_clicked == 'GO':
     employee()
