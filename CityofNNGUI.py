@@ -559,7 +559,6 @@ def employee():
     # Set figure and axis with 2 pie charts
 
     # Initialize Add'tl Benefits Ticket
-    benefits_title = '**Additional Benefits**'
     text1 = "\n**FITNESS BENEFITS**\n" \
             "YMCA Benefit: ${:.2f} monthly\n" \
             "\tOriginal: ${:.2f}\n" \
@@ -581,18 +580,6 @@ def employee():
             "\tBenefit Waiting Period: After 90 days\n".format(ymca_benefit, ymca_cost, ymca_nnva_cost,
                                                                one_benefit, one_cost, one_nnva_cost,
                                                                riv_benefit, riv_cost, riv_nnva_cost)
-    text2 = "\n**PAID HOLIDAYS**\nRegular, full-time City employees are eligible for paid holidays, provided\nthey are in an active " \
-            "pay status the working day prior to the holiday.\n\n\t• New Year’s Day (January 1)\n\t• Dr. Martin Luther King’s Birthday (Third Monday in January)\n" \
-            "\t• President’s Day & George Washington’s Birthday (Third Monday in February)\n" \
-            "\t• Memorial Day (Last Monday in May)\n" \
-            "\t• Juneteenth (June 19)\n" \
-            "\t• Independence Day (July 4)\n" \
-            "\t• Labor Day (First Monday in September)\n" \
-            "\t• Veterans Day (November 11)\n" \
-            "\t• Thanksgiving Day (Fourth Thursday in November)\n" \
-            "\t• The Friday following Thanksgiving Day\n" \
-            "\t• Christmas Eve (December 24) – Observed as four hours only, and provided\n\tthat December 24 falls during the normal Monday through Friday work week\n" \
-            "\t• Christmas Day (December 25)\n\n"
 
     df_annual = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=['Annual Compensation Package'])
     fig_df = df_annual.drop([df_annual.index[0]])
@@ -611,16 +598,14 @@ def employee():
                                na_action='ignore')
     main_df.fillna("", inplace=True)
 
-    return df_annual, df_monthly, main_df, text1, text2, benefits_title, fig
+    return df_annual, df_monthly, main_df, text1, fig
 
 try:
     user = employee()
     final_df = user[0]
     monthly_df = user[1]
     total_df = user[2]
-    text = user[4]
-    benefits_title = user[5]
-    figure = user[6]
+    figure = user[4]
 
     st.plotly_chart(figure, use_container_width=True, sharing='streamlit')
 
@@ -643,10 +628,26 @@ try:
         final_df = final_df.applymap(lambda x: "${:,.2f}".format(float(x)),
                                      na_action='ignore')
         st.table(final_df)
-
+except TypeError:
+    pass
+finally:
+    benefits_title = '**Additional Benefits**'
     st.title(benefits_title)
 
+    text = "\n**PAID HOLIDAYS**\nRegular, full-time City employees are eligible for paid holidays, provided\nthey are in an active " \
+            "pay status the working day prior to the holiday.\n\n\t• New Year’s Day (January 1)\n\t• Dr. Martin Luther King’s Birthday (Third Monday in January)\n" \
+            "\t• President’s Day & George Washington’s Birthday (Third Monday in February)\n" \
+            "\t• Memorial Day (Last Monday in May)\n" \
+            "\t• Juneteenth (June 19)\n" \
+            "\t• Independence Day (July 4)\n" \
+            "\t• Labor Day (First Monday in September)\n" \
+            "\t• Veterans Day (November 11)\n" \
+            "\t• Thanksgiving Day (Fourth Thursday in November)\n" \
+            "\t• The Friday following Thanksgiving Day\n" \
+            "\t• Christmas Eve (December 24) – Observed as four hours only, and provided\n\tthat December 24 falls during the normal Monday through Friday work week\n" \
+            "\t• Christmas Day (December 25)\n\n"
     st.subheader(text)
+    
     st.subheader(
         "**PAID PERSONAL LEAVE (PPL)**\nPaid personal leave covers vacation, absences for personal business and"
         "\nsome medical leave. Regular, full-time employees and 24-hour "
@@ -656,8 +657,6 @@ try:
                  "Paid medical leave can be used for certain personal "
                  "and family\nmedical-related absences. Regular, full-time employees accrue 2.75 hours\n"
                  "bi-weekly and 24-hour fire employees accrue 7.5 hours bi-weekly.")
-except TypeError:
-    pass
 
 
 if button_clicked == 'GO':
