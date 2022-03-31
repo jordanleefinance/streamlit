@@ -583,14 +583,9 @@ def employee():
     df_annual = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=['Annual Compensation Package'])
     fig_df = df_annual.drop([df_annual.index[0]])
 
-    fig = go.Figure(data=[go.Pie(values=fig_df['Annual Compensation Package'], labels=labels[1:],
-                                 title="{:s} Compensation Package".format(name))])
+    fig = go.Figure(data=[go.Pie(values=fig_df['Annual Compensation Package'], labels=labels[1:])])
     fig.update_traces(hoverinfo='label+value+percent')
-    fig.update_layout(annotations=[dict(font_size=1000)],
-                      title_font_family="Times New Roman",
-                      title_font_color="blue",
-                      legend_font_family="Times New Roman",
-                      title_yanchor="top")
+    fig.update_layout(annotations=[dict(font_size=1000)])
 
     df_annual.loc['Total'] = value
 
@@ -602,15 +597,18 @@ def employee():
                                na_action='ignore')
     main_df.fillna("", inplace=True)
 
-    return df_annual, df_monthly, main_df, text1, fig
+    return df_annual, df_monthly, main_df, text1, fig, name
 
 try:
     user = employee()
+    n = user[-1]
     final_df = user[0]
     monthly_df = user[1]
     total_df = user[2]
     figure = user[4]
 
+    title = "{:s} Compensation Package".format(n)
+    st.subheader(title)
     st.plotly_chart(figure, use_container_width=True, sharing='streamlit')
 
     with st.expander("See Full Breakdown"):
