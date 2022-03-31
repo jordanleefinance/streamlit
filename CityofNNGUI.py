@@ -588,7 +588,9 @@ def employee():
     fig.update_traces(hoverinfo='label+value+percent')
     fig.update_layout(annotations=[dict(font_size=1000)],
                       title_font_family="Times New Roman",
-                      title_font_color="blue")
+                      title_font_color="blue",
+                      legend_font_family="Times New Roman",
+                      title_yref="top")
 
     df_annual.loc['Total'] = value
 
