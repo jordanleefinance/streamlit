@@ -3,6 +3,7 @@ import webbrowser
 import streamlit as st
 import matplotlib.pyplot as plt
 import altair as alt
+import plotly.graph_objects as go
 import os
 
 start = r"C:\Users\data\Sampledata.xlsx"
@@ -23,19 +24,50 @@ def load_data():
 file_path = r'C:/Users/JordanLee/OneDrive/Documents/MFinA/' \
             r'FINC 591 - Integrated Financial Analysis & Strategy/' \
             r'NNPS - Capstone/Compensation Package.xlsx'
+st.title("Calculate Your Total Compensation")
+statement = "Below is a personalized statement prepared specifically for you. This statement shows the "\
+            "contributions made by the City of Newport News "\
+            "toward your total compensation package. As you "\
+            "review this statement, you will see the value of your "\
+            "benefits, added to your annual pay, producing your total "\
+            "compensation. The calculator is most beneficial to full time employees.\n\n" \
+            "This tool can help you:\n\n" \
+            "\n\t• Budget for yourself or your team" \
+            "\n\n\t• Understand how city-paid benefits factor into total compensation" \
+            "\n\n\t• Determine the total compensation of prospective employees" \
+            "\n\nTips:\n\n" \
+            "\n\t• Open left sidebar to make adjustments to the modeled employee" \
+            "\n\n\t• Hover your mouse over different pie pieces to view the benefit name and value" \
+            "\n\n\t• Click on the values in the legend to adjust the amount of benefits on the chart" \
+            "\n\n\t• See the full breakdown by clicking the dropdown bar below the graph\n\n" \
+            "This graph will automatically be created and changed as data is entered. " \
+            "The graph excludes your base salary in order to highlight your core benefits. " \
+            "This statement is designed to show how much your service is valued by us."
+st.write(statement, unsafe_allow_html=False)
 
-st.sidebar.subheader("""**City of Newport News Compensation Package**""")
-user_name = st.sidebar.text_input("Name", "Jetson George")
-user_jobtitle = st.sidebar.selectbox("Job Title", ("Treasurer", 'Fire', 'Police',
-                                                   'Finance', 'Human Resources',
-                                                   'Engineering', 'Libraries', 'Information Technology'))
+st.sidebar.subheader("""**Total Compensation**""")
+user_name = st.sidebar.text_input("Name", "George Jetson")
+user_jobtitle = st.sidebar.selectbox("Location/Department", ("Treasurer", 'Fire', 'Police',
+                                                             'Finance', 'Human Resources',
+                                                             'Engineering', 'Libraries', 'Information Technology'))
 user_jobtype = st.sidebar.radio("Job Type", ["Full Time", "Part Time"])
-user_salary = st.sidebar.number_input("Enter your hourly/annual pay:", value=80857.45)
-user_coverage = st.sidebar.selectbox("Coverage", ("Employee", "Employee + 1 Child", "Employee + Spouse", "Family"))
+if user_jobtype == "Full Time":
+    user_salary = st.sidebar.number_input("Annual Base Pay:", value=80857.45, step=500.00)
+elif user_jobtype == "Part Time":
+    user_salary = st.sidebar.number_input("Hourly Rate:", value=15.66, step=0.50)
+
+user_health_coverage = st.sidebar.selectbox("Health Coverage", (
+"Employee (Health)", "Employee + 1 Child (Health)", "Employee + Spouse (Health)", "Family (Health)"))
 user_health_plan = st.sidebar.selectbox("Health Plan", ('Optima Health POS', 'Optima Health POS + FSA',
                                                         'Optima Equity HDHP', 'Optima Equity HDHP + FSA',
                                                         'Optima Equity HDHP + HSA', 'None'))
+
+user_dental_coverage = st.sidebar.selectbox("Dental Coverage", (
+"Employee (Dental)", "Employee + 1 Child (Dental)", "Employee + Spouse (Dental)", "Family (Dental)"))
 user_dental_plan = st.sidebar.radio('Dental Plan', ['Delta Dental', 'None'])
+
+user_vision_coverage = st.sidebar.selectbox("Vision Coverage", (
+"Employee (Vision)", "Employee + 1 Child (Vision)", "Employee + Spouse (Vision)", "Family (Vision)"))
 user_vision_plan = st.sidebar.radio("Vision Plan", ['Vision Service Plan', 'Vision INS City', 'None'])
 
 file = st.sidebar.file_uploader("Upload Database:", 'xlsx')
@@ -49,7 +81,8 @@ except FileNotFoundError:
         df = df1[:8]
     elif file is None:
         st.header("BASE PACKAGE")
-        st.error("Please upload a database in the sidebar to calculate entire package.")
+        st.error("Please upload the sample data in the left sidebar to calculate entire package.\n"
+                 "This is for testing purposes only.")
         pass
 
 PPL_data = [['Up to 5 years in service', "6 hours", "9.25 hours"],
@@ -77,7 +110,7 @@ def employee_part_time():
     salary = user_salary
     monthly_value = 0
     weekly_pay = 0
-    job_title = user_jobtitle
+    name = user_name
     try:
         hourly_pay = float(salary)
         weekly_pay = float(hourly_pay * 37)
@@ -90,10 +123,10 @@ def employee_part_time():
     fig = plt.figure(figsize=(18, 10.5), dpi=68)
     fig.tight_layout()
     fig.set_facecolor('white')
-    fig.suptitle('A(n) {:s} at NNVA earns ${:,.2f} yearly.\n\n'
-                 'A(n) {:s} at NNVA earns ${:,.2f} monthly.\n\n'
-                 'A(n){:s} at NNVA earns ${:,.2f} weekly.'.format(job_title, value, job_title, monthly_value, job_title,
-                                                                  weekly_pay),
+    fig.suptitle('{:s} earns ${:,.2f} yearly.\n\n'
+                 '{:s} earns ${:,.2f} monthly.\n\n'
+                 '{:s} earns ${:,.2f} weekly.'.format(name, value, name, monthly_value, name,
+                                                      weekly_pay),
                  x=0.5, y=0.5, fontweight='bold', fontsize=30)
 
     st.pyplot(fig)
@@ -125,7 +158,9 @@ def employee():
     job_title = user_jobtitle.upper()
     job_type = user_jobtype
     salary = user_salary
-    coverage = user_coverage
+    health_coverage = user_health_coverage
+    dental_coverage = user_dental_coverage
+    vision_coverage = user_vision_coverage
     health_plan = user_health_plan
     den_plan = user_dental_plan
     vis_plan = user_vision_plan
@@ -164,7 +199,7 @@ def employee():
         info_dict['Annual Salary'] = float(salary)
         monthly_info_dict['Monthly Salary'] = float(salary) / 12
 
-    if coverage == 'Employee':
+    if health_coverage == 'Employee (Health)':
         ymca_cost = 49.00
         ymca_nnva_cost = 30.00
         ymca_benefit = ymca_cost - ymca_nnva_cost
@@ -175,7 +210,7 @@ def employee():
         riv_nnva_cost = 28.00
         riv_benefit = riv_cost - riv_nnva_cost
 
-    if coverage == 'Employee + 1 Child':
+    if health_coverage == 'Employee + 1 Child (Health)':
         ymca_cost = 64.00
         ymca_nnva_cost = 53.00
         ymca_benefit = ymca_cost - ymca_nnva_cost
@@ -186,7 +221,7 @@ def employee():
         riv_nnva_cost = 51.00
         riv_benefit = riv_cost - riv_nnva_cost
 
-    if coverage == 'Family':
+    if health_coverage == 'Family (Health)':
         ymca_cost = 79.00
         ymca_nnva_cost = 58.00
         ymca_benefit = ymca_cost - ymca_nnva_cost
@@ -197,7 +232,7 @@ def employee():
         riv_nnva_cost = 79.00
         riv_benefit = riv_cost - riv_nnva_cost
 
-    if coverage == 'Employee + Spouse':
+    if health_coverage == 'Employee + Spouse (Health)':
         ymca_cost = 98.00
         ymca_nnva_cost = 50.00
         ymca_benefit = ymca_cost - ymca_nnva_cost
@@ -209,51 +244,51 @@ def employee():
         riv_benefit = riv_cost - riv_nnva_cost
 
     if health_plan == 'Optima Health POS':
-        if coverage == 'Employee':
+        if health_coverage == 'Employee (Health)':
             monthly_value += 546.35
             value += 546.35 * 12
             monthly_info_dict[health_plan] = 546.35
             info_dict[health_plan] = 546.35 * 12
-        elif coverage == 'Employee + 1 Child':
+        elif health_coverage == 'Employee + 1 Child (Health)':
             monthly_value += 861.69
             value += 861.69 * 12
             monthly_info_dict[health_plan] = 861.69
             info_dict[health_plan] = 861.69 * 12
-        elif coverage == 'Family':
+        elif health_coverage == 'Family (Health)':
             monthly_value += 1493.78
             value += 1493.78 * 12
             monthly_info_dict[health_plan] = 1493.78
             info_dict[health_plan] = 1493.78 * 12
-        elif coverage == 'Employee + Spouse':
+        elif health_coverage == 'Employee + Spouse (Health)':
             monthly_value += 1114.82
             value += 1114.82 * 12
             monthly_info_dict[health_plan] = 1114.82
             info_dict[health_plan] = 1114.82 * 12
 
     if health_plan == 'Optima Equity HDHP':
-        if coverage == 'Employee':
+        if health_coverage == 'Employee (Health)':
             monthly_value += 527.54
             value += 527.54 * 12
             monthly_info_dict[health_plan] = 527.54
             info_dict[health_plan] = 527.54 * 12
-        elif coverage == 'Employee + 1 Child':
+        elif health_coverage == 'Employee + 1 Child (Health)':
             monthly_value += 836.47
             value += 836.47 * 12
             monthly_info_dict[health_plan] = 836.47
             info_dict[health_plan] = 836.47 * 12
-        elif coverage == 'Family':
+        elif health_coverage == 'Family (Health)':
             monthly_value += 1417.11
             value += 1417.11 * 12
             monthly_info_dict[health_plan] = 1417.11
             info_dict[health_plan] = 1417.11 * 12
-        elif coverage == 'Employee + Spouse':
+        elif health_coverage == 'Employee + Spouse (Health)':
             monthly_value += 1076.19
             value += 1076.19 * 12
             monthly_info_dict[health_plan] = 1076.19
             info_dict[health_plan] = 1076.19 * 12
 
     if health_plan == 'Optima Health POS + FSA':
-        if coverage == 'Employee':
+        if health_coverage == 'Employee (Health)':
             monthly_value += 479.43
             monthly_value += (2750 * .22) / 13  # Tax Benefit
             value += 479.43 * 12
@@ -263,7 +298,7 @@ def employee():
             info_dict[health_plan] = ((2750 * .22) + (479.43 * 12))
             info_dict['Flexible Spending Account (FSA)'] = (2750 * .22)
 
-        elif coverage == 'Employee + 1 Child':
+        elif health_coverage == 'Employee + 1 Child (Health)':
             monthly_value += 861.69
             monthly_value += (7750 * .22) / 13  # Tax Benefit
             value += 861.69 * 12
@@ -273,7 +308,7 @@ def employee():
             info_dict[health_plan] = ((861.69 * 12) + (7750 * .22))
             info_dict['Flexible Spending Account (FSA)'] = (7750 * .22)
 
-        elif coverage == 'Family':
+        elif health_coverage == 'Family (Health)':
             monthly_value += 1493.78
             monthly_value += (7750 * .22) / 13  # Tax Benefit
             value += 1493.78 * 12
@@ -283,7 +318,7 @@ def employee():
             info_dict[health_plan] = ((7750 * .22) + (1493.78 * 12))
             info_dict['Flexible Spending Account (FSA)'] = (7750 * .22)
 
-        elif coverage == 'Employee + Spouse':
+        elif health_coverage == 'Employee + Spouse (Health)':
             monthly_value += 1114.82
             monthly_value += (2750 * .22) / 13
             value += 1114.82 * 12
@@ -293,8 +328,8 @@ def employee():
             info_dict[health_plan] = ((2750 * .22) + (1114.82 * 12))
             info_dict['Flexible Spending Account (FSA)'] = (2750 * .22)
 
-    if health_plan == 'Optima Equity HDHP + FSA':
-        if coverage == 'Employee':
+    if health_plan == 'Optima Equity HDHP + FSA (Health)':
+        if health_coverage == 'Employee':
             monthly_value += 527.54
             monthly_value += (2750 * .22) / 13
             value += 527.54 * 12
@@ -304,7 +339,7 @@ def employee():
             info_dict[health_plan] = ((2750 * .22) + (527.54 * 12))
             info_dict['Flexible Spending Account (FSA)'] = (2750 * .22)
 
-        elif coverage == 'Employee + 1 Child':
+        elif health_coverage == 'Employee + 1 Child (Health)':
             monthly_value += 836.47
             monthly_value += (7750 * .22) / 13
             value += 836.47 * 12
@@ -314,7 +349,7 @@ def employee():
             info_dict[health_plan] = ((836.47 * 12) + (7750 * .22))
             info_dict['Flexible Spending Account (FSA)'] = (7750 * .22)
 
-        elif coverage == 'Family':
+        elif health_coverage == 'Family (Health)':
             monthly_value += 1417.11
             monthly_value += (7750 * .22) / 13  # Tax Benefit
             value += 1417.11 * 12
@@ -324,7 +359,7 @@ def employee():
             info_dict[health_plan] = ((7750 * .22) + (1417.11 * 12))
             info_dict['Flexible Spending Account (FSA)'] = (7750 * .22)
 
-        elif coverage == 'Employee + Spouse':
+        elif health_coverage == 'Employee + Spouse (Health)':
             monthly_value += 1076.19
             monthly_value += (2750 * .22) / 13
             value += 1076.19 * 12
@@ -335,7 +370,7 @@ def employee():
             info_dict['Flexible Spending Account (FSA)'] = (2750 * .22)
 
     if health_plan == 'Optima Equity HDHP + HSA':
-        if coverage == 'Employee':
+        if health_coverage == 'Employee (Health)':
             monthly_value += 527.54
             monthly_value += 62.50
             value += (527.54 + 62.50) * 12
@@ -344,7 +379,7 @@ def employee():
             info_dict[health_plan] = (62.50 + 527.54) * 12
             info_dict['Health Savings Account (HSA)'] = 62.50 * 12
 
-        elif coverage == 'Employee + 1 Child':
+        elif health_coverage == 'Employee + 1 Child (Health)':
             monthly_value += 836.47
             monthly_value += 125
             value += (836.47 + 125) * 12
@@ -353,7 +388,7 @@ def employee():
             info_dict[health_plan] = (836.47 + 125) * 12
             info_dict['Health Savings Account (HSA)'] = 125 * 12
 
-        elif coverage == 'Family':
+        elif health_coverage == 'Family (Health)':
             monthly_value += 1417.11 + 125
             value += (1417.11 + 125) * 12
             monthly_info_dict[health_plan] = 1417.11 + 125
@@ -361,7 +396,7 @@ def employee():
             info_dict[health_plan] = (1417.11 + 125) * 12
             info_dict['Health Savings Account (HSA)'] = 125 * 12
 
-        elif coverage == 'Employee + Spouse':
+        elif health_coverage == 'Employee + Spouse (Health)':
             monthly_value += 1076.19 + 125
             value += (1076.19 + 125) * 12
             monthly_info_dict[health_plan] = 1076.19 + 125
@@ -370,50 +405,50 @@ def employee():
             info_dict['Health Savings Account (HSA)'] = 125 * 12
 
     if den_plan == 'Delta Dental':
-        if coverage == 'Employee':
+        if dental_coverage == 'Employee (Dental)':
             monthly_value += 21.42
             value += 21.42 * 12
             monthly_info_dict[den_plan] = 21.42
             info_dict[den_plan] = 21.42 * 12
-        elif coverage == 'Employee + 1 Child':
+        elif dental_coverage == 'Employee + 1 Child (Dental)':
             monthly_value += 38.92
             value += 38.92 * 12
             monthly_info_dict[den_plan] = 38.92
             info_dict[den_plan] = 38.92 * 12
-        elif coverage == 'Family' or coverage == 'Employee + Spouse':
+        elif dental_coverage == 'Family (Dental)' or dental_coverage == 'Employee + Spouse (Dental)':
             monthly_value += 66.91
             value += 66.91 * 12
             monthly_info_dict[den_plan] = 66.91
             info_dict[den_plan] = 66.91 * 12
 
     if vis_plan == 'Vision Service Plan':
-        if coverage == 'Employee':
-            monthly_value += 1.8
-            value += 1.8 * 12
-            monthly_info_dict[vis_plan] = 1.8
-            info_dict[vis_plan] = 1.8 * 12
-        elif coverage == 'Employee + 1 Child':
-            monthly_value += 2.8
-            value += 2.8 * 12
-            monthly_info_dict[vis_plan] = 2.8
-            info_dict[vis_plan] = 2.8 * 12
-        elif coverage == 'Family':
-            monthly_value += 2.8
-            value += 2.8 * 12
-            monthly_info_dict[vis_plan] = 2.8
-            info_dict[vis_plan] = 2.8 * 12
-        elif coverage == 'Employee + Spouse':
-            monthly_value += 2.8
-            value += 2.8 * 12
-            monthly_info_dict[vis_plan] = 2.8
-            info_dict[vis_plan] = 2.8 * 12
+        if vision_coverage == 'Employee (Vision)':
+            monthly_value += 1.80
+            value += 1.80 * 12
+            monthly_info_dict[vis_plan] = 1.80
+            info_dict[vis_plan] = 1.80 * 12
+        elif vision_coverage == 'Employee + 1 Child (Vision)':
+            monthly_value += 2.80
+            value += 2.80 * 12
+            monthly_info_dict[vis_plan] = 2.80
+            info_dict[vis_plan] = 2.80 * 12
+        elif vision_coverage == 'Family (Vision)':
+            monthly_value += 2.80
+            value += 2.80 * 12
+            monthly_info_dict[vis_plan] = 2.80
+            info_dict[vis_plan] = 2.80 * 12
+        elif vision_coverage == 'Employee + Spouse (Vision)':
+            monthly_value += 2.80
+            value += 2.80 * 12
+            monthly_info_dict[vis_plan] = 2.80
+            info_dict[vis_plan] = 2.80 * 12
 
     if vis_plan == 'Vision INS City':
-        if coverage == 'Employee':
-            monthly_value += 0.8
-            value += 0.8 * 12
-            monthly_info_dict[vis_plan] = 0.8
-            info_dict[vis_plan] = 0.8 * 12
+        if vision_coverage == 'Employee (Vision)':
+            monthly_value += 0.80
+            value += 0.80 * 12
+            monthly_info_dict[vis_plan] = 0.80
+            info_dict[vis_plan] = 0.80 * 12
         else:
             monthly_value += 0
             value += 0 * 12
@@ -421,7 +456,7 @@ def employee():
             info_dict[vis_plan] = 0 * 12
     try:
         for i in range(len(df)):
-            if df.iloc[i].name == (last_name, first_name) or \
+            if df.iloc[i].name == (first_name, last_name) or \
                     df.iloc[i].loc['Location Code Desc'] == job_title:
                 ret_plan = df.iloc[i].loc['Retirement Plan']
 
@@ -525,55 +560,6 @@ def employee():
     # Graph results
     # Set figure and axis with 2 pie charts
 
-    fig1, ax1 = plt.subplots(figsize=(12, 9))
-    fig1.tight_layout()
-    fig1.set_facecolor('white')
-
-    ax1.pie(info_dict.values(), explode=explode[:len(info_dict.values())],
-            labels=labels,
-            colors=colors[:len(info_dict.values())], autopct='%1.1f%%', startangle=190,
-            pctdistance=0.7, labeldistance=1.05, radius=0.83)
-
-    ax1.legend(labels=[str('{:s}, ${:,.2f}').format(i, j) for i, j in zip(info_dict.keys(), info_dict.values())],
-               shadow=True, loc=(0.8, 0.75), fontsize=10)
-
-    ax1.set_title('{:s} Annual Compensation Package\n {:s}'.format(name, job_title.capitalize()), fontweight='bold',
-                  fontsize=30)
-
-    fig1.suptitle('A(n) {:s} at NNVA earns ${:,.2f} yearly\n'
-                  'Health Plan: {:s}\n'
-                  'Dental Plan: {:s}\n'
-                  'Vision Plan: {:s}\n'
-                  'Retirement Plan: {:s}\n'
-                  'Life Plan: {:s}'.format(job_title.capitalize(), float(value),
-                                           health_plan, den_plan, vis_plan, ret_plan, life_plan),
-                  x=0.521, y=0.15, fontsize=17)
-
-    fig2, ax2 = plt.subplots(figsize=(18.5, 12.5))
-    fig2.tight_layout()
-    fig2.set_facecolor('white')
-
-    ax2.pie(monthly_info_dict.values(), explode=explode[:len(monthly_info_dict.values())],
-            labels=monthly_labels,
-            colors=colors[:len(monthly_info_dict.values())], autopct='%1.1f%%', startangle=190,
-            pctdistance=0.7, labeldistance=1.05, radius=0.65)
-
-    ax2.legend(labels=[str('{:s}, ${:,.2f}').format(i, float(j)) for i, j in
-                       zip(monthly_info_dict.keys(), monthly_info_dict.values())],
-               shadow=True, loc=(0.65, 0.75), fontsize=13)
-
-    ax2.set_title('{:s} Monthly Compensation Package\n {:s}'.format(name, job_title.capitalize()), fontweight='bold',
-                  fontsize=25)
-
-    fig2.suptitle('A(n) {:s} at NNVA earns ${:,.2f} monthly\n'
-                  'Health Plan: {:s}\n'
-                  'Dental Plan: {:s}\n'
-                  'Vision Plan: {:s}\n'
-                  'Retirement Plan: {:s}\n'
-                  'Life Plan: {:s}'.format(job_title.capitalize(), float(monthly_value),
-                                           health_plan, den_plan, vis_plan, ret_plan, life_plan),
-                  x=0.521, y=0.18, fontsize=15)
-
     # Initialize Add'tl Benefits Ticket
     benefits_title = '**Additional Benefits**'
     text1 = "\n**FITNESS BENEFITS**\n" \
@@ -594,9 +580,11 @@ def employee():
             "Long Term Disability (LTD)\n" \
             "\tCity provided core coverage: 40%\n" \
             "\tEmployee buy up: 10%\n" \
-            "\tBenefit Waiting Period: After 90 days\n" \
-            "\n**PAID HOLIDAYS**\n Regular, full-time City employees are eligible for paid holidays,\n provided they are in an active " \
-            "pay status the working day prior to the holiday.\n\t• New Year’s Day (January 1)\n\t• Dr. Martin Luther King’s Birthday (Third Monday in January)\n" \
+            "\tBenefit Waiting Period: After 90 days\n".format(ymca_benefit, ymca_cost, ymca_nnva_cost,
+                                                               one_benefit, one_cost, one_nnva_cost,
+                                                               riv_benefit, riv_cost, riv_nnva_cost)
+    text2 = "\n**PAID HOLIDAYS**\nRegular, full-time City employees are eligible for paid holidays, provided\nthey are in an active " \
+            "pay status the working day prior to the holiday.\n\n\t• New Year’s Day (January 1)\n\t• Dr. Martin Luther King’s Birthday (Third Monday in January)\n" \
             "\t• President’s Day & George Washington’s Birthday (Third Monday in February)\n" \
             "\t• Memorial Day (Last Monday in May)\n" \
             "\t• Juneteenth (June 19)\n" \
@@ -606,12 +594,17 @@ def employee():
             "\t• Thanksgiving Day (Fourth Thursday in November)\n" \
             "\t• The Friday following Thanksgiving Day\n" \
             "\t• Christmas Eve (December 24) – Observed as four hours only, and provided\n\tthat December 24 falls during the normal Monday through Friday work week\n" \
-            "\t• Christmas Day (December 25)\n\n".format(ymca_benefit, ymca_cost, ymca_nnva_cost,
-                                                         one_benefit, one_cost, one_nnva_cost,
-                                                         riv_benefit, riv_cost, riv_nnva_cost)
+            "\t• Christmas Day (December 25)\n\n"
 
     df_annual = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=['Annual Compensation Package'])
+    fig_df = df_annual.drop([df_annual.index[0]])
+
+    fig = go.Figure(data=[go.Pie(values=fig_df['Annual Compensation Package'], labels=labels[1:])])
+    fig.update_traces(hoverinfo='label+value+percent')
+    fig.update_layout(annotations=[dict(font_size=1000)])
+
     df_annual.loc['Total'] = value
+
     df_monthly = pd.DataFrame.from_dict(data=monthly_info_dict, orient='index',
                                         columns=['Monthly Compensation Package'])
     df_monthly.loc['Total'] = monthly_value
@@ -620,41 +613,52 @@ def employee():
                                na_action='ignore')
     main_df.fillna("", inplace=True)
 
-    return df_annual, df_monthly, main_df, text1, benefits_title, fig1, fig2
+    return df_annual, df_monthly, main_df, text1, text2, benefits_title, fig
 
 
-try:
-    user = employee()
-    df = user[0]
-    monthly_df = user[1]
-    total_df = user[2]
-    text = user[3]
-    benefits_title = user[4]
-    annual_fig = user[5]
-    monthly_fig = user[6]
+user = employee()
+final_df = user[0]
+monthly_df = user[1]
+total_df = user[2]
+text = user[4]
+benefits_title = user[5]
+figure = user[6]
 
-    st.pyplot(annual_fig)
-    df = df.applymap(lambda x: "${:,.2f}".format(float(x)),
-                     na_action='ignore')
-    st.table(df)
+st.plotly_chart(figure, use_container_width=True, sharing='streamlit')
 
-    st.pyplot(monthly_fig)
-    monthly_df = monthly_df.applymap(lambda x: "${:,.2f}".format(float(x)),
-                                     na_action='ignore')
-    st.table(monthly_df)
-    st.header(benefits_title)
+with st.expander("See Full Breakdown"):
+    col1, col2, col3, col4, col5 = st.columns(5)
+    with col1:
+        st.write("Base Pay")
+        st.write("${:,.2f}".format(final_df['Annual Compensation Package'].iloc[0]))
+    with col2:
+        st.subheader(" + ")
+    with col3:
+        st.write("City Paid Benefits")
+        st.write("${:,.2f}".format(final_df['Annual Compensation Package'].iloc[1:-1].sum()))
+    with col4:
+        st.subheader("\t=")
+    with col5:
+        st.write("Total Comp.")
+        st.write("${:,.2f}".format(final_df['Annual Compensation Package'].iloc[-1]))
 
-    st.text(text)
-    st.subheader(
-        "**PAID PERSONAL LEAVE (PPL)**\nPaid personal leave covers vacation, absences for personal business and"
-        "\nsome medical leave. Regular, full-time employees and 24-hour "
-        "fire employees\nearn PPL according to the following bi-weekly accrual schedule:")
-    st.table(PPL_df.set_index('YEARS OF SERVICE'))
-    st.subheader("\n**PAID MEDICAL LEAVE (PML)**\n"
-                 "Paid medical leave can be used for certain personal "
-                 "and family\nmedical-related absences. Regular, full-time employees accrue 2.75 hours\n"
-                 "bi-weekly and 24-hour fire employees accrue 7.5 hours bi-weekly.")
-except TypeError:
-    pass
+    final_df = final_df.applymap(lambda x: "${:,.2f}".format(float(x)),
+                                 na_action='ignore')
+    st.table(final_df)
+
+
+st.title(benefits_title)
+
+st.subheader(text)
+st.subheader(
+    "**PAID PERSONAL LEAVE (PPL)**\nPaid personal leave covers vacation, absences for personal business and"
+    "\nsome medical leave. Regular, full-time employees and 24-hour "
+    "fire employees\nearn PPL according to the following bi-weekly accrual schedule:")
+st.table(PPL_df.set_index('YEARS OF SERVICE'))
+st.subheader("\n**PAID MEDICAL LEAVE (PML)**\n"
+             "Paid medical leave can be used for certain personal "
+             "and family\nmedical-related absences. Regular, full-time employees accrue 2.75 hours\n"
+             "bi-weekly and 24-hour fire employees accrue 7.5 hours bi-weekly.")
+
 if button_clicked == 'GO':
     employee()
