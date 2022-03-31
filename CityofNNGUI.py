@@ -659,7 +659,12 @@ finally:
     st.subheader("\n**PAID MEDICAL LEAVE (PML)**\n"
                  "Paid medical leave can be used for certain personal "
                  "and family\nmedical-related absences. Regular, full-time employees accrue 2.75 hours\n"
-                 "bi-weekly and 24-hour fire employees accrue 7.5 hours bi-weekly.")
+                 "bi-weekly and 24-hour fire employees accrue 7.5 hours bi-weekly.\n\n"
+                 "\n**TUITION REIMBURSEMENT**\n"
+                 "Tuition reimbursement is intended to encourage employee development and improve work-related "
+                 "knowledge, skills, and abilities through the pursuit of educational programs leading to a college "
+                 "degree or industry-related certification or licensure that enhances City operations. Tuition "
+                 "reimbursement is a benefit for active full-time employees. ")
 
 
 if button_clicked == 'GO':
