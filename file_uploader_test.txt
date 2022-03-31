@@ -1,0 +1,12 @@
+file = st.sidebar.file_uploader("Upload Database:", 'xlsx')
+try:
+    df = load_data()
+except FileNotFoundError:
+    if file:
+        df2 = pd.read_excel(file, index_col=[1, 2], header=[2], sheet_name=None)
+        df1 = pd.concat(df2.values(), axis=0)
+        df = df1[:8]
+    elif file is None:
+        st.error("Please upload the sample data in the left sidebar to calculate entire package.\n"
+                 "This is for testing purposes only.")
+        pass
