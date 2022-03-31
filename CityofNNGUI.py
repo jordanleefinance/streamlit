@@ -590,7 +590,7 @@ def employee():
                       title_font_family="Times New Roman",
                       title_font_color="blue",
                       legend_font_family="Times New Roman",
-                      title_yref="top")
+                      title_yanchor="top")
 
     df_annual.loc['Total'] = value
 
