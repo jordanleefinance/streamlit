@@ -17,6 +17,7 @@ def load_data():
     df = pd.read_excel(start, index_col=[1, 2], header=[2], sheet_name='Sheet1')
     df1 = pd.concat(df.values, axis=0)
     df1 = df1[:8]
+    print(df1)
     return df1
 
 
