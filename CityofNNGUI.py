@@ -74,6 +74,9 @@ button_clicked = st.sidebar.button("GO")
 try:
     df = load_data()
 except FileNotFoundError:
+    df = pd.read_excel(r"C:\Users\data\Sampledata.xls", index_col=[1, 2], header=[2], sheet_name='Sheet1')
+    df1 = pd.concat(df.values, axis=0)
+    df1 = df1[:8]
     if file:
         df2 = pd.read_excel(file, index_col=[1, 2], header=[2], sheet_name=None)
         df1 = pd.concat(df2.values(), axis=0)
@@ -647,7 +650,7 @@ finally:
             "\t• Christmas Eve (December 24) – Observed as four hours only, and provided\n\tthat December 24 falls during the normal Monday through Friday work week\n" \
             "\t• Christmas Day (December 25)\n\n"
     st.subheader(text)
-    
+
     st.subheader(
         "**PAID PERSONAL LEAVE (PPL)**\nPaid personal leave covers vacation, absences for personal business and"
         "\nsome medical leave. Regular, full-time employees and 24-hour "
