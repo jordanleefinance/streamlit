@@ -49,7 +49,8 @@ statement = "Below is a personalized statement prepared specifically for you. Th
             "\n\t• Open left sidebar to make adjustments to the modeled employee" \
             "\n\n\t• Hover your mouse over different pie pieces to view the benefit name and value" \
             "\n\n\t• Click on the values in the legend to adjust the amount of benefits on the chart" \
-            "\n\n\t• See the full breakdown by clicking the dropdown bar below the graph\n\n" \
+            "\n\n\t• See the full breakdown by clicking the dropdown bar below the graph" \
+            "\n\n\t• See the additional benefits by clicking the dropdown bar below the full breakdown\n\n" \
             "This graph will automatically be created and changed as data is entered. " \
             "The graph excludes your base salary in order to highlight your core benefits. " \
             "This statement is designed to show how much your service is valued by us."
