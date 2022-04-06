@@ -594,6 +594,7 @@ def employee():
         text=fig_df.index
     )])
     fig.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False, hoverinfo='label+value+percent')
+    fig.update_layout(barmode='stack')
 
     df_annual.loc['Total'] = value
 
