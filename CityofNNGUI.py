@@ -586,8 +586,6 @@ def employee():
     columns_list = list(new_df.columns.values)
     print(columns_list)
     fig_df = df_annual.drop([df_annual.index[0]])
-    df_annual['Benefits'] = df_annual.index.values
-    df_annual['Benefit Amounts'] = df_annual['Annual Compensation Package']
 
     fig = go.Figure(data=[go.Pie(values=fig_df['Annual Compensation Package'], labels=labels[1:])])
     fig.update_traces(hoverinfo='label+value+percent')
@@ -607,10 +605,11 @@ def employee():
                                         columns=['Monthly Compensation Package'])
     df_monthly.loc['Total'] = monthly_value
     main_df = pd.concat([df_annual, df_monthly], axis=1)
-    main_df = main_df['Annual Compensation Package'].apply(lambda x: "${:,.2f}".format(float(x)), na_action='ignore')
+    main_df = main_df.applymap(lambda x: "${:,.2f}".format(float(x)), na_action='ignore')
     main_df.fillna("", inplace=True)
 
     return df_annual, df_monthly, main_df, text1, fig, name, fig2
+
 
 try:
     user = employee()
@@ -625,7 +624,6 @@ try:
     st.subheader(title)
     st.plotly_chart(figure, use_container_width=True, sharing='streamlit')
     st.plotly_chart(figure2, use_container_width=True, sharing='streamlit')
-
 
     with st.expander("See Full Breakdown"):
         col1, col2, col3, col4, col5 = st.columns(5)
@@ -654,8 +652,11 @@ finally:
         benefits_title = '**Additional Benefits**'
         st.title(benefits_title)
 
-        text = "\n**PAID HOLIDAYS**\nRegular, full-time City employees are eligible for paid holidays, provided\nthey are in an active " \
-               "pay status the working day prior to the holiday.\n\n\t• New Year’s Day (January 1)\n\t• Dr. Martin Luther King’s Birthday (Third Monday in January)\n" \
+        text = "\n**PAID HOLIDAYS**\n" \
+               "Regular, full-time City employees are eligible for paid holidays, provided\nthey are in an active " \
+               "pay status the working day prior to the holiday.\n\n" \
+               "\t• New Year’s Day (January 1)\n" \
+               "\t• Dr. Martin Luther King’s Birthday (Third Monday in January)\n" \
                "\t• President’s Day & George Washington’s Birthday (Third Monday in February)\n" \
                "\t• Memorial Day (Last Monday in May)\n" \
                "\t• Juneteenth (June 19)\n" \
@@ -664,7 +665,8 @@ finally:
                "\t• Veterans Day (November 11)\n" \
                "\t• Thanksgiving Day (Fourth Thursday in November)\n" \
                "\t• The Friday following Thanksgiving Day\n" \
-               "\t• Christmas Eve (December 24) – Observed as four hours only, and provided\n\tthat December 24 falls during the normal Monday through Friday work week\n" \
+               "\t• Christmas Eve (December 24) – Observed as four hours only, and provided\n" \
+               "\tthat December 24 falls during the normal Monday through Friday work week\n" \
                "\t• Christmas Day (December 25)\n\n"
         st.subheader(text)
 
