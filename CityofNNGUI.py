@@ -582,19 +582,18 @@ def employee():
 
     df_annual = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=['Annual Compensation Package'])
     fig_df = df_annual.drop([df_annual.index[0]])
+    fig_df['Benefits'] = fig_df.index.to_list()
 
     fig = go.Figure(data=[go.Pie(values=fig_df['Annual Compensation Package'], labels=labels[1:])])
     fig.update_traces(hoverinfo='label+value+percent')
     fig.update_layout(annotations=[dict(font_size=1000)])
 
     fig2 = go.Figure(data=[go.Bar(
-        x=fig_df.index,
-        y=fig_df['Annual Compensation Package'],
-        showlegend=True
-    )])
+        x=fig_df['Benefits'],
+        y=fig_df['Annual Compensation Package'])])
 
-    fig.update_traces(textfont_size=12, textposition="outside", hoverinfo='label+value+percent')
-    fig.update_layout(barmode='stack')
+    fig2.update_traces(textfont_size=12, textposition="outside")
+    fig2.update_layout(barmode='stack')
 
     df_annual.loc['Total'] = value
 
