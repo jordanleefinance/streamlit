@@ -582,6 +582,9 @@ def employee():
                                                                riv_benefit, riv_cost, riv_nnva_cost)
 
     df_annual = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=['Annual Compensation Package'])
+    new_df = df_annual.T
+    print(df_annual)
+    print(new_df)
     fig_df = df_annual.drop([df_annual.index[0]])
     df_annual['Benefits'] = df_annual.index.values
     df_annual['Benefit Amounts'] = df_annual['Annual Compensation Package']
@@ -590,9 +593,9 @@ def employee():
     fig.update_traces(hoverinfo='label+value+percent')
     fig.update_layout(annotations=[dict(font_size=1000)])
 
-    fig2 = px.bar(df_annual, x=df_annual['Benefit Amounts'],
-                  y=['Benefits'],
-                  color=df_annual['Benefits'],
+    fig2 = px.bar(new_df, x=new_df.index.values,
+                  y=new_df.columns.values,
+                  color=new_df.index.values,
                   barmode='stack',
                   labels=labels)
 
