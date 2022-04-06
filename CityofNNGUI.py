@@ -593,7 +593,7 @@ def employee():
 
     fig2 = px.bar(new_df, x=new_df.index.values,
                   y=columns_list,
-                  color=new_df.index.values,
+                  color=columns_list,
                   barmode='stack',
                   labels=labels)
 
