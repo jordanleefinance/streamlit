@@ -593,7 +593,7 @@ def employee():
 
     fig = go.Figure(data=[go.Pie(values=fig_df['Annual Compensation Package'], labels=labels[1:])])
     fig.update_traces(hoverinfo='label+value+percent')
-    fig.update_layout(annotations=[dict(font_size=1000)], legend_title='Benefits', legend_font_size=20,
+    fig.update_layout(annotations=[dict(font_size=1000)], legend_title='Benefits', legend_font_size=16,
                       legend_title_font_size=24)
 
     fig2 = px.bar(new_df, x=new_df.index,
