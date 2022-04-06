@@ -583,14 +583,16 @@ def employee():
 
     df_annual = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=['Annual Compensation Package'])
     fig_df = df_annual.drop([df_annual.index[0]])
+    df_annual['Benefits'] = df_annual.index.values
+    df_annual['Benefit Amounts'] = df_annual['Annual Compensation Package']
 
     fig = go.Figure(data=[go.Pie(values=fig_df['Annual Compensation Package'], labels=labels[1:])])
     fig.update_traces(hoverinfo='label+value+percent')
     fig.update_layout(annotations=[dict(font_size=1000)])
 
-    fig2 = px.bar(df_annual, x=df_annual.index,
-                  y=df_annual['Annual Compensation Package'],
-                  color=df_annual.index,
+    fig2 = px.bar(df_annual, y=df_annual['Benefits'],
+                  x=df_annual['Benefit Amounts'],
+                  color=df_annual['Benefits'],
                   barmode='stack',
                   labels=labels)
 
@@ -603,8 +605,7 @@ def employee():
                                         columns=['Monthly Compensation Package'])
     df_monthly.loc['Total'] = monthly_value
     main_df = pd.concat([df_annual, df_monthly], axis=1)
-    main_df = main_df.applymap(lambda x: "${:,.2f}".format(float(x)),
-                               na_action='ignore')
+    main_df = main_df['Annual Compensation Package'].apply(lambda x: "${:,.2f}".format(float(x)), na_action='ignore')
     main_df.fillna("", inplace=True)
 
     return df_annual, df_monthly, main_df, text1, fig, name, fig2
