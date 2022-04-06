@@ -3,6 +3,7 @@ import webbrowser
 import streamlit as st
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
+import plotly.express as px
 from openpyxl import load_workbook
 import os
 
@@ -588,9 +589,10 @@ def employee():
     fig.update_traces(hoverinfo='label+value+percent')
     fig.update_layout(annotations=[dict(font_size=1000)])
 
-    fig2 = go.Figure(data=[go.Bar(
-        x=fig_df['Benefits'],
-        y=fig_df['Annual Compensation Package'])])
+    fig2 = px.bar(fig_df, x=fig_df['Benefits'],
+                  y=fig_df['Annual Compensation Package'],
+                  color=fig_df['Benefits'],
+                  barmode='stack')
 
     fig2.update_traces(textfont_size=12, textposition="outside")
     fig2.update_layout(barmode='stack')
@@ -633,7 +635,7 @@ try:
             st.write("City Paid Benefits")
             st.write("${:,.2f}".format(final_df['Annual Compensation Package'].iloc[1:-1].sum()))
         with col4:
-            st.subheader("\t=")
+            st.subheader("\t\t=")
         with col5:
             st.write("Total Comp.")
             st.write("${:,.2f}".format(final_df['Annual Compensation Package'].iloc[-1]))
