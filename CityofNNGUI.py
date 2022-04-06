@@ -459,8 +459,8 @@ def employee():
             info_dict[vis_plan] = 0 * 12
     try:
         for i in range(len(df)):
-            if df.iloc[i].name == (first_name, last_name) or \
-                    df.iloc[i].loc['Location Code Desc'] == job_title:
+            # df.iloc[i].name == (first_name, last_name) or
+            if df.iloc[i].loc['Location Code Desc'] == job_title:
                 ret_plan = df.iloc[i].loc['Retirement Plan']
 
                 if ret_plan == 'NNER  CITY OF NEWPORT NEWS RET':
