@@ -489,10 +489,10 @@ def employee():
                 info_dict[ret_health_plan] = float(retiree_data) * 12
 
                 life_data = df.iloc[i].loc['Life City']
-                monthly_value += float(life_data)
-                value += float(life_data) * 12
-                monthly_info_dict[life_plan] = float(life_data)
-                info_dict[life_plan] = float(life_data) * 12
+                monthly_value += round(float(life_data), 2)
+                value += round(float(life_data) * 12, 2)
+                monthly_info_dict[life_plan] = round(float(life_data), 2)
+                info_dict[life_plan] = round(float(life_data) * 12, 2)
 
                 if ret_plan == 'VRSH - Virginia Retirement System Hybrid':
                     hybrid_data = df.iloc[i].loc['DC Plan City']
@@ -509,10 +509,10 @@ def employee():
                     info_dict['Hybrid Mandatory (Optional)'] = float(hybrid_optional_data) * 12
 
                     VLDP_data = df.iloc[i].loc['VLDP City']
-                    monthly_value += float(VLDP_data)
-                    value += float(VLDP_data) * 12
-                    monthly_info_dict['Disability (Hybrid Only)'] = float(VLDP_data)
-                    info_dict['Disability (Hybrid Only)'] = float(VLDP_data) * 12
+                    monthly_value += round(float(VLDP_data), 2)
+                    value += round(float(VLDP_data) * 12, 2)
+                    monthly_info_dict['Disability (Hybrid Only)'] = round(float(VLDP_data), 2)
+                    info_dict['Disability (Hybrid Only)'] = round(float(VLDP_data) * 12, 2)
     except NameError:
         pass
 
@@ -629,7 +629,7 @@ try:
     title = "{:s} Compensation Package".format(n)
     st.subheader(title)
     st.plotly_chart(figure, use_container_width=True, sharing='streamlit')
-    st.plotly_chart(figure2, use_container_width=True, sharing='streamlit')
+    # st.plotly_chart(figure2, use_container_width=True, sharing='streamlit')
 
     with st.expander("See Full Breakdown"):
         col1, col2, col3, col4, col5 = st.columns(5)
