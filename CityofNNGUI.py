@@ -587,6 +587,14 @@ def employee():
     fig.update_traces(hoverinfo='label+value+percent')
     fig.update_layout(annotations=[dict(font_size=1000)])
 
+    fig2 = go.Figure(data=[go.Bar(
+        x = fig_df.index,
+        y = fig_df['Annual Compensation Package']
+    )])
+    fig.update_traces(hoverinfo='label+value+percent')
+    fig.update_layout(annotations=[dict(font_size=1000)])
+
+
     df_annual.loc['Total'] = value
 
     df_monthly = pd.DataFrame.from_dict(data=monthly_info_dict, orient='index',
@@ -597,19 +605,22 @@ def employee():
                                na_action='ignore')
     main_df.fillna("", inplace=True)
 
-    return df_annual, df_monthly, main_df, text1, fig, name
+    return df_annual, df_monthly, main_df, text1, fig, name, fig2
 
 try:
     user = employee()
-    n = user[-1]
+    n = user[5]
     final_df = user[0]
     monthly_df = user[1]
     total_df = user[2]
     figure = user[4]
+    figure2 = user[6]
 
     title = "{:s} Compensation Package".format(n)
     st.subheader(title)
     st.plotly_chart(figure, use_container_width=True, sharing='streamlit')
+    st.plotly_chart(figure2, use_container_width=True, sharing='streamlit')
+
 
     with st.expander("See Full Breakdown"):
         col1, col2, col3, col4, col5 = st.columns(5)
