@@ -13,22 +13,26 @@ path1 = r"C:\Users\data"
 path = r"C:\Users\jorda\OneDrive\Documents\GitHub\streamlit\Sampledata.xlsx"
 DB_path = os.path.join(path1, "Sampledata.xlsx")
 
-workbook = load_workbook(filename="Sampledata.xlsx")
-workbook = workbook['Sheet1']
-data = workbook.values
-df = pd.DataFrame(data)
-header = df.iloc[2]
-df = df.iloc[3:, :]
-df = df.drop([0], axis=1)
-df.columns = header[1:]
-df = df.set_index(['Last Name', 'First Name'])[:8]
-
 @st.cache
 def load_data():
     df = pd.read_excel(start, index_col=[1, 2], header=[2], sheet_name='Sheet1')
     df1 = pd.concat(df.values, axis=0)
     df1 = df1[:8]
     return df1
+
+
+try:
+    workbook = load_workbook(filename="Sampledata.xlsx", data_only=True)
+    workbook = workbook['Sheet1']
+    data = workbook.values
+    df = pd.DataFrame(data)
+    header = df.iloc[2]
+    df = df.iloc[3:, :]
+    df = df.drop([0], axis=1)
+    df.columns = header[1:]
+    df = df.set_index(['Last Name', 'First Name'])[:8]
+except FileNotFoundError:
+    df = load_data()
 
 
 file_path = r'C:/Users/JordanLee/OneDrive/Documents/MFinA/' \
