@@ -590,14 +590,13 @@ def employee():
     fig.update_traces(hoverinfo='label+value+percent')
     fig.update_layout(annotations=[dict(font_size=1000)])
 
-    fig2 = px.bar(df_annual, y=df_annual['Benefits'],
-                  x=df_annual['Benefit Amounts'],
+    fig2 = px.bar(df_annual, x=df_annual['Benefit Amounts'],
+                  y=['Benefits'],
                   color=df_annual['Benefits'],
                   barmode='stack',
                   labels=labels)
 
     fig2.update_traces(textfont_size=12, textposition="outside")
-    fig2.update_layout(barmode='stack')
 
     df_annual.loc['Total'] = value
 
