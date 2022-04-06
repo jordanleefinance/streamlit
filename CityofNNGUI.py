@@ -583,8 +583,8 @@ def employee():
 
     df_annual = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=['Annual Compensation Package'])
     new_df = df_annual.T
-    print(df_annual)
-    print(new_df)
+    columns_list = list(new_df.columns.values)
+    print(columns_list)
     fig_df = df_annual.drop([df_annual.index[0]])
     df_annual['Benefits'] = df_annual.index.values
     df_annual['Benefit Amounts'] = df_annual['Annual Compensation Package']
@@ -594,7 +594,7 @@ def employee():
     fig.update_layout(annotations=[dict(font_size=1000)])
 
     fig2 = px.bar(new_df, x=new_df.index.values,
-                  y=new_df.columns.values,
+                  y=columns_list,
                   color=new_df.index.values,
                   barmode='stack',
                   labels=labels)
