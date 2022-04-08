@@ -660,6 +660,15 @@ finally:
         benefits_title = '**Additional Benefits**'
         st.title(benefits_title)
 
+        st.subheader("\n**RETIREMENT HEALTH SAVINGS (RHS) PLAN**\n"
+                     "The Retirement Health Savings (RHS) Plan is a city-funded tax-advantaged spending account "
+                     "that provides regular active full-time employees of the City hired after February 28, 2010, "
+                     "the ability to accumulate assets on a tax-free basis, for reimbursements of qualified medical "
+                     "expenses during retirement.  The city contributes 3% of earnings on behalf of each eligible "
+                     "employee.  *Definition of Earnings: Average City full-time salary annualized and calculated"
+                     " at the beginning of each Fiscal Year.  For more information on the Retirement Health Savings "
+                     "(RHS) Plan, please visit https://www.nnva.gov/2673/Retirement-Health-Savings-Plan-RHS. ")
+
         text = "\n**PAID HOLIDAYS**\n" \
                "Regular, full-time City employees are eligible for paid holidays, provided\nthey are in an active " \
                "pay status the working day prior to the holiday.\n\n" \
