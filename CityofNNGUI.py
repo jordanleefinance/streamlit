@@ -623,7 +623,7 @@ def employee():
 
     )
     plots.update_layout(height=600, width=1500, legend_title="Legend", legend_font_size=14,
-                        legend_title_font_size=19)
+                        legend_title_font_size=19, legend=dict(orientation="v", xanchor="right", x=1.02))
     plots.update_annotations(y=1.085, selector={'text': 'Voluntary Benefits'})
     plots.update_annotations(y=0.41, selector={'text': 'Mandatory Benefits'})
     plots.update_annotations(y=1.002, selector={'text': 'Full Compensation Package'})
@@ -656,7 +656,7 @@ try:
     figure = user[4]
     # figure2 = user[6]
 
-    title = "{:s} Compensation Package".format(n)
+    title = "\t\t{:s} Compensation Package".format(n)
     st.subheader(title)
     st.plotly_chart(figure, use_container_width=True, sharing='streamlit')
     # st.plotly_chart(figure2, use_container_width=True, sharing='streamlit')
