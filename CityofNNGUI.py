@@ -593,32 +593,29 @@ def employee():
     # fig_df = fig_df.T
     columns_list = list(fig_df.columns.values)
 
-    fig = go.Figure(data=[go.Pie(values=df_annual['Annual Compensation Package'], labels=labels,
-                                 pull=[i for i in explode[:len(labels)]])])
-    fig.update_traces(hoverinfo='label+value+percent')
-    fig.update_layout(annotations=[dict(font_size=1000)], legend_title='Benefits', legend_font_size=16,
-                      legend_title_font_size=24)
-
     plots = make_subplots(
         rows=1, cols=2,
-        specs=[[{"type": "pie"}, {"type": "pie"}]]
+        specs=[[{"type": "pie"}, {"type": "pie"}]],
+        subplot_titles=("Benefits Package", "Full Compensation Package")
     )
     plots.add_trace(
         go.Pie(values=df_annual['Annual Compensation Package'], labels=labels,
-                                 pull=[i for i in explode[:len(labels)]]),
+               pull=[i for i in explode[:len(labels)]],
+               hoverinfo='label+value+percent'),
         row=1, col=2
 
     )
 
     plots.add_trace(
-        go.Pie(values=fig_df['Annual Compensation Package'], labels=labels[1:]),
+        go.Pie(values=fig_df['Annual Compensation Package'], labels=labels[1:],
+               hoverinfo='label+value+percent'),
         row=1, col=1
 
     )
-    plots.update_layout(height=1000, width=1500, legend_title="Benefits", legend_font_size=16,
-                      legend_title_font_size=24)
+    plots.update_layout(height=600, width=1500, legend_title="Benefits", legend_font_size=12,
+                        legend_title_font_size=20)
 
-    #fig2 = px.bar(new_df, x=new_df.index, y=columns_list, barmode='stack', labels=labels)
+    # fig2 = px.bar(new_df, x=new_df.index, y=columns_list, barmode='stack', labels=labels)
 
     # fig2.update_traces(textfont_size=12, textposition="outside")
     # fig2.update_xaxes(title='Compensation')
@@ -634,7 +631,7 @@ def employee():
     main_df = main_df.applymap(lambda x: "${:,.2f}".format(float(x)), na_action='ignore')
     main_df.fillna("", inplace=True)
 
-    return df_annual, df_monthly, main_df, text1, fig, name, plots
+    return df_annual, df_monthly, main_df, text1, plots, name
 
 
 try:
@@ -644,12 +641,12 @@ try:
     monthly_df = user[1]
     total_df = user[2]
     figure = user[4]
-    figure2 = user[6]
+    # figure2 = user[6]
 
     title = "{:s} Compensation Package".format(n)
     st.subheader(title)
     st.plotly_chart(figure, use_container_width=True, sharing='streamlit')
-    st.plotly_chart(figure2, use_container_width=True, sharing='streamlit')
+    # st.plotly_chart(figure2, use_container_width=True, sharing='streamlit')
 
     with st.expander("See Full Breakdown"):
         col1, col2, col3, col4, col5 = st.columns(5)
