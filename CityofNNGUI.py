@@ -589,7 +589,7 @@ def employee():
 
     df_annual = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=['Annual Compensation Package'])
     new_df = df_annual.drop([df_annual.index[0], df_annual.index[1], df_annual.index[2], df_annual.index[3]])
-    fig_df = df_annual.drop([df_annual.index[0], df_annual.loc[ret_plan]])
+    fig_df = df_annual.loc[[health_plan, den_plan, vis_plan], :]
     # fig_df = fig_df.T
     columns_list = list(fig_df.columns.values)
 
