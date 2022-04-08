@@ -154,7 +154,7 @@ def employee():
     monthly_labels = []
     colors = ['lightblue', 'firebrick', 'goldenrod', 'hotpink', 'green', 'purple', 'orange', 'blue', 'lightgreen',
               'lightcyan', 'violet']
-    explode = [0.002, 0.152, 0.252, 0.392, 0.452, 0.532, 0.622, 0.712, 0.805, 0.905, 0.95, 1.05]
+    explode = [0.00, 0.152, 0.252, 0.392, 0.452, 0.532, 0.622, 0.712, 0.805, 0.905, 0.95, 1.05]
     name = user_name
     first_name = ''
     last_name = ''
@@ -169,7 +169,7 @@ def employee():
     vis_plan = user_vision_plan
     ret_plan = ''
     lt_dis_plan = 'Long Term Dis.'
-    ret_health_plan = 'Retiree Health'
+    ret_health_plan = 'RHS'
     life_plan = 'Basic Life'
 
     # job type test
@@ -592,7 +592,8 @@ def employee():
     fig_df = fig_df.T
     columns_list = list(fig_df.columns.values)
 
-    fig = go.Figure(data=[go.Pie(values=df_annual['Annual Compensation Package'], labels=labels)])
+    fig = go.Figure(data=[go.Pie(values=df_annual['Annual Compensation Package'], labels=labels,
+                                 pull=[i for i in explode[:len(labels)]])])
     fig.update_traces(hoverinfo='label+value+percent')
     fig.update_layout(annotations=[dict(font_size=1000)], legend_title='Benefits', legend_font_size=16,
                       legend_title_font_size=24)
@@ -665,7 +666,7 @@ finally:
                      "that provides regular active full-time employees of the City hired after February 28, 2010, "
                      "the ability to accumulate assets on a tax-free basis, for reimbursements of qualified medical "
                      "expenses during retirement.  The city contributes 3% of earnings on behalf of each eligible "
-                     "employee.  *Definition of Earnings: Average City full-time salary annualized and calculated"
+                     "employee.  \n\n*Definition of Earnings: Average City full-time salary annualized and calculated"
                      " at the beginning of each Fiscal Year.  For more information on the Retirement Health Savings "
                      "(RHS) Plan, please visit https://www.nnva.gov/2673/Retirement-Health-Savings-Plan-RHS. ")
 
