@@ -606,11 +606,14 @@ def employee():
     plots.add_trace(
         go.Pie(values=df_annual['Annual Compensation Package'], labels=labels,
                                  pull=[i for i in explode[:len(labels)]]),
-        row=1, col=1
+        row=1, col=2,
+        legendgroup='group', legendgrouptitle_text="Full Compensation Package"
     )
 
     plots.add_trace(
-        go.Pie(values=fig_df['Annual Compensation Package'], labels=labels[1:])
+        go.Pie(values=fig_df['Annual Compensation Package'], labels=labels[1:]),
+        row=1, col=1,
+        legendgroup='group1', legendgrouptitle_text="Benefits Package"
     )
     plots.update_layout(height=600, width=800)
 
@@ -759,7 +762,7 @@ finally:
         st.subheader("\n**VOLUNTARY WHOLE LIFE INSURANCE**\n"
                      "Full-time city employees have the option of enrolling in Whole Life Insurance, "
                      "with Optional Riders, "
-                     "regardless of their retirement plan ")
+                     "regardless of their retirement plan. ")
 
         st.subheader("\n**VOLUNTARY TAX ADVANTAGE 457 DEFERRED COMPENSATION AND ROTH IRA PLAN OPTIONS**\n"
                      "Our third party vendor is committed to helping employees build retirement security through "
