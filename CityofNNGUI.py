@@ -600,7 +600,8 @@ def employee():
                       legend_title_font_size=24)
 
     plots = make_subplots(
-        rows=1, cols=2
+        rows=1, cols=2,
+        specs=[[{"type": "pie"}, {"type": "pie"}]]
     )
     plots.add_trace(
         go.Pie(values=df_annual['Annual Compensation Package'], labels=labels,
