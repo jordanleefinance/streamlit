@@ -605,19 +605,18 @@ def employee():
     )
     plots.add_trace(
         go.Pie(values=df_annual['Annual Compensation Package'], labels=labels,
-                                 pull=[i for i in explode[:len(labels)]],
-               legendgroup='Full Compensation Package'),
+                                 pull=[i for i in explode[:len(labels)]]),
         row=1, col=2
 
     )
 
     plots.add_trace(
-        go.Pie(values=fig_df['Annual Compensation Package'], labels=labels[1:],
-               legendgroup='Benefits Package'),
+        go.Pie(values=fig_df['Annual Compensation Package'], labels=labels[1:]),
         row=1, col=1
 
     )
-    plots.update_layout(height=600, width=800)
+    plots.update_layout(height=1000, width=1500, legend_title="Benefits", legend_font_size=16,
+                      legend_title_font_size=24)
 
     #fig2 = px.bar(new_df, x=new_df.index, y=columns_list, barmode='stack', labels=labels)
 
