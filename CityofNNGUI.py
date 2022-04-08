@@ -594,9 +594,10 @@ def employee():
     columns_list = list(fig_df.columns.values)
 
     plots = make_subplots(
-        rows=2, cols=2,
-        specs=[[{"type": "pie"}, {"type": "pie"}],
-               [{"type": "pie"}, {"rowspan": 1}]],
+        rows=3, cols=2,
+        specs=[[{"type": "pie"}, None],
+               [None, {"type": "pie"}],
+               [{"type": "pie"}, None]],
 
         subplot_titles=("Voluntary Benefits", "Full Compensation Package", "Mandatory Benefits")
     )
@@ -604,7 +605,7 @@ def employee():
         go.Pie(values=df_annual['Annual Compensation Package'], labels=labels,
                pull=[i for i in explode[:len(labels)]],
                hoverinfo='label+value+percent'),
-        row=1, col=2
+        row=2, col=2
 
     )
 
@@ -618,11 +619,14 @@ def employee():
     plots.add_trace(
         go.Pie(values=new_df['Annual Compensation Package'], labels=labels[4:],
                hoverinfo='label+value+percent'),
-        row=2, col=1
+        row=3, col=1
 
     )
     plots.update_layout(height=600, width=1500, legend_title="Legend", legend_font_size=14,
                         legend_title_font_size=19)
+    plots.update_annotations(y=1.2, selector={'text': 'Voluntary Benefits'})
+    plots.update_annotations(y=1.2, selector={'text': 'Mandatory Benefits'})
+    plots.update_annotations(y=1.2, selector={'text': 'Full Compensation Package'})
 
     # fig2 = px.bar(new_df, x=new_df.index, y=columns_list, barmode='stack', labels=labels)
 
