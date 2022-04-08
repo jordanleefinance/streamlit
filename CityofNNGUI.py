@@ -595,8 +595,9 @@ def employee():
 
     plots = make_subplots(
         rows=2, cols=2,
-        specs=[[{"type": "domain"}, {"type": "domain"}],
-               [{"colspan": 2}, None]],
+        specs=[[{"type": "pie"}, {"type": "pie"}],
+               [{"colspan": 2}, {"type": "pie"}]],
+
         subplot_titles=("Voluntary Benefits", "Full Compensation Package", "Mandatory Benefits")
     )
     plots.add_trace(
