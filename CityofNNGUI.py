@@ -332,8 +332,8 @@ def employee():
             info_dict[health_plan] = ((2750 * .22) + (1114.82 * 12))
             info_dict['Flexible Spending Account (FSA)'] = (2750 * .22)
 
-    if health_plan == 'Optima Equity HDHP + FSA (Health)':
-        if health_coverage == 'Employee':
+    if health_plan == 'Optima Equity HDHP + FSA':
+        if health_coverage == 'Employee (Health)':
             monthly_value += 527.54
             monthly_value += (2750 * .22) / 13
             value += 527.54 * 12
