@@ -154,7 +154,7 @@ def employee():
     monthly_labels = []
     colors = ['lightblue', 'firebrick', 'goldenrod', 'hotpink', 'green', 'purple', 'orange', 'blue', 'lightgreen',
               'lightcyan', 'violet']
-    explode = [0.00, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002]
+    explode = [0.00, 0.02, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002]
     name = user_name
     first_name = ''
     last_name = ''
