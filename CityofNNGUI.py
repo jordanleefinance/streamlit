@@ -589,15 +589,15 @@ def employee():
     df_annual = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=['Annual Compensation Package'])
     new_df = df_annual.T
     columns_list = list(new_df.columns.values)
-    # fig_df = df_annual.drop([df_annual.index[0]])
+    fg_df = df_annual.drop([df_annual.index[0]])
 
     fig = go.Figure(data=[go.Pie(values=df_annual['Annual Compensation Package'], labels=labels)])
     fig.update_traces(hoverinfo='label+value+percent')
     fig.update_layout(annotations=[dict(font_size=1000)], legend_title='Benefits', legend_font_size=16,
                       legend_title_font_size=24)
 
-    fig2 = px.bar(new_df, x=new_df.index,
-                  y=columns_list,
+    fig2 = px.bar(new_df, x=new_df.index[1:],
+                  y=columns_list[1:],
                   barmode='stack',
                   labels=labels)
 
@@ -630,7 +630,7 @@ try:
     title = "{:s} Compensation Package".format(n)
     st.subheader(title)
     st.plotly_chart(figure, use_container_width=True, sharing='streamlit')
-    # st.plotly_chart(figure2, use_container_width=True, sharing='streamlit')
+    st.plotly_chart(figure2, use_container_width=True, sharing='streamlit')
 
     with st.expander("See Full Breakdown"):
         col1, col2, col3, col4, col5 = st.columns(5)
