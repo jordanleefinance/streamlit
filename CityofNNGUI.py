@@ -598,7 +598,8 @@ def employee():
         specs=[[{"type": "pie"}, {"rowspan": 2, "type": "pie"}],
                [{"type": "pie"}, None]],
 
-        subplot_titles=("Voluntary Benefits", "Full Compensation Package", "Mandatory Benefits")
+        subplot_titles=("Voluntary Benefits", "Full Compensation Package", "Mandatory Benefits"),
+        horizontal_spacing=0.05
     )
     plots.add_trace(
         go.Pie(values=df_annual['Annual Compensation Package'], labels=labels,
