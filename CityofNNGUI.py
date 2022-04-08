@@ -605,15 +605,17 @@ def employee():
     )
     plots.add_trace(
         go.Pie(values=df_annual['Annual Compensation Package'], labels=labels,
-                                 pull=[i for i in explode[:len(labels)]]),
+                                 pull=[i for i in explode[:len(labels)]],
+               legendgroup='Full Compensation Package'),
         row=1, col=2
-        # legendgroup='group', legendgrouptitle_text="Full Compensation Package"
+
     )
 
     plots.add_trace(
-        go.Pie(values=fig_df['Annual Compensation Package'], labels=labels[1:]),
+        go.Pie(values=fig_df['Annual Compensation Package'], labels=labels[1:],
+               legendgroup='Benefits Package'),
         row=1, col=1
-        #legendgroup='group1', legendgrouptitle_text="Benefits Package"
+
     )
     plots.update_layout(height=600, width=800)
 
