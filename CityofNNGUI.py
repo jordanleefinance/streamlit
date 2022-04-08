@@ -623,7 +623,7 @@ def employee():
 
     )
     plots.update_layout(height=600, width=1500, legend_title="Legend", legend_font_size=14,
-                        legend_title_font_size=19, legend=dict(orientation="v", x=1.32))
+                        legend_title_font_size=19, legend=dict(orientation="v", x=1.15))
     plots.update_annotations(y=1.085, selector={'text': 'Voluntary Benefits'})
     plots.update_annotations(y=0.41, selector={'text': 'Mandatory Benefits'})
     plots.update_annotations(y=1.002, selector={'text': 'Full Compensation Package'})
