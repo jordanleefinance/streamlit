@@ -589,14 +589,14 @@ def employee():
 
     df_annual = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=['Annual Compensation Package'])
     new_df = df_annual.drop([df_annual.index[0], df_annual.index[1], df_annual.index[2], df_annual.index[3]])
-    fig_df = df_annual.drop([df_annual.index[0]])
+    fig_df = df_annual.drop([df_annual.index[0], df_annual.loc[ret_plan]])
     # fig_df = fig_df.T
     columns_list = list(fig_df.columns.values)
 
     plots = make_subplots(
         rows=2, cols=2,
-        specs=[[{"type": "pie"}, {"type": "pie"}],
-               [{"type": "pie"}, {"type": "pie"}]],
+        specs=[[{"type": "domain"}, {"type": "domain"}],
+               [{"colspan": 2}, None]],
         subplot_titles=("Voluntary Benefits", "Full Compensation Package", "Mandatory Benefits")
     )
     plots.add_trace(
