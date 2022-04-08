@@ -4,6 +4,7 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import plotly.express as px
+from plotly.subplots import make_subplots
 from openpyxl import load_workbook
 import os
 
@@ -589,7 +590,7 @@ def employee():
     df_annual = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=['Annual Compensation Package'])
     new_df = df_annual.T
     fig_df = df_annual.drop([df_annual.index[0]])
-    fig_df = fig_df.T
+    # fig_df = fig_df.T
     columns_list = list(fig_df.columns.values)
 
     fig = go.Figure(data=[go.Pie(values=df_annual['Annual Compensation Package'], labels=labels,
@@ -598,15 +599,26 @@ def employee():
     fig.update_layout(annotations=[dict(font_size=1000)], legend_title='Benefits', legend_font_size=16,
                       legend_title_font_size=24)
 
-    fig2 = px.bar(new_df, x=new_df.index,
-                  y=columns_list,
-                  barmode='stack',
-                  labels=labels)
+    plots = make_subplots(
+        rows=1, cols=2
+    )
+    plots.add_trace(
+        go.Pie(values=df_annual['Annual Compensation Package'], labels=labels,
+                                 pull=[i for i in explode[:len(labels)]]),
+        row=1, col=1
+    )
 
-    fig2.update_traces(textfont_size=12, textposition="outside")
-    fig2.update_xaxes(title='Compensation')
-    fig2.update_yaxes(title='Total Value ($)')
-    fig2.update_layout(legend_title='Benefits')
+    plots.add_trace(
+        go.Pie(values=fig_df['Annual Compensation Package'], labels=labels[1:])
+    )
+    plots.update_layout(height=600, width=800)
+
+    #fig2 = px.bar(new_df, x=new_df.index, y=columns_list, barmode='stack', labels=labels)
+
+    # fig2.update_traces(textfont_size=12, textposition="outside")
+    # fig2.update_xaxes(title='Compensation')
+    # fig2.update_yaxes(title='Total Value ($)')
+    # fig2.update_layout(legend_title='Benefits')
 
     df_annual.loc['Total'] = value
 
@@ -617,7 +629,7 @@ def employee():
     main_df = main_df.applymap(lambda x: "${:,.2f}".format(float(x)), na_action='ignore')
     main_df.fillna("", inplace=True)
 
-    return df_annual, df_monthly, main_df, text1, fig, name, fig2
+    return df_annual, df_monthly, main_df, text1, fig, name, plots
 
 
 try:
