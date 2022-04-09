@@ -136,6 +136,7 @@ def employee_part_time():
 
 
 def employee():
+    global fig_df
     ymca_cost = 0
     ymca_nnva_cost = 0
     ymca_benefit = 0
@@ -587,7 +588,10 @@ def employee():
 
     df_annual = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=['Annual Compensation Package'])
     new_df = df_annual.drop([df_annual.index[0], df_annual.index[1], df_annual.index[2], df_annual.index[3]])
-    fig_df = df_annual.loc[[health_plan, den_plan, vis_plan], :]
+    try:
+        fig_df = df_annual.loc[[health_plan, den_plan, vis_plan], :]
+    except KeyError:
+        pass
     if health_plan == "Optima Health POS + FSA" or health_plan == "Optima Equity HDHP + FSA":
         fig_df = df_annual.loc[[health_plan, "Flexible Spending Account (FSA)", den_plan, vis_plan], :]
         new_df = df_annual.drop(
@@ -598,10 +602,13 @@ def employee():
             [df_annual.index[0], df_annual.index[1], df_annual.index[2], df_annual.index[3], df_annual.index[4]])
     elif health_plan == "None":
         fig_df = df_annual.loc[[den_plan, vis_plan], :]
+        new_df = df_annual.drop([df_annual.index[0], df_annual.index[1], df_annual.index[2]])
     elif den_plan == "None":
         fig_df = df_annual.loc[[health_plan, vis_plan], :]
+        new_df = df_annual.drop([df_annual.index[0], df_annual.index[1], df_annual.index[2]])
     elif vis_plan == "None":
         fig_df = df_annual.loc[[health_plan, den_plan], :]
+        new_df = df_annual.drop([df_annual.index[0], df_annual.index[1], df_annual.index[2]])
 
     # fig_df = fig_df.T
 
