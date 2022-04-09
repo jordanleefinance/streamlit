@@ -592,8 +592,10 @@ def employee():
     fig_df = df_annual.loc[[health_plan, den_plan, vis_plan], :]
     if health_plan == "Optima Health POS + FSA" or health_plan == "Optima Equity HDHP + FSA":
         fig_df = df_annual.loc[[health_plan, "Flexible Spending Account (FSA)", den_plan, vis_plan], :]
+        new_df = df_annual.drop([df_annual.index[0], df_annual.index[1], df_annual.index[2], df_annual.index[3], df_annual.index[4]])
     elif health_plan == "Optima Equity HDHP + HSA":
         fig_df = df_annual.loc[[health_plan, "Health Savings Account (HSA)", den_plan, vis_plan], :]
+        new_df = df_annual.drop([df_annual.index[0], df_annual.index[1], df_annual.index[2], df_annual.index[3], df_annual.index[4]])
 
     # fig_df = fig_df.T
 
@@ -681,8 +683,14 @@ try:
             st.write("Total Comp.")
             st.write("${:,.2f}".format(final_df['Annual Compensation Package'].iloc[-1]))
 
+
+        def df_style():
+            return "font-weight: bold"
+
+        last_row = pd.IndexSlice[final_df.index[final_df.index == "Total"], :]
+
         final_df = final_df.applymap(lambda x: "${:,.2f}".format(float(x)),
-                                     na_action='ignore')
+                                     na_action='ignore').style.applymap(df_style, subset=last_row)
         st.table(final_df)
 except TypeError:
     pass
