@@ -684,14 +684,14 @@ try:
             st.write("${:,.2f}".format(final_df['Annual Compensation Package'].iloc[-1]))
 
 
-        def df_style():
+        def df_style(val):
             return "font-weight: bold"
 
         last_row = pd.IndexSlice[final_df.index[final_df.index == "Total"], :]
 
         final_df = final_df.applymap(lambda x: "${:,.2f}".format(float(x)),
                                      na_action='ignore').style.applymap(df_style, subset=last_row)
-        st.table(final_df)
+        st.dataframe(final_df)
 except TypeError:
     pass
 
