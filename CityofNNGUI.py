@@ -623,6 +623,9 @@ def employee():
         fig_df = df_annual.loc[[vis_plan], :]
         new_df = df_annual.drop([df_annual.index[0], df_annual.index[1]])
 
+    else:
+        fig_df = df_annual
+
 
     # fig_df = fig_df.T
 
