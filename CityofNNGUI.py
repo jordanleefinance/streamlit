@@ -678,7 +678,7 @@ try:
             st.write("City Paid Benefits")
             st.write("${:,.2f}".format(final_df['Annual Compensation Package'].iloc[1:-1].sum()))
         with col4:
-            st.subheader("\t\t=")
+            st.subheader("\t\n\t=")
         with col5:
             st.write("**Total Comp.**")
             st.write("**${:,.2f}**".format(final_df['Annual Compensation Package'].iloc[-1]))
