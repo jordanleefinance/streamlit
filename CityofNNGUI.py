@@ -623,7 +623,7 @@ def employee():
         fig_df = df_annual.loc[[vis_plan], :]
         new_df = df_annual.drop([df_annual.index[0], df_annual.index[1]])
 
-    else:
+    elif health_plan == "None" and den_plan == "None" and vis_plan == "None":
         fig_df = df_annual
         new_df = df_annual.drop([df_annual.index[0]])
 
