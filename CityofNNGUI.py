@@ -56,9 +56,7 @@ statement = "Below is a personalized statement prepared specifically for you. Th
             "\n\n\t• Click on the legend items to adjust the amount of benefits on the charts" \
             "\n\n\t• See the full breakdown by clicking the dropdown bar below the graph" \
             "\n\n\t• See the additional benefits by clicking the dropdown bar below the full breakdown\n\n" \
-            "This graph will automatically be created and changed as data is entered. " \
-            "The graph excludes your base salary in order to highlight your core benefits. " \
-            "This statement is designed to show how much your service is valued by us."
+
 st.write(statement, unsafe_allow_html=False)
 
 st.sidebar.subheader("""**Total Compensation**""")
@@ -666,6 +664,8 @@ try:
     st.subheader(title)
     st.plotly_chart(figure, use_container_width=True, sharing='streamlit')
     # st.plotly_chart(figure2, use_container_width=True, sharing='streamlit')
+    st.write("This graph will automatically be created and changed as data is entered. "
+             "This statement is designed to show how much your service is valued by us.")
 
     with st.expander("See Full Breakdown"):
         col1, col2, col3, col4, col5 = st.columns(5)
