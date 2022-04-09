@@ -664,7 +664,7 @@ try:
     st.subheader(title)
     st.plotly_chart(figure, use_container_width=True, sharing='streamlit')
     # st.plotly_chart(figure2, use_container_width=True, sharing='streamlit')
-    st.write("This graph will automatically be created and changed as data is entered. "
+    st.caption("This graph will automatically be created and changed as data is entered. "
              "This statement is designed to show how much your service is valued by us.")
 
     with st.expander("See Full Breakdown"):
