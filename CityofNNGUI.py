@@ -136,7 +136,7 @@ def employee_part_time():
 
 
 def employee():
-    global fig_df
+    global fig_df, new_df
     ymca_cost = 0
     ymca_nnva_cost = 0
     ymca_benefit = 0
@@ -589,7 +589,6 @@ def employee():
     df_annual = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=['Annual Compensation Package'])
     try:
         fig_df = df_annual.loc[[health_plan, den_plan, vis_plan], :]
-        new_df = df_annual.drop([df_annual.index[0], df_annual.index[1], df_annual.index[2], df_annual.index[3]])
     except KeyError:
         pass
     if health_plan == "Optima Health POS + FSA" or health_plan == "Optima Equity HDHP + FSA":
