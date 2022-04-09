@@ -680,8 +680,8 @@ try:
         with col4:
             st.subheader("\t\t=")
         with col5:
-            st.write("Total Comp.")
-            st.write("${:,.2f}".format(final_df['Annual Compensation Package'].iloc[-1]))
+            st.write("**Total Comp.**")
+            st.write("**${:,.2f}**".format(final_df['Annual Compensation Package'].iloc[-1]))
 
 
         def df_style(val):
