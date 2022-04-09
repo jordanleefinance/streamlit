@@ -625,6 +625,7 @@ def employee():
 
     else:
         fig_df = df_annual
+        new_df = df_annual.drop([df_annual.index[0]])
 
 
     # fig_df = fig_df.T
