@@ -620,6 +620,7 @@ def employee():
         fig_df = df_annual.loc[[den_plan], :]
         new_df = df_annual.drop([df_annual.index[0], df_annual.index[1]])
     if health_plan == "None" and den_plan == "None" and vis_plan != "None":
+        st.write("DESTINATION")
         fig_df = df_annual.loc[[vis_plan], :]
         new_df = df_annual.drop([df_annual.index[0], df_annual.index[1]])
 
