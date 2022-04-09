@@ -595,20 +595,34 @@ def employee():
     if health_plan == "Optima Health POS + FSA" or health_plan == "Optima Equity HDHP + FSA":
         fig_df = df_annual.loc[[health_plan, "Flexible Spending Account (FSA)", den_plan, vis_plan], :]
         new_df = df_annual.drop(
-            [df_annual.index[0], df_annual.index[1], df_annual.index[2], df_annual.index[3], df_annual.index[4]])
+            [df_annual.index[0], df_annual.index[1], df_annual.index[2], df_annual.index[3], df_annual.index[4],
+             df_annual.index[5]])
     elif health_plan == "Optima Equity HDHP + HSA":
         fig_df = df_annual.loc[[health_plan, "Health Savings Account (HSA)", den_plan, vis_plan], :]
         new_df = df_annual.drop(
-            [df_annual.index[0], df_annual.index[1], df_annual.index[2], df_annual.index[3], df_annual.index[4]])
-    elif health_plan == "None":
+            [df_annual.index[0], df_annual.index[1], df_annual.index[2], df_annual.index[3], df_annual.index[4],
+             df_annual.index[5]])
+
+    elif health_plan == "None" and den_plan != "None" and vis_plan != "None":
         fig_df = df_annual.loc[[den_plan, vis_plan], :]
         new_df = df_annual.drop([df_annual.index[0], df_annual.index[1], df_annual.index[2]])
-    elif den_plan == "None":
+    elif den_plan == "None" and health_plan != "None" and vis_plan != "None":
         fig_df = df_annual.loc[[health_plan, vis_plan], :]
         new_df = df_annual.drop([df_annual.index[0], df_annual.index[1], df_annual.index[2]])
-    elif vis_plan == "None":
+    elif vis_plan == "None" and den_plan != "None" and health_plan != "None":
         fig_df = df_annual.loc[[health_plan, den_plan], :]
         new_df = df_annual.drop([df_annual.index[0], df_annual.index[1], df_annual.index[2]])
+
+    elif health_plan != "None" and den_plan == "None" and vis_plan == "None":
+        fig_df = df_annual.loc[[health_plan], :]
+        new_df = df_annual.drop([df_annual.index[0], df_annual.index[1]])
+    elif health_plan == "None" and den_plan != "None" and vis_plan == "None":
+        fig_df = df_annual.loc[[den_plan], :]
+        new_df = df_annual.drop([df_annual.index[0], df_annual.index[1]])
+    elif health_plan == "None" and den_plan == "None" and vis_plan != "None":
+        fig_df = df_annual.loc[[vis_plan], :]
+        new_df = df_annual.drop([df_annual.index[0], df_annual.index[1]])
+
 
     # fig_df = fig_df.T
 
