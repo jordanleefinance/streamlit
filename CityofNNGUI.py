@@ -699,7 +699,7 @@ def employee():
                pull=[i for i in explode[:len(labels)]],
                hoverinfo='label+value+percent'),
         row=1, col=2,
-        hover_data={'Annual Compensation Package': '$:.2f'}
+        hovertemplate='%{value:$.2f}<extra></extra>'
 
     )
 
