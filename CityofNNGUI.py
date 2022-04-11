@@ -718,9 +718,9 @@ def employee():
     plots.update_layout(height=900, width=1200, legend_title="Legend", legend_font_size=14,
                         legend_title_font_size=19, legend=dict(orientation="v", x=1.75))
 
-    plots.update_annotations(y=0.55, selector={'text': 'Voluntary Benefits'})
+    '''plots.update_annotations(y=0.55, selector={'text': 'Voluntary Benefits'})
     plots.update_annotations(y=0.55, selector={'text': 'Mandatory Benefits'})
-    plots.update_annotations(y=1.15, selector={'text': 'Full Compensation Package'})
+    plots.update_annotations(y=1.15, selector={'text': 'Full Compensation Package'})'''
 
 
     # fig2 = px.bar(new_df, x=new_df.index, y=columns_list, barmode='stack', labels=labels)
