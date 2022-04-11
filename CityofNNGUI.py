@@ -72,7 +72,7 @@ elif user_jobtype == "Part Time":
 
 user_health_coverage = st.sidebar.selectbox("Health Coverage", (
     "Employee (Health)", "Employee + 1 Child (Health)", "Employee + Spouse (Health)", "Family (Health)"))
-user_health_plan = st.sidebar.selectbox("Health Plan", ('None', 'Optima Health POS', 'Optima Health POS + FSA',
+user_health_plan = st.sidebar.selectbox("Health Plan", ('Optima Health POS + FSA', 'Optima Health POS', 'None',
                                                         'Optima Equity HDHP', 'Optima Equity HDHP + FSA',
                                                         'Optima Equity HDHP + HSA'))
 
@@ -594,43 +594,111 @@ def employee():
         print(new_df)
     except KeyError:
         pass
+
+    voluntary_labels = labels
+    mandatory_labels = labels
     if health_plan == "Optima Health POS + FSA" or health_plan == "Optima Equity HDHP + FSA":
-        fig_df = df_annual.loc[[health_plan, "Flexible Spending Account (FSA)", den_plan, vis_plan], :]
-        new_df = df_annual.drop(
-            [df_annual.index[0], df_annual.index[1], df_annual.index[2], df_annual.index[3], df_annual.index[4],
-             df_annual.index[5]])
+        if den_plan != "None" or vis_plan != "None":
+            fig_df = df_annual.loc[[health_plan, "Flexible Spending Account (FSA)", den_plan, vis_plan], :]
+            new_df = df_annual.drop(
+                [df_annual.index[0], df_annual.index[1], df_annual.index[2], df_annual.index[3], df_annual.index[4],
+                 df_annual.index[5]])
+            voluntary_labels = voluntary_labels[1:5]
+            mandatory_labels = mandatory_labels[5:]
+
+        elif den_plan == "None" and vis_plan != "None":
+            fig_df = df_annual.loc[[health_plan, "Flexible Spending Account (FSA)", vis_plan], :]
+            new_df = df_annual.drop(
+                [df_annual.index[0], df_annual.index[1], df_annual.index[2], df_annual.index[3],
+                 df_annual.index[4]])
+            voluntary_labels = voluntary_labels[1:4]
+            mandatory_labels = mandatory_labels[4:]
+
+        elif vis_plan == "None" and den_plan != "None":
+            fig_df = df_annual.loc[[health_plan, "Flexible Spending Account (FSA)", den_plan], :]
+            new_df = df_annual.drop(
+                [df_annual.index[0], df_annual.index[1], df_annual.index[2], df_annual.index[3], df_annual.index[4]])
+            voluntary_labels = voluntary_labels[1:4]
+            mandatory_labels = mandatory_labels[4:]
+
+        elif den_plan == "None" and vis_plan == "None":
+            fig_df = df_annual.loc[[health_plan, "Flexible Spending Account (FSA)"], :]
+            new_df = df_annual.drop(
+                [df_annual.index[0], df_annual.index[1], df_annual.index[2], df_annual.index[3]])
+            voluntary_labels = voluntary_labels[1:3]
+            mandatory_labels = mandatory_labels[3:]
+
+
     if health_plan == "Optima Equity HDHP + HSA":
-        fig_df = df_annual.loc[[health_plan, "Health Savings Account (HSA)", den_plan, vis_plan], :]
-        new_df = df_annual.drop(
-            [df_annual.index[0], df_annual.index[1], df_annual.index[2], df_annual.index[3], df_annual.index[4],
-             df_annual.index[5]])
+        if den_plan != "None" or vis_plan != "None":
+            fig_df = df_annual.loc[[health_plan, "Health Savings Account (HSA)", den_plan, vis_plan], :]
+            new_df = df_annual.drop(
+                [df_annual.index[0], df_annual.index[1], df_annual.index[2], df_annual.index[3], df_annual.index[4],
+                 df_annual.index[5]])
+            voluntary_labels = voluntary_labels[1:5]
+            mandatory_labels = mandatory_labels[5:]
+
+        elif den_plan == "None" and vis_plan != "None":
+            fig_df = df_annual.loc[[health_plan, "Health Savings Account (HSA)", vis_plan], :]
+            new_df = df_annual.drop(
+                [df_annual.index[0], df_annual.index[1], df_annual.index[2], df_annual.index[3],
+                 df_annual.index[4]])
+            voluntary_labels = voluntary_labels[1:4]
+            mandatory_labels = mandatory_labels[4:]
+
+        elif vis_plan == "None" and den_plan != "None":
+            fig_df = df_annual.loc[[health_plan, "Health Savings Account (HSA)", den_plan], :]
+            new_df = df_annual.drop(
+                [df_annual.index[0], df_annual.index[1], df_annual.index[2], df_annual.index[3], df_annual.index[4]])
+            voluntary_labels = voluntary_labels[1:4]
+            mandatory_labels = mandatory_labels[4:]
+
+        elif den_plan == "None" and vis_plan == "None":
+            fig_df = df_annual.loc[[health_plan, "Health Savings Account (HSA)"], :]
+            new_df = df_annual.drop(
+                [df_annual.index[0], df_annual.index[1], df_annual.index[2], df_annual.index[3]])
+            voluntary_labels = voluntary_labels[1:3]
+            mandatory_labels = mandatory_labels[3:]
 
     if health_plan == "None" and den_plan != "None" and vis_plan != "None":
         fig_df = df_annual.loc[[den_plan, vis_plan], :]
         new_df = df_annual.drop([df_annual.index[0], df_annual.index[1], df_annual.index[2]])
+        voluntary_labels = voluntary_labels[1:3]
+        mandatory_labels = mandatory_labels[3:]
+
     if den_plan == "None" and health_plan != "None" and vis_plan != "None":
         fig_df = df_annual.loc[[health_plan, vis_plan], :]
         new_df = df_annual.drop([df_annual.index[0], df_annual.index[1], df_annual.index[2]])
+        voluntary_labels = voluntary_labels[1:3]
+        mandatory_labels = mandatory_labels[3:]
+
     if vis_plan == "None" and den_plan != "None" and health_plan != "None":
         fig_df = df_annual.loc[[health_plan, den_plan], :]
         new_df = df_annual.drop([df_annual.index[0], df_annual.index[1], df_annual.index[2]])
+        voluntary_labels = voluntary_labels[1:3]
+        mandatory_labels = mandatory_labels[3:]
 
     if health_plan != "None" and den_plan == "None" and vis_plan == "None":
         fig_df = df_annual.loc[[health_plan], :]
         new_df = df_annual.drop([df_annual.index[0], df_annual.index[1]])
+        voluntary_labels = voluntary_labels[1:2]
+        mandatory_labels = mandatory_labels[2:]
+
     if health_plan == "None" and den_plan != "None" and vis_plan == "None":
         fig_df = df_annual.loc[[den_plan], :]
         new_df = df_annual.drop([df_annual.index[0], df_annual.index[1]])
+        voluntary_labels = voluntary_labels[1:2]
+        mandatory_labels = mandatory_labels[2:]
+
     if health_plan == "None" and den_plan == "None" and vis_plan != "None":
-        st.write("DESTINATION")
         fig_df = df_annual.loc[[vis_plan], :]
         new_df = df_annual.drop(["Annual Salary", vis_plan])
+        voluntary_labels = voluntary_labels[1:2]
+        mandatory_labels = mandatory_labels[2:]
 
     if health_plan == "None" and den_plan == "None" and vis_plan == "None":
         fig_df = df_annual
         new_df = df_annual.drop([df_annual.index[0]])
-    print(fig_df)
-    print(new_df)
 
 
     # fig_df = fig_df.T
@@ -652,20 +720,21 @@ def employee():
     )
 
     plots.add_trace(
-        go.Pie(values=fig_df['Annual Compensation Package'], labels=labels[1:],
+        go.Pie(values=fig_df['Annual Compensation Package'], labels=voluntary_labels,
                hoverinfo='label+value+percent'),
         row=1, col=1
 
     )
 
     plots.add_trace(
-        go.Pie(values=new_df['Annual Compensation Package'], labels=labels[4:],
+        go.Pie(values=new_df['Annual Compensation Package'], labels=mandatory_labels,
                hoverinfo='label+value+percent'),
         row=2, col=1
 
     )
     plots.update_layout(height=600, width=1500, legend_title="Legend", legend_font_size=14,
                         legend_title_font_size=19, legend=dict(orientation="v", x=1.15))
+
     plots.update_annotations(y=1.085, selector={'text': 'Voluntary Benefits'})
     plots.update_annotations(y=0.41, selector={'text': 'Mandatory Benefits'})
     plots.update_annotations(y=1.002, selector={'text': 'Full Compensation Package'})
