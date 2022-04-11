@@ -688,17 +688,17 @@ def employee():
 
     plots = make_subplots(
         rows=2, cols=2,
-        specs=[[None, {"rowspan": 2, "type": "pie"}],
+        specs=[[{"colspan": 2, "type": "pie"}, None],
                [{"type": "pie"}, {"type": "pie"}]],
 
-        subplot_titles=("Voluntary Benefits", "Full Compensation Package", "Mandatory Benefits"),
+        subplot_titles=("Full Compensation Package", "Voluntary Benefits", "Mandatory Benefits"),
         horizontal_spacing=0.25
     )
     plots.add_trace(
         go.Pie(values=df_annual['Annual Compensation Package'], labels=labels,
                pull=[i for i in explode[:len(labels)]],
                hovertemplate='%{label}: %{value:$,.2f}<extra></extra>\t | \t%{percent}'),
-        row=1, col=2
+        row=1, col=1
 
     )
 
@@ -718,9 +718,9 @@ def employee():
     plots.update_layout(height=1000, width=1500, legend_title="Legend", legend_font_size=14,
                         legend_title_font_size=19, legend=dict(orientation="v", x=1.75))
 
-    plots.update_annotations(x=0.3, y=1.185, selector={'text': 'Voluntary Benefits'})
-    plots.update_annotations(x=0.3, y=0.525, selector={'text': 'Mandatory Benefits'})
-    plots.update_annotations(x=1.25, y=1.002, selector={'text': 'Full Compensation Package'})
+    plots.update_annotations(selector={'text': 'Voluntary Benefits'})
+    plots.update_annotations(selector={'text': 'Mandatory Benefits'})
+    plots.update_annotations(selector={'text': 'Full Compensation Package'})
 
 
     print(plots.data[2].domain)
