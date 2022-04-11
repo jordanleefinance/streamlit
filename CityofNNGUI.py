@@ -715,7 +715,7 @@ def employee():
         row=2, col=2
 
     )
-    plots.update_layout(height=1000, width=1500, legend_title="Legend", legend_font_size=14,
+    plots.update_layout(height=500, width=1500, legend_title="Legend", legend_font_size=14,
                         legend_title_font_size=19, legend=dict(orientation="v", x=1.75))
 
     plots.update_annotations(y=0.5, selector={'text': 'Voluntary Benefits'})
