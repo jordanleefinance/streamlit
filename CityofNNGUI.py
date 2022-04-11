@@ -692,7 +692,7 @@ def employee():
         specs=[[{"colspan": 2, "type": "pie"}, None],
                [{"type": "pie"}, {"type": "pie"}]],
 
-        subplot_titles=("Full Compensation Package", "Voluntary", "Mandatory"),
+        subplot_titles=("Full Compensation Package", "Voluntary Benefits", "Mandatory Benefits"),
         vertical_spacing=0.35, column_widths=[0.5, 0.5], row_heights=[0.47, 0.53]
     )
     plots.add_trace(
