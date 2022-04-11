@@ -717,6 +717,7 @@ def employee():
     )
     plots.update_layout(height=900, width=1200, legend_title="Legend", legend_font_size=14,
                         legend_title_font_size=19, legend=dict(orientation="v", x=1.75))
+    plots.update_traces(textposition='inside', textinfo='percent+label')
 
     # '''plots.update_annotations(y=0.55, selector={'text': 'Voluntary Benefits'})    plots.update_annotations(y=0.55,
     # selector={'text': 'Mandatory Benefits'})    plots.update_annotations(y=1.15,
