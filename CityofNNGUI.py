@@ -692,7 +692,7 @@ def employee():
         specs=[[{"colspan": 2, "type": "pie"}, None],
                [{"type": "pie"}, {"type": "pie"}]],
 
-        subplot_titles=("Full Compensation Package", "Voluntary Benefits", "Mandatory Benefits"),
+        subplot_titles=("Full Compensation Package", "Voluntary", "Mandatory"),
         vertical_spacing=0.35, column_widths=[0.5, 0.5], row_heights=[0.47, 0.53]
     )
     plots.add_trace(
@@ -720,7 +720,7 @@ def employee():
                         legend_title_font_size=19, legend=dict(orientation="v", x=1.25))
     plots.update_traces(textposition='inside', textinfo='percent+label')
 
-    plots.data[0].domain = {'x': [0.09, 0.98], 'y': [0.45, 0.98]}
+    plots.data[0].domain = {'x': [0.08, 0.98], 'y': [0.45, 0.98]}
     # fig2 = px.bar(new_df, x=new_df.index, y=columns_list, barmode='stack', labels=labels)
 
     # fig2.update_traces(textfont_size=12, textposition="outside")
