@@ -697,21 +697,21 @@ def employee():
     plots.add_trace(
         go.Pie(values=df_annual['Annual Compensation Package'], labels=labels,
                pull=[i for i in explode[:len(labels)]],
-               hovertemplate='%{label}: %{value:$,.2f}<extra></extra>\t | \n\t%{percent}'),
+               hovertemplate='%{label}: %{value:$,.2f}<extra></extra>\t | \t%{percent}'),
         row=1, col=2
 
     )
 
     plots.add_trace(
         go.Pie(values=fig_df['Annual Compensation Package'], labels=voluntary_labels,
-               hovertemplate='%{label}: %{value:$,.2f}<extra></extra>\t | \n\t%{percent}'),
+               hovertemplate='%{label}: %{value:$,.2f}<extra></extra>\t | \t%{percent}'),
         row=1, col=1
 
     )
 
     plots.add_trace(
         go.Pie(values=new_df['Annual Compensation Package'], labels=mandatory_labels,
-               hovertemplate='%{label}: %{value:$,.2f}<extra></extra>\t | \n\t%{percent}'),
+               hovertemplate='%{label}: %{value:$,.2f}<extra></extra>\t | \t%{percent}'),
         row=2, col=1
 
     )
@@ -719,7 +719,7 @@ def employee():
                         legend_title_font_size=19, legend=dict(orientation="v", x=1.15))
 
     plots.update_annotations(y=1.085, selector={'text': 'Voluntary Benefits'})
-    plots.update_annotations(y=0.41, selector={'text': 'Mandatory Benefits'})
+    plots.update_annotations(y=0.51, selector={'text': 'Mandatory Benefits'})
     plots.update_annotations(y=1.002, selector={'text': 'Full Compensation Package'})
 
     # fig2 = px.bar(new_df, x=new_df.index, y=columns_list, barmode='stack', labels=labels)
