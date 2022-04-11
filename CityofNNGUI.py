@@ -722,6 +722,8 @@ def employee():
     plots.update_annotations(y=0.475, selector={'text': 'Mandatory Benefits'})
     plots.update_annotations(y=1.002, selector={'text': 'Full Compensation Package'})
 
+    plots.data[0].domain = {'x': [0, 1], 'y': [0.25, 0.75]}
+
     # fig2 = px.bar(new_df, x=new_df.index, y=columns_list, barmode='stack', labels=labels)
 
     # fig2.update_traces(textfont_size=12, textposition="outside")
