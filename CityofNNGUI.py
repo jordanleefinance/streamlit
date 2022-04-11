@@ -720,7 +720,7 @@ def employee():
     plots.update_traces(textposition='inside', textinfo='percent+label')
 
     print(plots.data[0].domain)
-    plots.data[0].domain = {'x': [0.001, 0.93], 'y': [0.43, 0.93]}
+    plots.data[0].domain = {'x': [0.05, 0.93], 'y': [0.43, 0.93]}
     # fig2 = px.bar(new_df, x=new_df.index, y=columns_list, barmode='stack', labels=labels)
 
     # fig2.update_traces(textfont_size=12, textposition="outside")
