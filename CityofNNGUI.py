@@ -715,7 +715,7 @@ def employee():
         row=2, col=2
 
     )
-    plots.update_layout(autosize=False, height=600, width=1200, legend_title="Legend", legend_font_size=14,
+    plots.update_layout(height=700, width=1500, legend_title="Legend", legend_font_size=14,
                         legend_title_font_size=19, legend=dict(orientation="v", x=1.25))
     plots.update_traces(textposition='inside', textinfo='percent+label')
     #plots.data[0].domain = {'x': [0.2, 0.375], 'y': [0.2, 0.375]}
