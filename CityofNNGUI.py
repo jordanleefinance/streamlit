@@ -718,9 +718,9 @@ def employee():
     plots.update_layout(height=1000, width=1500, legend_title="Legend", legend_font_size=14,
                         legend_title_font_size=19, legend=dict(orientation="v", x=1.75))
 
-    plots.update_annotations(x=0.25, y=1.185, selector={'text': 'Voluntary Benefits'})
-    plots.update_annotations(x=0.25, y=0.525, selector={'text': 'Mandatory Benefits'})
-    plots.update_annotations(x=1.5, y=1.002, selector={'text': 'Full Compensation Package'})
+    plots.update_annotations(x=0.3, y=1.185, selector={'text': 'Voluntary Benefits'})
+    plots.update_annotations(x=0.3, y=0.525, selector={'text': 'Mandatory Benefits'})
+    plots.update_annotations(x=1.25, y=1.002, selector={'text': 'Full Compensation Package'})
 
 
     print(plots.data[2].domain)
