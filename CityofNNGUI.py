@@ -719,7 +719,7 @@ def employee():
                         legend_title_font_size=19, legend=dict(orientation="v", x=1.15))
 
     plots.update_annotations(y=1.085, selector={'text': 'Voluntary Benefits'})
-    plots.update_annotations(y=0.51, selector={'text': 'Mandatory Benefits'})
+    plots.update_annotations(y=0.475, selector={'text': 'Mandatory Benefits'})
     plots.update_annotations(y=1.002, selector={'text': 'Full Compensation Package'})
 
     # fig2 = px.bar(new_df, x=new_df.index, y=columns_list, barmode='stack', labels=labels)
