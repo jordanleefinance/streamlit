@@ -715,11 +715,11 @@ def employee():
         row=2, col=2
 
     )
-    plots.update_layout(height=700, width=1200, legend_title="Legend", legend_font_size=14,
+    plots.update_layout(height=900, width=1200, legend_title="Legend", legend_font_size=14,
                         legend_title_font_size=19, legend=dict(orientation="v", x=1.75))
 
-    plots.update_annotations(y=0.5, selector={'text': 'Voluntary Benefits'})
-    plots.update_annotations(y=0.5, selector={'text': 'Mandatory Benefits'})
+    plots.update_annotations(y=0.35, selector={'text': 'Voluntary Benefits'})
+    plots.update_annotations(y=0.35, selector={'text': 'Mandatory Benefits'})
     plots.update_annotations(y=1.15, selector={'text': 'Full Compensation Package'})
 
 
