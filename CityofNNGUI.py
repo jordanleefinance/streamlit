@@ -719,7 +719,7 @@ def employee():
                         legend_title_font_size=19, legend=dict(orientation="v", x=1.25))
     plots.update_traces(textposition='inside', textinfo='percent+label')
     #plots.data[0].domain = {'x': [0.2, 0.375], 'y': [0.2, 0.375]}
-    plots.data[1].domain = {'x': [0.1, 0.175], 'y': [0.2, 0.75]}
+    plots.data[1].domain = {'x': [0.1, 0.175], 'y': [0.25, 0.75]}
     plots.data[2].domain = {'x': [0.4, 0.0175], 'y': [0.2, 0.375]}
     print(plots.data[0].domain)
     print(plots.data[2])
