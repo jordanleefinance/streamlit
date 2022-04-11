@@ -697,21 +697,21 @@ def employee():
     plots.add_trace(
         go.Pie(values=df_annual['Annual Compensation Package'], labels=labels,
                pull=[i for i in explode[:len(labels)]],
-               hovertemplate='%{label}: %{value:$,.2f}<extra></extra> \n\t%{percent}'),
+               hovertemplate='%{label}: %{value:$,.2f}<extra></extra>\t | \n\t%{percent}'),
         row=1, col=2
 
     )
 
     plots.add_trace(
         go.Pie(values=fig_df['Annual Compensation Package'], labels=voluntary_labels,
-               hoverinfo='label+value+percent'),
+               hovertemplate='%{label}: %{value:$,.2f}<extra></extra>\t | \n\t%{percent}'),
         row=1, col=1
 
     )
 
     plots.add_trace(
         go.Pie(values=new_df['Annual Compensation Package'], labels=mandatory_labels,
-               hoverinfo='label+value+percent'),
+               hovertemplate='%{label}: %{value:$,.2f}<extra></extra>\t | \n\t%{percent}'),
         row=2, col=1
 
     )
