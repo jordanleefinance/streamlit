@@ -688,8 +688,8 @@ def employee():
 
     plots = make_subplots(
         rows=2, cols=2,
-        specs=[[{"type": "pie"}, {"rowspan": 2, "type": "pie"}],
-               [{"type": "pie"}, None]],
+        specs=[[None, {"rowspan": 2, "type": "pie"}],
+               [{"type": "pie"}, {"type": "pie"}]],
 
         subplot_titles=("Voluntary Benefits", "Full Compensation Package", "Mandatory Benefits"),
         horizontal_spacing=0.25
@@ -705,14 +705,14 @@ def employee():
     plots.add_trace(
         go.Pie(values=fig_df['Annual Compensation Package'], labels=voluntary_labels,
                hovertemplate='%{label}: %{value:$,.2f}<extra></extra>\t | \t%{percent}'),
-        row=1, col=1
+        row=2, col=1
 
     )
 
     plots.add_trace(
         go.Pie(values=new_df['Annual Compensation Package'], labels=mandatory_labels,
                hovertemplate='%{label}: %{value:$,.2f}<extra></extra>\t | \t%{percent}'),
-        row=2, col=1
+        row=2, col=2
 
     )
     plots.update_layout(height=1000, width=1500, legend_title="Legend", legend_font_size=14,
