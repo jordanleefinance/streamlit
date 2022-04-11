@@ -693,7 +693,7 @@ def employee():
                [{"type": "pie"}, {"type": "pie"}]],
 
         subplot_titles=("Full Compensation Package", "Voluntary Benefits", "Mandatory Benefits"),
-        vertical_spacing=0.25, column_widths=[0.5, 0.5], row_heights=[0.45, 0.55]
+        vertical_spacing=0.35, column_widths=[0.5, 0.5], row_heights=[0.47, 0.53]
     )
     plots.add_trace(
         go.Pie(values=df_annual['Annual Compensation Package'], labels=labels,
