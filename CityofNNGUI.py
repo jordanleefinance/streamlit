@@ -719,9 +719,10 @@ def employee():
                         legend_title_font_size=19, legend=dict(orientation="v", x=1.25))
     plots.update_traces(textposition='inside', textinfo='percent+label')
     #plots.data[0].domain = {'x': [0.2, 0.375], 'y': [0.2, 0.375]}
-    plots.data[1].domain = {'x': [0.2, 0.375], 'y': [0.2, 0.375]}
-    plots.data[2].domain = {'x': [0.2, 0.175], 'y': [0.2, 0.375]}
+    plots.data[1].domain = {'x': [0.2, 0.175], 'y': [0.2, 0.375]}
+    plots.data[2].domain = {'x': [0.2, 0.775], 'y': [0.2, 0.375]}
     print(plots.data[0].domain)
+    print(plots.data[2])
 
     # '''plots.update_annotations(y=0.55, selector={'text': 'Voluntary Benefits'})    plots.update_annotations(y=0.55,
     # selector={'text': 'Mandatory Benefits'})    plots.update_annotations(y=1.15,
