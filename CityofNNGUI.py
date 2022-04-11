@@ -82,7 +82,7 @@ user_dental_plan = st.sidebar.radio('Dental Plan', ['Delta Dental', 'None'])
 
 user_vision_coverage = st.sidebar.selectbox("Vision Coverage", (
     "Employee (Vision)", "Employee + 1 Child (Vision)", "Employee + Spouse (Vision)", "Family (Vision)"))
-user_vision_plan = st.sidebar.radio("Vision Plan", ['Vision Service Plan', 'None', 'Vision INS City'])
+user_vision_plan = st.sidebar.radio("Vision Plan", ['Vision Service Plan', 'Vision INS City', 'None'])
 
 button_clicked = st.sidebar.button("GO")
 
