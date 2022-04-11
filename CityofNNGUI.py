@@ -587,15 +587,16 @@ def employee():
                                                                riv_benefit, riv_cost, riv_nnva_cost)
 
     df_annual = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=['Annual Compensation Package'])
+    voluntary_labels = labels
+    mandatory_labels = labels
     try:
         fig_df = df_annual.loc[[health_plan, den_plan, vis_plan], :]
         new_df = df_annual.drop(["Annual Salary", health_plan, den_plan, vis_plan])
-
+        voluntary_labels = voluntary_labels[1:4]
+        mandatory_labels = mandatory_labels[4:]
     except KeyError:
         pass
 
-    voluntary_labels = labels
-    mandatory_labels = labels
     if health_plan == "Optima Health POS + FSA" or health_plan == "Optima Equity HDHP + FSA":
         if den_plan != "None" and vis_plan != "None":
             fig_df = df_annual.loc[[health_plan, "Flexible Spending Account (FSA)", den_plan, vis_plan], :]
@@ -719,7 +720,6 @@ def employee():
                         legend_title_font_size=19, legend=dict(orientation="v", x=1.25))
     plots.update_traces(textposition='inside', textinfo='percent+label')
 
-    print(plots.data[0].domain)
     plots.data[0].domain = {'x': [0.09, 0.98], 'y': [0.45, 0.98]}
     # fig2 = px.bar(new_df, x=new_df.index, y=columns_list, barmode='stack', labels=labels)
 
