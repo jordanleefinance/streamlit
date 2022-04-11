@@ -692,7 +692,7 @@ def employee():
                [{"type": "pie"}, {"type": "pie"}]],
 
         subplot_titles=("Full Compensation Package", "Voluntary Benefits", "Mandatory Benefits"),
-        horizontal_spacing=0.25
+        horizontal_spacing=0.25, column_widths=[0.7, 0.3], row_heights=[0.35, 0.65]
     )
     plots.add_trace(
         go.Pie(values=df_annual['Annual Compensation Package'], labels=labels,
@@ -720,7 +720,7 @@ def employee():
     plots.update_traces(textposition='inside', textinfo='percent+label')
     #plots.data[0].domain = {'x': [0.2, 0.375], 'y': [0.2, 0.375]}
     #plots.data[1].domain = {'x': [0.05, 0.45], 'y': [0.07, 0.75]}
-    plots.data[2].domain = {'x': [0.625, 0.0], 'y': [0.95, 0.0]}
+    # plots.data[2].domain = {'x': [0.625, 1.0], 'y': [0.95, 0.0]}
     print(plots.data[0].domain)
     print(plots.data[1])
 
