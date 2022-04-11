@@ -72,17 +72,17 @@ elif user_jobtype == "Part Time":
 
 user_health_coverage = st.sidebar.selectbox("Health Coverage", (
     "Employee (Health)", "Employee + 1 Child (Health)", "Employee + Spouse (Health)", "Family (Health)"))
-user_health_plan = st.sidebar.selectbox("Health Plan", ('Optima Health POS + FSA', 'Optima Health POS', 'None',
+user_health_plan = st.sidebar.selectbox("Health Plan", ('Optima Health POS', 'Optima Health POS + FSA',
                                                         'Optima Equity HDHP', 'Optima Equity HDHP + FSA',
-                                                        'Optima Equity HDHP + HSA'))
+                                                        'Optima Equity HDHP + HSA', 'None'))
 
 user_dental_coverage = st.sidebar.selectbox("Dental Coverage", (
     "Employee (Dental)", "Employee + 1 Child (Dental)", "Employee + Spouse (Dental)", "Family (Dental)"))
-user_dental_plan = st.sidebar.radio('Dental Plan', ['None', 'Delta Dental'])
+user_dental_plan = st.sidebar.radio('Dental Plan', ['Delta Dental', 'None'])
 
 user_vision_coverage = st.sidebar.selectbox("Vision Coverage", (
     "Employee (Vision)", "Employee + 1 Child (Vision)", "Employee + Spouse (Vision)", "Family (Vision)"))
-user_vision_plan = st.sidebar.radio("Vision Plan", ['None', 'Vision Service Plan', 'Vision INS City'])
+user_vision_plan = st.sidebar.radio("Vision Plan", ['Vision Service Plan', 'None', 'Vision INS City'])
 
 button_clicked = st.sidebar.button("GO")
 
@@ -720,7 +720,7 @@ def employee():
     plots.update_traces(textposition='inside', textinfo='percent+label')
 
     print(plots.data[0].domain)
-    plots.data[0].domain = {'x': [0.09, 0.98], 'y': [0.42, 0.98]}
+    plots.data[0].domain = {'x': [0.09, 0.98], 'y': [0.45, 0.98]}
     # fig2 = px.bar(new_df, x=new_df.index, y=columns_list, barmode='stack', labels=labels)
 
     # fig2.update_traces(textfont_size=12, textposition="outside")
