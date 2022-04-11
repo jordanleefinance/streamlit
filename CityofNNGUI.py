@@ -722,7 +722,9 @@ def employee():
     plots.update_annotations(y=0.475, selector={'text': 'Mandatory Benefits'})
     plots.update_annotations(y=1.002, selector={'text': 'Full Compensation Package'})
 
-    plots.data[0].domain = {'x': [1, 1], 'y': [0.02, 0.029]}
+    plots.data[0].domain = {'x': [0, 1], 'y': [0.2, 0.29]}
+    plots.data[1].domain = {'x': [1, 1], 'y': [0.2, 0.29]}
+    plots.data[2].domain = {'x': [2, 1], 'y': [0.2, 0.29]}
 
     # fig2 = px.bar(new_df, x=new_df.index, y=columns_list, barmode='stack', labels=labels)
 
