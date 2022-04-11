@@ -688,8 +688,8 @@ def employee():
 
     plots = make_subplots(
         rows=2, cols=2,
-        specs=[[{"type": "domain"}, {"rowspan": 2, "type": "domain"}],
-               [{"type": "domain"}, None]],
+        specs=[[{"type": "pie"}, {"rowspan": 2, "type": "pie"}],
+               [{"type": "pie"}, None]],
 
         subplot_titles=("Voluntary Benefits", "Full Compensation Package", "Mandatory Benefits"),
         horizontal_spacing=0.25
