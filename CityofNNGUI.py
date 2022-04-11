@@ -720,7 +720,7 @@ def employee():
     plots.update_traces(textposition='inside', textinfo='percent+label')
     #plots.data[0].domain = {'x': [0.2, 0.375], 'y': [0.2, 0.375]}
     #plots.data[1].domain = {'x': [0.05, 0.45], 'y': [0.07, 0.75]}
-    plots.data[2].domain = {'x': [0.625, 0.90], 'y': [0.95, 0.375]}
+    plots.data[2].domain = {'x': [0.625, 1.0], 'y': [0.95, 0.0075]}
     print(plots.data[0].domain)
     print(plots.data[2])
 
