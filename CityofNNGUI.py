@@ -715,14 +715,14 @@ def employee():
         row=2, col=1
 
     )
-    plots.update_layout(height=600, width=1500, legend_title="Legend", legend_font_size=14,
-                        legend_title_font_size=19, legend=dict(orientation="v", x=1.15))
+    plots.update_layout(height=1000, width=1500, legend_title="Legend", legend_font_size=14,
+                        legend_title_font_size=19, legend=dict(orientation="v", x=1.35))
 
     plots.update_annotations(y=1.085, selector={'text': 'Voluntary Benefits'})
     plots.update_annotations(y=0.475, selector={'text': 'Mandatory Benefits'})
     plots.update_annotations(y=1.002, selector={'text': 'Full Compensation Package'})
 
-    plots.data[0].domain = {'x': [0, 1], 'y': [0.25, 0.25]}
+    plots.data[0].domain = {'x': [0, 1], 'y': [0.25, 0.9]}
 
     # fig2 = px.bar(new_df, x=new_df.index, y=columns_list, barmode='stack', labels=labels)
 
