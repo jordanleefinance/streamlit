@@ -655,7 +655,9 @@ def employee():
             voluntary_labels = voluntary_labels[1:3]
             mandatory_labels = mandatory_labels[3:]
 
-    if den_plan == "None" and vis_plan == "None" and health_plan != "Optima Health POS + FSA" and health_plan != "Optima Equity HDHP + FSA" and health_plan != 'Optima Equity HDHP + HSA':
+    if den_plan == "None" and vis_plan == "None" and health_plan != "Optima Health POS + FSA" and \
+            health_plan != "Optima Equity HDHP + FSA" and health_plan != 'Optima Equity HDHP + HSA' \
+            and health_plan != "None":
         fig_df = df_annual.loc[[health_plan], :]
         new_df = df_annual.drop([df_annual.index[0], df_annual.index[1]])
         voluntary_labels = voluntary_labels[1:2]
