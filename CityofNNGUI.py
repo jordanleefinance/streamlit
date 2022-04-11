@@ -72,17 +72,17 @@ elif user_jobtype == "Part Time":
 
 user_health_coverage = st.sidebar.selectbox("Health Coverage", (
     "Employee (Health)", "Employee + 1 Child (Health)", "Employee + Spouse (Health)", "Family (Health)"))
-user_health_plan = st.sidebar.selectbox("Health Plan", ('Optima Health POS', 'Optima Health POS + FSA',
+user_health_plan = st.sidebar.selectbox("Health Plan", ('None', 'Optima Health POS', 'Optima Health POS + FSA',
                                                         'Optima Equity HDHP', 'Optima Equity HDHP + FSA',
-                                                        'Optima Equity HDHP + HSA', 'None'))
+                                                        'Optima Equity HDHP + HSA'))
 
 user_dental_coverage = st.sidebar.selectbox("Dental Coverage", (
     "Employee (Dental)", "Employee + 1 Child (Dental)", "Employee + Spouse (Dental)", "Family (Dental)"))
-user_dental_plan = st.sidebar.radio('Dental Plan', ['Delta Dental', 'None'])
+user_dental_plan = st.sidebar.radio('Dental Plan', ['None', 'Delta Dental'])
 
 user_vision_coverage = st.sidebar.selectbox("Vision Coverage", (
     "Employee (Vision)", "Employee + 1 Child (Vision)", "Employee + Spouse (Vision)", "Family (Vision)"))
-user_vision_plan = st.sidebar.radio("Vision Plan", ['Vision Service Plan', 'Vision INS City', 'None'])
+user_vision_plan = st.sidebar.radio("Vision Plan", ['None', 'Vision Service Plan', 'Vision INS City'])
 
 button_clicked = st.sidebar.button("GO")
 
@@ -589,6 +589,9 @@ def employee():
     df_annual = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=['Annual Compensation Package'])
     try:
         fig_df = df_annual.loc[[health_plan, den_plan, vis_plan], :]
+        new_df = df_annual.drop(["Annual Salary", health_plan, den_plan, vis_plan])
+        print(fig_df)
+        print(new_df)
     except KeyError:
         pass
     if health_plan == "Optima Health POS + FSA" or health_plan == "Optima Equity HDHP + FSA":
@@ -626,6 +629,8 @@ def employee():
     if health_plan == "None" and den_plan == "None" and vis_plan == "None":
         fig_df = df_annual
         new_df = df_annual.drop([df_annual.index[0]])
+    print(fig_df)
+    print(new_df)
 
 
     # fig_df = fig_df.T
