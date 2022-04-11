@@ -697,7 +697,7 @@ def employee():
     plots.add_trace(
         go.Pie(values=df_annual['Annual Compensation Package'], labels=labels,
                pull=[i for i in explode[:len(labels)]],
-               hovertemplate="%{label}: <br>Value: ${value} </br> %{percent}"),
+               hovertemplate="%{label}: <br>${values}</br> %{percent}"),
         row=1, col=2
 
     )
