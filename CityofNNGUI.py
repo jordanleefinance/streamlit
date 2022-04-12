@@ -883,7 +883,9 @@ finally:
         st.subheader("\n**VOLUNTARY TAX ADVANTAGE 457 DEFERRED COMPENSATION AND ROTH IRA PLAN OPTIONS**\n"
                      "Our third party vendor is committed to helping employees build retirement security through "
                      "retirement programs, investment products, and educational tools and services. ")
-
+    st.caption("**FSA: Flexible Spending Account\n"
+               "**HSA: Health Savings Account\n"
+               "**RHA: Retiree Health Account")
 
 if button_clicked == 'GO':
     employee()
