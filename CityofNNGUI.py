@@ -647,7 +647,7 @@ def employee():
                 [df_annual.index[0], df_annual.index[1], df_annual.index[2]])
             voluntary_labels = voluntary_labels[1:3]
             mandatory_labels = mandatory_labels[3:]
-    else:
+    elif health_plan == 'Optima Equity HDHP' or health_plan == 'Optima Health POS':
         try:
             fig_df = df_annual.loc[[health_plan, den_plan, vis_plan], :]
             new_df = df_annual.drop(["Annual Salary", health_plan, den_plan, vis_plan])
