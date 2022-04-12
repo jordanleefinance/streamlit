@@ -757,7 +757,7 @@ try:
     st.subheader(title)
     st.plotly_chart(figure, use_container_width=True, sharing='streamlit')
     # st.plotly_chart(figure2, use_container_width=True, sharing='streamlit')
-    st.caption("These graphs will automatically be created and changed as data is entered. "
+    st.caption("These graphs will automatically be created and changed as data is entered. \n\n"
              "This statement is designed to show how much your service is valued by us.")
 
     with st.expander("See Full Breakdown"):
@@ -883,9 +883,9 @@ finally:
         st.subheader("\n**VOLUNTARY TAX ADVANTAGE 457 DEFERRED COMPENSATION AND ROTH IRA PLAN OPTIONS**\n"
                      "Our third party vendor is committed to helping employees build retirement security through "
                      "retirement programs, investment products, and educational tools and services. ")
-    st.caption("**FSA: Flexible Spending Account\n"
+    st.caption("**FSA: Flexible Spending Account\n\n"
                "**HSA: Health Savings Account\n"
-               "**RHA: Retiree Health Account")
+               )
 
 if button_clicked == 'GO':
     employee()
