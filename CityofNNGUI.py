@@ -56,7 +56,7 @@ statement = "Below is a personalized statement prepared specifically for you. Th
             "\n\n\t• Click on the legend items to adjust the amount of benefits on the charts" \
             "\n\n\t• See the full breakdown by clicking the dropdown bar below the graph" \
             "\n\n\t• See the additional benefits by clicking the dropdown bar below the full breakdown\n\n" \
-            "\n\nThis statement is designed to show how much your service is valued by us." \
+            "\n\n**This statement is designed to show how much your service is valued by us.**" \
 
 st.write(statement, unsafe_allow_html=False)
 
