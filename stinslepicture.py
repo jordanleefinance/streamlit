@@ -9,22 +9,24 @@ def load_image(file):
 
 
 image_file = st.file_uploader("Upload Images", type=["png", "jpg", "jpeg"])
-img = cv2.imread(image_file)
 
-# Image to Gray Image
+if image_file is not None:
+    img = cv2.imread(image_file.name, 1)
 
-gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    # Image to Gray Image
 
-# Gray Image to Inverted Gray Image
-inverted_gray_image = 255 - gray_image
+    gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-# Blurring The Inverted Gray Image
-blurred_inverted_gray_image = cv2.GaussianBlur(inverted_gray_image, (19, 19), 0)
+    # Gray Image to Inverted Gray Image
+    inverted_gray_image = 255 - gray_image
 
-# Inverting the blurred image
-inverted_blurred_image = 255 - blurred_inverted_gray_image
+    # Blurring The Inverted Gray Image
+    blurred_inverted_gray_image = cv2.GaussianBlur(inverted_gray_image, (19, 19), 0)
 
-# Preparing Photo sketching
-sketch = cv2.divide(gray_image, inverted_blurred_image, scale=256.0)
+    # Inverting the blurred image
+    inverted_blurred_image = 255 - blurred_inverted_gray_image
 
-st.image(load_image(sketch), width=250)
+    # Preparing Photo sketching
+    sketch = cv2.divide(gray_image, inverted_blurred_image, scale=256.0)
+
+    st.image(load_image(sketch), width=250)
