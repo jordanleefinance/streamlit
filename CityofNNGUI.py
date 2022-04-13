@@ -454,10 +454,10 @@ def employee():
             monthly_info_dict[vis_plan] = 0.80
             info_dict[vis_plan] = 0.80 * 12
         else:
-            monthly_value += 0.01
-            value += 0.01 * 12
-            monthly_info_dict[vis_plan] = 0.01
-            info_dict[vis_plan] = 0.01 * 12
+            monthly_value += 2.00
+            value += 2.00 * 12
+            monthly_info_dict[vis_plan] = 2.00
+            info_dict[vis_plan] = 2.00 * 12
     try:
         for i in range(len(df)):
             # df.iloc[i].name == (first_name, last_name) or
