@@ -650,6 +650,14 @@ def employee():
             voluntary_labels = voluntary_labels[1:3]
             mandatory_labels = mandatory_labels[3:]
     if health_plan == 'Optima Equity HDHP' or health_plan == 'Optima Health POS':
+        try:
+            fig_df = df_annual.loc[[health_plan, den_plan, vis_plan], :]
+            new_df = df_annual.drop(
+                [df_annual.index[0], df_annual.index[1], df_annual.index[2], df_annual.index[3]])
+            voluntary_labels = voluntary_labels[1:4]
+            mandatory_labels = mandatory_labels[4:]
+        except KeyError:
+            pass
         if den_plan == "None" and vis_plan != "None":
             fig_df = df_annual.loc[[health_plan, vis_plan], :]
             new_df = df_annual.drop([df_annual.index[0], health_plan, vis_plan])
