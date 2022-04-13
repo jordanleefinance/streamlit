@@ -648,14 +648,17 @@ def employee():
                 [df_annual.index[0], df_annual.index[1], df_annual.index[2]])
             voluntary_labels = voluntary_labels[1:3]
             mandatory_labels = mandatory_labels[3:]
-    elif health_plan == 'Optima Equity HDHP' or health_plan == 'Optima Health POS':
-        try:
-            fig_df = df_annual.loc[[health_plan, den_plan, vis_plan], :]
-            new_df = df_annual.drop(["Annual Salary", health_plan, den_plan, vis_plan])
-            voluntary_labels = voluntary_labels[1:4]
-            mandatory_labels = mandatory_labels[4:]
-        except KeyError:
-            pass
+    if health_plan == 'Optima Equity HDHP' or health_plan == 'Optima Health POS':
+        if den_plan == "None" and vis_plan != "None":
+            fig_df = df_annual.loc[[health_plan, vis_plan], :]
+            new_df = df_annual.drop([df_annual.index[0], health_plan, vis_plan])
+            voluntary_labels = voluntary_labels[1:3]
+            mandatory_labels = mandatory_labels[3:]
+        elif vis_plan == "None" and den_plan != "None":
+            fig_df = df_annual.loc[[health_plan, vis_plan], :]
+            new_df = df_annual.drop([df_annual.index[0], health_plan, vis_plan])
+            voluntary_labels = voluntary_labels[1:3]
+            mandatory_labels = mandatory_labels[3:]
 
     if den_plan == "None" and vis_plan == "None" and health_plan != "Optima Health POS + FSA" and \
             health_plan != "Optima Equity HDHP + FSA" and health_plan != 'Optima Equity HDHP + HSA' \
