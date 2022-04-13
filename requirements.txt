@@ -10,7 +10,7 @@ requests
 xlrd
 openpyxl~=3.0.9
 altair~=4.2.0
-numpy~=1.22.3
+numpy~=1.21.6
 scikit-learn~=1.0.2
 Pillow~=9.0.1
 opencv-python~=4.5.5.64
