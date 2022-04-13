@@ -655,8 +655,8 @@ def employee():
             voluntary_labels = voluntary_labels[1:3]
             mandatory_labels = mandatory_labels[3:]
         elif vis_plan == "None" and den_plan != "None":
-            fig_df = df_annual.loc[[health_plan, vis_plan], :]
-            new_df = df_annual.drop([df_annual.index[0], health_plan, vis_plan])
+            fig_df = df_annual.loc[[health_plan, den_plan], :]
+            new_df = df_annual.drop([df_annual.index[0], health_plan, den_plan])
             voluntary_labels = voluntary_labels[1:3]
             mandatory_labels = mandatory_labels[3:]
 
