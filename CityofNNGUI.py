@@ -81,7 +81,7 @@ if user_type == "Current Employee":
             last_name = df.iloc[i].loc['First Name']
             name = first_name + " " + last_name
             if job_type == "ACTIVE FULL TIME":
-                salary = df.iloc[i].loc['Annual Pay']
+                salary = float(df.iloc[i].loc['Annual Pay'])
                 job_type = "Full Time"
             elif job_type == "ACTIVE PART TIME" or job_type == "ACTIVE TEMPORARY":
                 salary = df.iloc[i].loc['Hourly Pay']
