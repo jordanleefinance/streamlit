@@ -612,7 +612,7 @@ def employee():
     plots.update_traces(textposition='inside', textinfo='percent+label')
 
     plots.add_trace(
-        go.Bar(x=new_df.index, y=new_df.values,
+        go.Bar(x=new_df.index, y=new_df.iloc[:],
                hovertemplate='%{label}: %{y:$,.2f}<extra></extra>'),
         row=2, col=1
     )
