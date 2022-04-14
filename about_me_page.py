@@ -6,7 +6,7 @@ st.subheader("Financial Analyst")
 st.write("Thank you for checking out my webpage! I am a recent graduate from Christopher Newport University with"
          "an entrepreneurial mindset and strong will to invest into building relationships."
          " In the next 5 years, I plan on pursing my CFA (Chartered Financial Analyst) and shortly after "
-         "register JMM Group, LLC as an RIA (Registerd Investment Advisor)."
+         "register JMM Group, LLC as an RIA (Registerd Investment Advisor). "
          "A major detail I learned from my masters is within businesses there are systems within systems and I believe a great"
          " way to incorporate systems thinking into business decision making is through information science."
          "Below you can find some of my passions, goals, hobbies."
@@ -30,8 +30,10 @@ with st.container():
                  "@1/v1604352227/Investing/stock-market-today-110220.jpg")
     with text_col:
         st.subheader("Stock Analysis")
-        st.write("""Over time I've noticed a lot of people don't know much about the stock market or even what a stock
+        st.write("""Over time, I've noticed a lot of people don't know much about the stock market or even what a stock
         is in general. One of my goals is to create an avenue for the average person to be able to learn how to grow 
         their income based on their own knowledge and confidence.""")
         st.markdown("Click [here](https://www.jmmgroupllc.xyz/templates/products.html) "
-                    "for a glimpse of a couple analysis tools")
+                    "for a glimpse of a couple analysis tools.")
+        st.markdown("Click [subscribe](https://www.jmmgroupllc.xyz/templates/subscribe.html) "
+                    "to be redirected to the subscribe page.")
