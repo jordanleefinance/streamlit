@@ -754,7 +754,6 @@ try:
     total_df = user[2]
     figure = user[4]
     # figure2 = user[6]
-    figure.show()
 
     title = "\t\t{:s} Compensation Package".format(n)
     st.subheader(title)
