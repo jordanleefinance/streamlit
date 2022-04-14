@@ -609,16 +609,15 @@ def employee():
 
     )
 
-
-    plots.update_layout(height=700, width=1500, legend_title="Legend", legend_font_size=14,
-                        legend_title_font_size=19, legend=dict(orientation="v", x=1.25))
     plots.update_traces(textposition='inside', textinfo='percent+label')
 
     plots.add_trace(
-        go.Bar(x=new_df.index, y=labels[1:],
-               hovertemplate='%{label}: %{value:$,.2f}<extra></extra>\t | \t%{percent}'),
+        go.Bar(x=new_df.index, y=new_df.values,
+               hovertemplate='%{label}: %{y:$,.2f}<extra></extra>'),
         row=2, col=1
     )
+    plots.update_layout(height=700, width=1500, legend_title="Legend", legend_font_size=14,
+                        legend_title_font_size=19, legend=dict(orientation="v", x=1.25))
     plots.data[0].domain = {'x': [0.08, 0.98], 'y': [0.45, 0.98]}
     # fig2 = px.bar(new_df, x=new_df.index, y=columns_list, barmode='stack', labels=labels)
 
