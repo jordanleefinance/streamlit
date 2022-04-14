@@ -107,7 +107,8 @@ elif user_type == "Prospective Employee":
                 "\n\n\t• Understand how city-paid benefits factor into total compensation" \
                 "\n\n\t• Determine the total compensation of prospective employees" \
                 "\n\nTips:\n\n" \
-                "\n\t• Open left sidebar to make adjustments to the modeled employee" \
+                "\n\t• Open left sidebar to make adjustments to the modeled employee"\
+                "\n\n\t• Change the Location/Department to view different mandatory benefit plans"\
                 "\n\n\t• Hover your mouse over different pie pieces to view the benefit name and value" \
                 "\n\n\t• Click on the legend items to adjust the amount of benefits on the pie chart" \
                 "\n\n\t• See the full breakdown by clicking the dropdown bar below the graph" \
@@ -237,8 +238,8 @@ def employee():
             if df.iloc[i].loc["Employee Number"] == EIN:
                 job_title = df.iloc[i].loc['Location Code Desc'].upper()
                 job_type = df.iloc[i].loc['Personnel Status Code Desc']
-                first_name = df.iloc[i].loc['First Name']
-                last_name = df.iloc[i].loc['Last Name']
+                first_name = df.iloc[i].loc['Last Name']
+                last_name = df.iloc[i].loc['First Name']
                 name = first_name + " " + last_name
                 if job_type == "ACTIVE FULL TIME":
                     salary = df.iloc[i].loc['Annual Pay']
@@ -685,7 +686,6 @@ def employee():
                         value += round(float(VLDP_data) * 12, 2)
                         monthly_info_dict['Disability (Hybrid Only)'] = round(float(VLDP_data), 2)
                         info_dict['Disability (Hybrid Only)'] = round(float(VLDP_data) * 12, 2)
-                print(info_dict)
         except KeyError:
             pass
 
