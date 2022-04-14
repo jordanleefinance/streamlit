@@ -235,7 +235,7 @@ def employee():
         EIN = user_EIN
         for i in range(len(df)):
             if df.iloc[i].loc["Employee Number"] == EIN:
-                job_title = df.iloc[i].loc['Location Code Desc']
+                job_title = df.iloc[i].loc['Location Code Desc'].upper()
                 job_type = df.iloc[i].loc['Personnel Status Code Desc']
                 first_name = df.iloc[i].loc['First Name']
                 last_name = df.iloc[i].loc['Last Name']
@@ -631,6 +631,7 @@ def employee():
             pass
     elif user_type == "Current Employee":
         try:
+            EIN = user_EIN
             for i in range(len(df)):
                 if df.iloc[i].loc["Employee Number"] == EIN:
                     ret_plan = df.iloc[i].loc['Retirement Plan']
