@@ -588,6 +588,9 @@ def employee():
                                                                one_benefit, one_cost, one_nnva_cost,
                                                                riv_benefit, riv_cost, riv_nnva_cost)
 
+    values = list(info_dict.values())
+    keys = list(info_dict.keys())
+
     df_annual = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=['Annual Compensation Package'])
     new_df = df_annual.drop([df_annual.index[0]])
 
@@ -603,7 +606,7 @@ def employee():
     )
     plots.add_trace(
         go.Pie(values=df_annual['Annual Compensation Package'], labels=labels,
-               pull=[i for i in explode[:len(labels)]],
+               pull=[i for i in explode[:len(labels)]], legendgroup='group1', showlegend=True,
                hovertemplate='%{label}: %{value:$,.2f}<extra></extra>\t | \t%{percent}'),
         row=1, col=1
 
@@ -611,16 +614,13 @@ def employee():
 
     plots.update_traces(textposition='inside', textinfo='percent+label')
 
-    plots.update_layout(height=700, width=1500, legend_title="Legend", legend_font_size=14,
-                        legend_title_font_size=19, legend=dict(orientation="v", x=1.25))
-    values = info_dict.values()
-    keys = info_dict.keys()
-
     plots.add_trace(
-        go.Bar(x=keys[1:], y=values[1:],
-               hovertemplate='%{label}: %{y:$,.2f}<extra></extra>'),
+        go.Bar(x=keys[1:], y=values[1:], showlegend=False,
+               hovertemplate='%{label}: %{y:$,.2f}<extra></extra>', legendgroup='group1'),
         row=2, col=1
     )
+    plots.update_layout(height=700, width=1500, legend_title="Legend", legend_font_size=14,
+                        legend_title_font_size=19, legend=dict(orientation="v", x=1.25))
     plots.data[0].domain = {'x': [0.08, 0.98], 'y': [0.45, 0.98]}
     # fig2 = px.bar(new_df, x=new_df.index, y=columns_list, barmode='stack', labels=labels)
 
