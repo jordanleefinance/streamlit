@@ -57,7 +57,7 @@ if user_type == "Current Employee":
                 "\n\n\t• Determine the total compensation of prospective employees" \
                 "\n\nTips:\n\n" \
                 "\n\t• Open left sidebar and enter your EIN (Employee Identification Number) \n" \
-                "\n\t\t to view your current package" \
+                "\n\t and press enter to view your current package" \
                 "\n\n\t• Hover your mouse over different pie pieces to view the benefit name and value" \
                 "\n\n\t• Click on the legend items to adjust the amount of benefits on the pie chart" \
                 "\n\n\t• See the full breakdown by clicking the dropdown bar below the graph" \
