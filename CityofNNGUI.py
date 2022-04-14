@@ -59,7 +59,8 @@ if user_type == "Current Employee":
                 "\n\n\t• Understand how city-paid benefits factor into total compensation" \
                 "\n\n\t• Determine the total compensation of prospective employees" \
                 "\n\nTips:\n\n" \
-                "\n\t• Open left sidebar and enter your EIN (Employee Identification Number) to view your current package" \
+                "\n\t• Open left sidebar and enter your EIN (Employee Identification Number) \n" \
+                "\n\t\t to view your current package" \
                 "\n\n\t• Hover your mouse over different pie pieces to view the benefit name and value" \
                 "\n\n\t• Click on the legend items to adjust the amount of benefits on the pie chart" \
                 "\n\n\t• See the full breakdown by clicking the dropdown bar below the graph" \
@@ -108,7 +109,7 @@ elif user_type == "Prospective Employee":
                 "\n\nTips:\n\n" \
                 "\n\t• Open left sidebar to make adjustments to the modeled employee" \
                 "\n\n\t• Hover your mouse over different pie pieces to view the benefit name and value" \
-                "\n\n\t• Click on the legend items to adjust the amount of benefits on the charts" \
+                "\n\n\t• Click on the legend items to adjust the amount of benefits on the pie chart" \
                 "\n\n\t• See the full breakdown by clicking the dropdown bar below the graph" \
                 "\n\n\t• See the additional benefits by clicking the dropdown bar below the full breakdown\n\n" \
                 "\n\n**This statement is designed to show how much your service is valued by us.**"
@@ -761,6 +762,8 @@ try:
     st.plotly_chart(figure, use_container_width=True, sharing='streamlit')
     # st.plotly_chart(figure2, use_container_width=True, sharing='streamlit')
     st.caption("These graphs will automatically be created and changed as data is entered.")
+    if user_type == "Current Employee":
+        st.caption("Reset to your original package by clicking GO in the sidebar.")
 
     with st.expander("See Full Breakdown"):
         col1, col2, col3, col4, col5 = st.columns(5)
