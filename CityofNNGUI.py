@@ -68,7 +68,7 @@ if user_type == "Current Employee":
 
     st.write(statement, unsafe_allow_html=False)
 
-    user_EIN = st.sidebar.number_input("Enter your EIN", value=0)
+    user_EIN = st.sidebar.number_input("Enter your EIN", value=8963)
     user_name = st.sidebar.text_input("Name", "George Jetson")
     user_jobtitle = st.sidebar.selectbox("Location/Department", ("Treasurer", 'Fire', 'Police',
                                                                  'Finance', 'Human Resources',
@@ -232,7 +232,7 @@ def employee():
     if user_type == "Current Employee" and button_clicked:
         EIN = user_EIN
         for i in range(len(df)):
-            if df.iloc[i].loc["Employee Number"].astype(int) == EIN:
+            if df.iloc[i].loc["Employee Number"] == EIN:
                 job_title = df.iloc[i].loc['Location Code Desc']
                 first_name = df.iloc[i].loc['First Name']
                 last_name = df.iloc[i].loc['Last Name']
