@@ -611,13 +611,16 @@ def employee():
 
     plots.update_traces(textposition='inside', textinfo='percent+label')
 
+    plots.update_layout(height=700, width=1500, legend_title="Legend", legend_font_size=14,
+                        legend_title_font_size=19, legend=dict(orientation="v", x=1.25))
+    values = info_dict.values()
+    keys = info_dict.keys()
+
     plots.add_trace(
-        go.Bar(x=new_df.index, y=new_df.iloc[:],
+        go.Bar(x=keys[1:], y=values[1:],
                hovertemplate='%{label}: %{y:$,.2f}<extra></extra>'),
         row=2, col=1
     )
-    plots.update_layout(height=700, width=1500, legend_title="Legend", legend_font_size=14,
-                        legend_title_font_size=19, legend=dict(orientation="v", x=1.25))
     plots.data[0].domain = {'x': [0.08, 0.98], 'y': [0.45, 0.98]}
     # fig2 = px.bar(new_df, x=new_df.index, y=columns_list, barmode='stack', labels=labels)
 
@@ -646,6 +649,7 @@ try:
     total_df = user[2]
     figure = user[4]
     # figure2 = user[6]
+    figure.show()
 
     title = "\t\t{:s} Compensation Package".format(n)
     st.subheader(title)
