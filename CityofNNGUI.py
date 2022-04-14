@@ -27,11 +27,14 @@ try:
     workbook = workbook['Sheet1']
     data = workbook.values
     df = pd.DataFrame(data)
+    print(df)
+    header1 = df.iloc[1]
     header = df.iloc[2]
     df = df.iloc[3:, :]
-    df = df.drop([0], axis=1)
-    df.columns = header[1:]
-    df = df.set_index(['Last Name', 'First Name'])[:8]
+    # df = df.drop([0], axis=1)
+    df.columns = header[:]
+    print(df)
+
 except FileNotFoundError:
     df = load_data()
 
@@ -39,51 +42,103 @@ except FileNotFoundError:
 file_path = r'C:/Users/JordanLee/OneDrive/Documents/MFinA/' \
             r'FINC 591 - Integrated Financial Analysis & Strategy/' \
             r'NNPS - Capstone/Compensation Package.xlsx'
-st.title("Calculate Your Total Compensation")
-statement = "Below is a personalized statement prepared specifically for you. This statement shows the " \
-            "contributions made by the City of Newport News " \
-            "toward your total compensation package. As you " \
-            "review this statement, you will see the value of your " \
-            "benefits, added to your annual pay, producing your total " \
-            "compensation. The calculator is most beneficial for evaluating full time employees.\n\n" \
-            "This tool can help you:\n\n" \
-            "\n\t• Budget for yourself or your team" \
-            "\n\n\t• Understand how city-paid benefits factor into total compensation" \
-            "\n\n\t• Determine the total compensation of prospective employees" \
-            "\n\nTips:\n\n" \
-            "\n\t• Open left sidebar to make adjustments to the modeled employee" \
-            "\n\n\t• Hover your mouse over different pie pieces to view the benefit name and value" \
-            "\n\n\t• Click on the legend items to adjust the amount of benefits on the charts" \
-            "\n\n\t• See the full breakdown by clicking the dropdown bar below the graph" \
-            "\n\n\t• See the additional benefits by clicking the dropdown bar below the full breakdown\n\n" \
-            "\n\n**This statement is designed to show how much your service is valued by us.**" \
-
-st.write(statement, unsafe_allow_html=False)
 
 st.sidebar.subheader("""**Total Compensation**""")
-user_name = st.sidebar.text_input("Name", "George Jetson")
-user_jobtitle = st.sidebar.selectbox("Location/Department", ("Treasurer", 'Fire', 'Police',
-                                                             'Finance', 'Human Resources',
-                                                             'Engineering', 'Libraries', 'Information Technology'))
-user_jobtype = st.sidebar.radio("Job Type", ["Full Time", "Part Time"])
-if user_jobtype == "Full Time":
-    user_salary = st.sidebar.number_input("Annual Base Pay:", value=80857.45, step=500.00)
-elif user_jobtype == "Part Time":
-    user_salary = st.sidebar.number_input("Hourly Rate:", value=15.66, step=0.50)
+user_type = st.sidebar.radio("Are you a...", ['Prospective Employee', 'Current Employee'])
 
-user_health_coverage = st.sidebar.selectbox("Health Coverage", (
-    "Employee (Health)", "Employee + 1 Child (Health)", "Employee + Spouse (Health)", "Family (Health)"))
-user_health_plan = st.sidebar.selectbox("Health Plan", ('Optima Health POS', 'Optima Health POS + FSA',
-                                                        'Optima Equity HDHP', 'Optima Equity HDHP + FSA',
-                                                        'Optima Equity HDHP + HSA', 'None'))
+if user_type == "Current Employee":
+    st.title("Calculate Your Total Compensation")
+    statement = "Below is a personalized statement prepared specifically for you. This statement shows the " \
+                "contributions made by the City of Newport News " \
+                "toward your total compensation package. As you " \
+                "review this statement, you will see the value of your " \
+                "benefits, added to your annual pay, producing your total " \
+                "compensation. The calculator is most beneficial for evaluating full time employees.\n\n" \
+                "This tool can help you:\n\n" \
+                "\n\t• Budget for yourself or your team" \
+                "\n\n\t• Understand how city-paid benefits factor into total compensation" \
+                "\n\n\t• Determine the total compensation of prospective employees" \
+                "\n\nTips:\n\n" \
+                "\n\t• Open left sidebar to make adjustments to the modeled employee" \
+                "\n\n\t• Hover your mouse over different pie pieces to view the benefit name and value" \
+                "\n\n\t• Click on the legend items to adjust the amount of benefits on the charts" \
+                "\n\n\t• See the full breakdown by clicking the dropdown bar below the graph" \
+                "\n\n\t• See the additional benefits by clicking the dropdown bar below the full breakdown\n\n" \
+                "\n\n**This statement is designed to show how much your service is valued by us.**"
 
-user_dental_coverage = st.sidebar.selectbox("Dental Coverage", (
-    "Employee (Dental)", "Employee + 1 Child (Dental)", "Employee + Spouse (Dental)", "Family (Dental)"))
-user_dental_plan = st.sidebar.radio('Dental Plan', ['Delta Dental', 'None'])
+    st.write(statement, unsafe_allow_html=False)
 
-user_vision_coverage = st.sidebar.selectbox("Vision Coverage", (
-    "Employee (Vision)", "Employee + 1 Child (Vision)", "Employee + Spouse (Vision)", "Family (Vision)"))
-user_vision_plan = st.sidebar.radio("Vision Plan", ['Vision Service Plan', 'Vision INS City', 'None'])
+    user_EIN = st.sidebar.number_input("Enter your EIN", value=0)
+    user_name = st.sidebar.text_input("Name", "George Jetson")
+    user_jobtitle = st.sidebar.selectbox("Location/Department", ("Treasurer", 'Fire', 'Police',
+                                                                 'Finance', 'Human Resources',
+                                                                 'Engineering', 'Libraries', 'Information Technology'))
+    user_jobtype = st.sidebar.radio("Job Type", ["Full Time", "Part Time"])
+    if user_jobtype == "Full Time":
+        user_salary = st.sidebar.number_input("Annual Base Pay:", value=80857.45, step=500.00)
+    elif user_jobtype == "Part Time":
+        user_salary = st.sidebar.number_input("Hourly Rate:", value=15.66, step=0.50)
+
+    user_health_coverage = st.sidebar.selectbox("Health Coverage", (
+        "Employee (Health)", "Employee + 1 Child (Health)", "Employee + Spouse (Health)", "Family (Health)"))
+    user_health_plan = st.sidebar.selectbox("Health Plan", ('Optima Health POS', 'Optima Health POS + FSA',
+                                                            'Optima Equity HDHP', 'Optima Equity HDHP + FSA',
+                                                            'Optima Equity HDHP + HSA', 'None'))
+
+    user_dental_coverage = st.sidebar.selectbox("Dental Coverage", (
+        "Employee (Dental)", "Employee + 1 Child (Dental)", "Employee + Spouse (Dental)", "Family (Dental)"))
+    user_dental_plan = st.sidebar.radio('Dental Plan', ['Delta Dental', 'None'])
+
+    user_vision_coverage = st.sidebar.selectbox("Vision Coverage", (
+        "Employee (Vision)", "Employee + 1 Child (Vision)", "Employee + Spouse (Vision)", "Family (Vision)"))
+    user_vision_plan = st.sidebar.radio("Vision Plan", ['Vision Service Plan', 'Vision INS City', 'None'])
+
+elif user_type == "Prospective Employee":
+    st.title("Calculate a model City of Newport News employee's Total Compensation")
+    statement = "Below is a personalized statement prepared specifically for you. This statement shows the " \
+                "contributions made by the City of Newport News " \
+                "toward your total compensation package. As you " \
+                "review this statement, you will see the value of your " \
+                "benefits, added to your annual pay, producing your total " \
+                "compensation. The calculator is most beneficial for evaluating full time employees.\n\n" \
+                "This tool can help you:\n\n" \
+                "\n\t• Budget for yourself or your team" \
+                "\n\n\t• Understand how city-paid benefits factor into total compensation" \
+                "\n\n\t• Determine the total compensation of prospective employees" \
+                "\n\nTips:\n\n" \
+                "\n\t• Open left sidebar to make adjustments to the modeled employee" \
+                "\n\n\t• Hover your mouse over different pie pieces to view the benefit name and value" \
+                "\n\n\t• Click on the legend items to adjust the amount of benefits on the charts" \
+                "\n\n\t• See the full breakdown by clicking the dropdown bar below the graph" \
+                "\n\n\t• See the additional benefits by clicking the dropdown bar below the full breakdown\n\n" \
+                "\n\n**This statement is designed to show how much your service is valued by us.**"
+
+    st.write(statement, unsafe_allow_html=False)
+
+    user_name = st.sidebar.text_input("Name", "George Jetson")
+    user_jobtitle = st.sidebar.selectbox("Location/Department", ("Treasurer", 'Fire', 'Police',
+                                                                 'Finance', 'Human Resources',
+                                                                 'Engineering', 'Libraries', 'Information Technology'))
+    user_jobtype = st.sidebar.radio("Job Type", ["Full Time", "Part Time"])
+    if user_jobtype == "Full Time":
+        user_salary = st.sidebar.number_input("Annual Base Pay:", value=80857.45, step=500.00)
+    elif user_jobtype == "Part Time":
+        user_salary = st.sidebar.number_input("Hourly Rate:", value=15.66, step=0.50)
+
+    user_health_coverage = st.sidebar.selectbox("Health Coverage", (
+        "Employee (Health)", "Employee + 1 Child (Health)", "Employee + Spouse (Health)", "Family (Health)"))
+    user_health_plan = st.sidebar.selectbox("Health Plan", ('Optima Health POS', 'Optima Health POS + FSA',
+                                                            'Optima Equity HDHP', 'Optima Equity HDHP + FSA',
+                                                            'Optima Equity HDHP + HSA', 'None'))
+
+    user_dental_coverage = st.sidebar.selectbox("Dental Coverage", (
+        "Employee (Dental)", "Employee + 1 Child (Dental)", "Employee + Spouse (Dental)", "Family (Dental)"))
+    user_dental_plan = st.sidebar.radio('Dental Plan', ['Delta Dental', 'None'])
+
+    user_vision_coverage = st.sidebar.selectbox("Vision Coverage", (
+        "Employee (Vision)", "Employee + 1 Child (Vision)", "Employee + Spouse (Vision)", "Family (Vision)"))
+    user_vision_plan = st.sidebar.radio("Vision Plan", ['Vision Service Plan', 'Vision INS City', 'None'])
+
 
 button_clicked = st.sidebar.button("GO")
 
@@ -159,6 +214,7 @@ def employee():
     name = user_name
     first_name = ''
     last_name = ''
+
     job_title = user_jobtitle.upper()
     job_type = user_jobtype
     salary = user_salary
@@ -173,6 +229,60 @@ def employee():
     ret_health_plan = 'RHS'
     life_plan = 'Basic Life'
 
+    if user_type == "Current Employee" and button_clicked:
+        EIN = user_EIN
+        for i in range(len(df)):
+            if df.iloc[i].loc["Employee Number"].astype(int) == EIN:
+                job_title = df.iloc[i].loc['Location Code Desc']
+                first_name = df.iloc[i].loc['First Name']
+                last_name = df.iloc[i].loc['Last Name']
+                name = first_name + " " + last_name
+                salary = df.iloc[i].loc['Annual Pay']
+
+                if df.iloc[i].loc['Health Coverage'] == "EMPLOYEE":
+                    health_coverage = "Employee (Health)"
+                if df.iloc[i].loc['Health Coverage'] == "EMPLOYEE PLUS SPOUSE":
+                    health_coverage = "Employee + Spouse (Health)"
+                if df.iloc[i].loc['Health Coverage'] == "FAMILY":
+                    health_coverage = "Family (Health)"
+
+                if df.iloc[i].loc['Dental Coverage'] == "EMPLOYEE":
+                    dental_coverage = "Employee (Dental)"
+                if df.iloc[i].loc['Dental Coverage'] == "EMPLOYEE PLUS SPOUSE":
+                    dental_coverage = "Employee + Spouse (Dental)"
+                if df.iloc[i].loc['Dental Coverage'] == "FAMILY":
+                    dental_coverage = "Family (Dental)"
+
+                if df.iloc[i].loc['Vision Coverage'] == "EMPLOYEE":
+                    vision_coverage = "Employee (Vision)"
+                if df.iloc[i].loc['Vision Coverage'] == "EMPLOYEE PLUS SPOUSE":
+                    vision_coverage = "Employee + Spouse (Vision)"
+                if df.iloc[i].loc['Vision Coverage'] == "FAMILY":
+                    vision_coverage = "Family (Vision)"
+
+                if df.iloc[i].loc['Health Plan'] == "OPTIMA HEALTH POS":
+                    health_plan = "Optima Health POS"
+                if df.iloc[i].loc['Health Plan'] == "OPTIMA EQUITY HDHP":
+                    health_plan = "Optima Equity HDHP"
+
+                if df.iloc[i].loc['Dental Plan'] == "DENTAL":
+                    den_plan = "Delta Dental"
+                if df.iloc[i].loc['Dental Plan'] == "NONE":
+                    den_plan = "None"
+
+                if df.iloc[i].loc['Vision Plan'] == "NONE":
+                    vis_plan = "None"
+                if df.iloc[i].loc['Vision Plan'] == "VISION SERVICE PLAN":
+                    vis_plan = "Vision Service Plan"
+                if df.iloc[i].loc['Vision Plan'] == "VISION INS CITY":
+                    vis_plan = "Vision INS City"
+
+                ret_plan = ''
+                lt_dis_plan = 'Long Term Dis.'
+                ret_health_plan = 'RHS'
+                life_plan = 'Basic Life'
+
+
     # job type test
     if job_type == 'Part Time':
         employee_part_time()
@@ -180,11 +290,6 @@ def employee():
 
     # name test
     if name != '':
-        first_name = name.split()[0]
-        try:
-            last_name = name.split()[1]
-        except IndexError:
-            pass
         name += '\'s'
     # no salary test
 
