@@ -205,6 +205,7 @@ def employee():
     riv_benefit = 0
     value = 0
     monthly_value = 0
+    EIN = 0
     info_dict = {}
     monthly_info_dict = {}
     labels = []
@@ -571,64 +572,124 @@ def employee():
             value += 0 * 12
             monthly_info_dict[vis_plan] = 0
             info_dict[vis_plan] = 0 * 12
-    try:
-        for i in range(len(df)):
-            # df.iloc[i].name == (first_name, last_name) or
-            if df.iloc[i].loc['Location Code Desc'] == job_title:
-                ret_plan = df.iloc[i].loc['Retirement Plan']
+    if user_type == "Prospective Employee":
+        try:
+            for i in range(len(df)):
+                # df.iloc[i].name == (first_name, last_name) or
+                if df.iloc[i].loc['Location Code Desc'] == job_title:
+                    ret_plan = df.iloc[i].loc['Retirement Plan']
 
-                if ret_plan == 'NNER  CITY OF NEWPORT NEWS RET':
-                    ret_plan = 'NNER - City of Newport News Ret'
-                elif ret_plan == 'VRS - VIRGINIA RETIREMENT SYST':
-                    ret_plan = 'VRS - Virginia Retirement System'
-                elif ret_plan == 'VRSH - VIRGINIA RET SYS HYBRID':
-                    ret_plan = 'VRSH - Virginia Retirement System Hybrid'
+                    if ret_plan == 'NNER  CITY OF NEWPORT NEWS RET':
+                        ret_plan = 'NNER - City of Newport News Ret'
+                    elif ret_plan == 'VRS - VIRGINIA RETIREMENT SYST':
+                        ret_plan = 'VRS - Virginia Retirement System'
+                    elif ret_plan == 'VRSH - VIRGINIA RET SYS HYBRID':
+                        ret_plan = 'VRSH - Virginia Retirement System Hybrid'
 
-                user_data = df.iloc[i].loc['DB Retirement City']
-                monthly_value += float(user_data)
-                value += float(user_data) * 12
-                monthly_info_dict[ret_plan] = float(user_data)
-                info_dict[ret_plan] = float(user_data) * 12
+                    user_data = df.iloc[i].loc['DB Retirement City']
+                    monthly_value += float(user_data)
+                    value += float(user_data) * 12
+                    monthly_info_dict[ret_plan] = float(user_data)
+                    info_dict[ret_plan] = float(user_data) * 12
 
-                lt_dis_data = df.iloc[i].loc['LTD City']
-                monthly_value += float(lt_dis_data)
-                value += float(lt_dis_data) * 12
-                monthly_info_dict[lt_dis_plan] = float(lt_dis_data)
-                info_dict[lt_dis_plan] = float(lt_dis_data) * 12
+                    lt_dis_data = df.iloc[i].loc['LTD City']
+                    monthly_value += float(lt_dis_data)
+                    value += float(lt_dis_data) * 12
+                    monthly_info_dict[lt_dis_plan] = float(lt_dis_data)
+                    info_dict[lt_dis_plan] = float(lt_dis_data) * 12
 
-                retiree_data = df.iloc[i].loc['OPEB City or HRA City']
-                monthly_value += float(retiree_data)
-                value += float(retiree_data) * 12
-                monthly_info_dict[ret_health_plan] = float(retiree_data)
-                info_dict[ret_health_plan] = float(retiree_data) * 12
+                    retiree_data = df.iloc[i].loc['OPEB City or HRA City']
+                    monthly_value += float(retiree_data)
+                    value += float(retiree_data) * 12
+                    monthly_info_dict[ret_health_plan] = float(retiree_data)
+                    info_dict[ret_health_plan] = float(retiree_data) * 12
 
-                life_data = df.iloc[i].loc['Life City']
-                monthly_value += round(float(life_data), 2)
-                value += round(float(life_data) * 12, 2)
-                monthly_info_dict[life_plan] = round(float(life_data), 2)
-                info_dict[life_plan] = round(float(life_data) * 12, 2)
+                    life_data = df.iloc[i].loc['Life City']
+                    monthly_value += round(float(life_data), 2)
+                    value += round(float(life_data) * 12, 2)
+                    monthly_info_dict[life_plan] = round(float(life_data), 2)
+                    info_dict[life_plan] = round(float(life_data) * 12, 2)
 
-                if ret_plan == 'VRSH - Virginia Retirement System Hybrid':
-                    hybrid_data = df.iloc[i].loc['DC Plan City']
-                    monthly_value += float(hybrid_data)
-                    value += float(hybrid_data) * 12
-                    monthly_info_dict['Hybrid Mandatory'] = float(hybrid_data)
-                    info_dict['Hybrid Mandatory'] = float(hybrid_data) * 12
+                    if ret_plan == 'VRSH - Virginia Retirement System Hybrid':
+                        hybrid_data = df.iloc[i].loc['DC Plan City']
+                        monthly_value += float(hybrid_data)
+                        value += float(hybrid_data) * 12
+                        monthly_info_dict['Hybrid Mandatory'] = float(hybrid_data)
+                        info_dict['Hybrid Mandatory'] = float(hybrid_data) * 12
 
-                    hybrid_optional_data = df.iloc[i].loc['Opt DC City']
-                    print(hybrid_optional_data)
-                    monthly_value += float(hybrid_optional_data)
-                    value += float(hybrid_optional_data) * 12
-                    monthly_info_dict['Hybrid Mandatory (Optional)'] = float(hybrid_optional_data)
-                    info_dict['Hybrid Mandatory (Optional)'] = float(hybrid_optional_data) * 12
+                        hybrid_optional_data = df.iloc[i].loc['Opt DC City']
+                        print(hybrid_optional_data)
+                        monthly_value += float(hybrid_optional_data)
+                        value += float(hybrid_optional_data) * 12
+                        monthly_info_dict['Hybrid Mandatory (Optional)'] = float(hybrid_optional_data)
+                        info_dict['Hybrid Mandatory (Optional)'] = float(hybrid_optional_data) * 12
 
-                    VLDP_data = df.iloc[i].loc['VLDP City']
-                    monthly_value += round(float(VLDP_data), 2)
-                    value += round(float(VLDP_data) * 12, 2)
-                    monthly_info_dict['Disability (Hybrid Only)'] = round(float(VLDP_data), 2)
-                    info_dict['Disability (Hybrid Only)'] = round(float(VLDP_data) * 12, 2)
-    except NameError:
-        pass
+                        VLDP_data = df.iloc[i].loc['VLDP City']
+                        monthly_value += round(float(VLDP_data), 2)
+                        value += round(float(VLDP_data) * 12, 2)
+                        monthly_info_dict['Disability (Hybrid Only)'] = round(float(VLDP_data), 2)
+                        info_dict['Disability (Hybrid Only)'] = round(float(VLDP_data) * 12, 2)
+        except NameError:
+            pass
+    elif user_type == "Current Employee":
+        try:
+            for i in range(len(df)):
+                # df.iloc[i].name == (first_name, last_name) or
+                if df.iloc[i].loc['Employee Number'] == EIN:
+
+                    ret_plan = df.iloc[i].loc['Retirement Plan']
+                    if ret_plan == 'NNER  CITY OF NEWPORT NEWS RET':
+                        ret_plan = 'NNER - City of Newport News Ret'
+                    elif ret_plan == 'VRS - VIRGINIA RETIREMENT SYST':
+                        ret_plan = 'VRS - Virginia Retirement System'
+                    elif ret_plan == 'VRSH - VIRGINIA RET SYS HYBRID':
+                        ret_plan = 'VRSH - Virginia Retirement System Hybrid'
+
+                    user_data = df.iloc[i].loc['DB Retirement City']
+                    monthly_value += float(user_data)
+                    value += float(user_data) * 12
+                    monthly_info_dict[ret_plan] = float(user_data)
+                    info_dict[ret_plan] = float(user_data) * 12
+
+                    lt_dis_data = df.iloc[i].loc['LTD City']
+                    monthly_value += float(lt_dis_data)
+                    value += float(lt_dis_data) * 12
+                    monthly_info_dict[lt_dis_plan] = float(lt_dis_data)
+                    info_dict[lt_dis_plan] = float(lt_dis_data) * 12
+
+                    retiree_data = df.iloc[i].loc['OPEB City or HRA City']
+                    monthly_value += float(retiree_data)
+                    value += float(retiree_data) * 12
+                    monthly_info_dict[ret_health_plan] = float(retiree_data)
+                    info_dict[ret_health_plan] = float(retiree_data) * 12
+
+                    life_data = df.iloc[i].loc['Life City']
+                    monthly_value += round(float(life_data), 2)
+                    value += round(float(life_data) * 12, 2)
+                    monthly_info_dict[life_plan] = round(float(life_data), 2)
+                    info_dict[life_plan] = round(float(life_data) * 12, 2)
+
+                    if ret_plan == 'VRSH - Virginia Retirement System Hybrid':
+                        hybrid_data = df.iloc[i].loc['DC Plan City']
+                        monthly_value += float(hybrid_data)
+                        value += float(hybrid_data) * 12
+                        monthly_info_dict['Hybrid Mandatory'] = float(hybrid_data)
+                        info_dict['Hybrid Mandatory'] = float(hybrid_data) * 12
+
+                        hybrid_optional_data = df.iloc[i].loc['Opt DC City']
+                        print(hybrid_optional_data)
+                        monthly_value += float(hybrid_optional_data)
+                        value += float(hybrid_optional_data) * 12
+                        monthly_info_dict['Hybrid Mandatory (Optional)'] = float(hybrid_optional_data)
+                        info_dict['Hybrid Mandatory (Optional)'] = float(hybrid_optional_data) * 12
+
+                        VLDP_data = df.iloc[i].loc['VLDP City']
+                        monthly_value += round(float(VLDP_data), 2)
+                        value += round(float(VLDP_data) * 12, 2)
+                        monthly_info_dict['Disability (Hybrid Only)'] = round(float(VLDP_data), 2)
+                        info_dict['Disability (Hybrid Only)'] = round(float(VLDP_data) * 12, 2)
+        except NameError:
+            pass
 
     for key, val in list(info_dict.items()):
         if val > 0:
