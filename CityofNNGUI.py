@@ -67,7 +67,7 @@ if user_type == "Current Employee":
     st.write(statement, unsafe_allow_html=False)
 
     user_EIN = st.sidebar.number_input("Enter your EIN", value=8963)
-    salary = 0
+    salary = 0.0
     health_coverage = ''
     health_plan = ''
     dental_coverage = ''
@@ -93,6 +93,8 @@ if user_type == "Current Employee":
                 health_coverage = "Employee + Spouse (Health)"
             if df.iloc[i].loc['Health Coverage'] == "FAMILY":
                 health_coverage = "Family (Health)"
+            if df.iloc[i].loc['Health Coverage'] == "NONE" or df.iloc[i].loc['Health Coverage'] == "":
+                health_coverage = "None"
 
             if df.iloc[i].loc['Dental Coverage'] == "EMPLOYEE":
                 dental_coverage = "Employee (Dental)"
@@ -100,6 +102,8 @@ if user_type == "Current Employee":
                 dental_coverage = "Employee + Spouse (Dental)"
             if df.iloc[i].loc['Dental Coverage'] == "FAMILY":
                 dental_coverage = "Family (Dental)"
+            if df.iloc[i].loc['Dental Coverage'] == "NONE" or df.iloc[i].loc['Dental Coverage'] == "":
+                dental_coverage = "None"
 
             if df.iloc[i].loc['Vision Coverage'] == "EMPLOYEE":
                 vision_coverage = "Employee (Vision)"
@@ -107,11 +111,15 @@ if user_type == "Current Employee":
                 vision_coverage = "Employee + Spouse (Vision)"
             if df.iloc[i].loc['Vision Coverage'] == "FAMILY":
                 vision_coverage = "Family (Vision)"
+            if df.iloc[i].loc['Vision Coverage'] == "NONE" or df.iloc[i].loc['Vision Coverage'] == "":
+                vision_coverage = "None"
 
             if df.iloc[i].loc['Health Plan'] == "OPTIMA HEALTH POS":
                 health_plan = "Optima Health POS"
             if df.iloc[i].loc['Health Plan'] == "OPTIMA EQUITY HDHP":
                 health_plan = "Optima Equity HDHP"
+            if df.iloc[i].loc['Health Plan'] == "":
+                health_plan = "None"
 
             if df.iloc[i].loc['Dental Plan'] == "DENTAL":
                 den_plan = "Delta Dental"
@@ -153,20 +161,23 @@ if user_type == "Current Employee":
         dental_plans.remove(den_plan)
         vision_coverages.remove(vision_coverage)
         vision_plans.remove(vis_plan)
-        user_health_coverage = st.sidebar.selectbox("Health Coverage", [health_coverage, health_coverages])
-        user_health_plan = st.sidebar.selectbox("Health Plan", [health_plan, health_plans])
-        user_dental_coverage = st.sidebar.selectbox("Dental Coverage", [dental_coverage, dental_coverages])
-        user_dental_plan = st.sidebar.radio('Dental Plan', [den_plan, dental_plans])
-        user_vision_coverage = st.sidebar.selectbox("Vision Coverage", [vision_coverage, vision_coverages])
-        user_vision_plan = st.sidebar.radio("Vision Plan", [vis_plan, vision_plans])
+
+        health_coverages.insert(0, health_coverage)
+        health_plans.insert(0, health_plan)
+        dental_coverages.insert(0, dental_coverage)
+        dental_plans.insert(0, den_plan)
+        vision_coverages.insert(0, vision_coverage)
+        vision_plans.insert(0, vis_plan)
+
     except ValueError:
+        pass
+    finally:
         user_health_coverage = st.sidebar.selectbox("Health Coverage", health_coverages)
         user_health_plan = st.sidebar.selectbox("Health Plan", health_plans)
         user_dental_coverage = st.sidebar.selectbox("Dental Coverage", dental_coverages)
         user_dental_plan = st.sidebar.radio('Dental Plan', dental_plans)
         user_vision_coverage = st.sidebar.selectbox("Vision Coverage", vision_coverages)
         user_vision_plan = st.sidebar.radio("Vision Plan", vision_plans)
-        pass
 
 
 
