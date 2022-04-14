@@ -145,14 +145,14 @@ if user_type == "Current Employee":
         user_salary = st.sidebar.number_input("Hourly Rate:", value=salary, step=0.50)
 
     health_coverages = ["Employee (Health)", "Employee + 1 Child (Health)",
-                        "Employee + Spouse (Health)", "Family (Health)"]
+                        "Employee + Spouse (Health)", "Family (Health)", "None"]
     health_plans = ['Optima Health POS', 'Optima Health POS + FSA', 'Optima Equity HDHP',
                     'Optima Equity HDHP + FSA', 'Optima Equity HDHP + HSA', 'None']
     dental_coverages = ["Employee (Dental)", "Employee + 1 Child (Dental)",
-                        "Employee + Spouse (Dental)", "Family (Dental)"]
+                        "Employee + Spouse (Dental)", "Family (Dental)", "None"]
     dental_plans = ['Delta Dental', 'None']
     vision_coverages = ["Employee (Vision)", "Employee + 1 Child (Vision)",
-                        "Employee + Spouse (Vision)", "Family (Vision)"]
+                        "Employee + Spouse (Vision)", "Family (Vision)", "None"]
     vision_plans = ['Vision Service Plan', 'Vision INS City', 'None']
     try:
         health_coverages.remove(health_coverage)
