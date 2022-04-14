@@ -27,13 +27,11 @@ try:
     workbook = workbook['Sheet1']
     data = workbook.values
     df = pd.DataFrame(data)
-    print(df)
     header1 = df.iloc[1]
     header = df.iloc[2]
     df = df.iloc[3:, :]
     # df = df.drop([0], axis=1)
     df.columns = header[:]
-    print(df)
 
 except FileNotFoundError:
     df = load_data()
@@ -72,25 +70,25 @@ if user_type == "Current Employee":
     user_EIN = st.sidebar.number_input("Enter your EIN", value=8963)
     user_name = st.sidebar.text_input("Name", "George Jetson")
     user_jobtitle = st.sidebar.selectbox("Location/Department", ("Treasurer", 'Fire', 'Police',
-                                                             'Finance', 'Human Resources',
-                                                             'Engineering', 'Libraries',
-                                                             'Information Technology'))
+                                                                 'Finance', 'Human Resources',
+                                                                 'Engineering', 'Libraries',
+                                                                 'Information Technology'))
     user_jobtype = st.sidebar.radio("Job Type", ["Full Time", "Part Time"])
     if user_jobtype == "Full Time":
         user_salary = st.sidebar.number_input("Annual Base Pay:", value=80857.45, step=500.00)
     elif user_jobtype == "Part Time":
         user_salary = st.sidebar.number_input("Hourly Rate:", value=15.66, step=0.50)
-        user_health_coverage = st.sidebar.selectbox("Health Coverage", (
-            "Employee (Health)", "Employee + 1 Child (Health)", "Employee + Spouse (Health)", "Family (Health)"))
-        user_health_plan = st.sidebar.selectbox("Health Plan", ('Optima Health POS', 'Optima Health POS + FSA',
-                                                                'Optima Equity HDHP', 'Optima Equity HDHP + FSA',
-                                                                'Optima Equity HDHP + HSA', 'None'))
-        user_dental_coverage = st.sidebar.selectbox("Dental Coverage", (
-            "Employee (Dental)", "Employee + 1 Child (Dental)", "Employee + Spouse (Dental)", "Family (Dental)"))
-        user_dental_plan = st.sidebar.radio('Dental Plan', ['Delta Dental', 'None'])
-        user_vision_coverage = st.sidebar.selectbox("Vision Coverage", (
-            "Employee (Vision)", "Employee + 1 Child (Vision)", "Employee + Spouse (Vision)", "Family (Vision)"))
-        user_vision_plan = st.sidebar.radio("Vision Plan", ['Vision Service Plan', 'Vision INS City', 'None'])
+    user_health_coverage = st.sidebar.selectbox("Health Coverage", (
+        "Employee (Health)", "Employee + 1 Child (Health)", "Employee + Spouse (Health)", "Family (Health)"))
+    user_health_plan = st.sidebar.selectbox("Health Plan", ('Optima Health POS', 'Optima Health POS + FSA',
+                                                            'Optima Equity HDHP', 'Optima Equity HDHP + FSA',
+                                                            'Optima Equity HDHP + HSA', 'None'))
+    user_dental_coverage = st.sidebar.selectbox("Dental Coverage", (
+        "Employee (Dental)", "Employee + 1 Child (Dental)", "Employee + Spouse (Dental)", "Family (Dental)"))
+    user_dental_plan = st.sidebar.radio('Dental Plan', ['Delta Dental', 'None'])
+    user_vision_coverage = st.sidebar.selectbox("Vision Coverage", (
+        "Employee (Vision)", "Employee + 1 Child (Vision)", "Employee + Spouse (Vision)", "Family (Vision)"))
+    user_vision_plan = st.sidebar.radio("Vision Plan", ['Vision Service Plan', 'Vision INS City', 'None'])
 
 
 elif user_type == "Prospective Employee":
@@ -205,7 +203,6 @@ def employee():
     riv_benefit = 0
     value = 0
     monthly_value = 0
-    EIN = 0
     info_dict = {}
     monthly_info_dict = {}
     labels = []
