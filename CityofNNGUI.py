@@ -43,7 +43,6 @@ file_path = r'C:/Users/JordanLee/OneDrive/Documents/MFinA/' \
 
 st.sidebar.subheader("""**Total Compensation**""")
 user_type = st.sidebar.radio("Are you a...", ['Current Employee', 'Prospective Employee'])
-
 if user_type == "Current Employee":
     st.title("Calculate Your Total Compensation")
     statement = "Below is a personalized statement prepared specifically for you. This statement shows the " \
@@ -68,6 +67,64 @@ if user_type == "Current Employee":
     st.write(statement, unsafe_allow_html=False)
 
     user_EIN = st.sidebar.number_input("Enter your EIN", value=8963)
+    salary = 0
+    health_coverage = ''
+    health_plan = ''
+    dental_coverage = ''
+    den_plan = ''
+    vision_coverage = ''
+    vis_plan = ''
+    for i in range(len(df)):
+        if df.iloc[i].loc["Employee Number"] == user_EIN:
+            job_type = df.iloc[i].loc['Personnel Status Code Desc']
+            first_name = df.iloc[i].loc['Last Name']
+            last_name = df.iloc[i].loc['First Name']
+            name = first_name + " " + last_name
+            if job_type == "ACTIVE FULL TIME":
+                salary = df.iloc[i].loc['Annual Pay']
+                job_type = "Full Time"
+            elif job_type == "ACTIVE PART TIME" or job_type == "ACTIVE TEMPORARY":
+                salary = df.iloc[i].loc['Hourly Pay']
+                job_type = "Part Time"
+
+            if df.iloc[i].loc['Health Coverage'] == "EMPLOYEE":
+                health_coverage = "Employee (Health)"
+            if df.iloc[i].loc['Health Coverage'] == "EMPLOYEE PLUS SPOUSE":
+                health_coverage = "Employee + Spouse (Health)"
+            if df.iloc[i].loc['Health Coverage'] == "FAMILY":
+                health_coverage = "Family (Health)"
+
+            if df.iloc[i].loc['Dental Coverage'] == "EMPLOYEE":
+                dental_coverage = "Employee (Dental)"
+            if df.iloc[i].loc['Dental Coverage'] == "EMPLOYEE PLUS SPOUSE":
+                dental_coverage = "Employee + Spouse (Dental)"
+            if df.iloc[i].loc['Dental Coverage'] == "FAMILY":
+                dental_coverage = "Family (Dental)"
+
+            if df.iloc[i].loc['Vision Coverage'] == "EMPLOYEE":
+                vision_coverage = "Employee (Vision)"
+            if df.iloc[i].loc['Vision Coverage'] == "EMPLOYEE PLUS SPOUSE":
+                vision_coverage = "Employee + Spouse (Vision)"
+            if df.iloc[i].loc['Vision Coverage'] == "FAMILY":
+                vision_coverage = "Family (Vision)"
+
+            if df.iloc[i].loc['Health Plan'] == "OPTIMA HEALTH POS":
+                health_plan = "Optima Health POS"
+            if df.iloc[i].loc['Health Plan'] == "OPTIMA EQUITY HDHP":
+                health_plan = "Optima Equity HDHP"
+
+            if df.iloc[i].loc['Dental Plan'] == "DENTAL":
+                den_plan = "Delta Dental"
+            if df.iloc[i].loc['Dental Plan'] == "NONE":
+                den_plan = "None"
+
+            if df.iloc[i].loc['Vision Plan'] == "NONE":
+                vis_plan = "None"
+            if df.iloc[i].loc['Vision Plan'] == "VISION SERVICE PLAN":
+                vis_plan = "Vision Service Plan"
+            if df.iloc[i].loc['Vision Plan'] == "VISION INS CITY":
+                vis_plan = "Vision INS City"
+
     user_name = st.sidebar.text_input("Name", "George Jetson")
     user_jobtitle = st.sidebar.selectbox("Location/Department", ("Treasurer", 'Fire', 'Police',
                                                                  'Finance', 'Human Resources',
@@ -75,20 +132,43 @@ if user_type == "Current Employee":
                                                                  'Information Technology'))
     user_jobtype = st.sidebar.radio("Job Type", ["Full Time", "Part Time"])
     if user_jobtype == "Full Time":
-        user_salary = st.sidebar.number_input("Annual Base Pay:", value=80857.45, step=500.00)
+        user_salary = st.sidebar.number_input("Annual Base Pay:", value=salary, step=500.00)
     elif user_jobtype == "Part Time":
-        user_salary = st.sidebar.number_input("Hourly Rate:", value=15.66, step=0.50)
-    user_health_coverage = st.sidebar.selectbox("Health Coverage", (
-        "Employee (Health)", "Employee + 1 Child (Health)", "Employee + Spouse (Health)", "Family (Health)"))
-    user_health_plan = st.sidebar.selectbox("Health Plan", ('Optima Health POS', 'Optima Health POS + FSA',
-                                                            'Optima Equity HDHP', 'Optima Equity HDHP + FSA',
-                                                            'Optima Equity HDHP + HSA', 'None'))
-    user_dental_coverage = st.sidebar.selectbox("Dental Coverage", (
-        "Employee (Dental)", "Employee + 1 Child (Dental)", "Employee + Spouse (Dental)", "Family (Dental)"))
-    user_dental_plan = st.sidebar.radio('Dental Plan', ['Delta Dental', 'None'])
-    user_vision_coverage = st.sidebar.selectbox("Vision Coverage", (
-        "Employee (Vision)", "Employee + 1 Child (Vision)", "Employee + Spouse (Vision)", "Family (Vision)"))
-    user_vision_plan = st.sidebar.radio("Vision Plan", ['Vision Service Plan', 'Vision INS City', 'None'])
+        user_salary = st.sidebar.number_input("Hourly Rate:", value=salary, step=0.50)
+
+    health_coverages = ["Employee (Health)", "Employee + 1 Child (Health)",
+                        "Employee + Spouse (Health)", "Family (Health)"]
+    health_plans = ['Optima Health POS', 'Optima Health POS + FSA', 'Optima Equity HDHP',
+                    'Optima Equity HDHP + FSA', 'Optima Equity HDHP + HSA', 'None']
+    dental_coverages = ["Employee (Dental)", "Employee + 1 Child (Dental)",
+                        "Employee + Spouse (Dental)", "Family (Dental)"]
+    dental_plans = ['Delta Dental', 'None']
+    vision_coverages = ["Employee (Vision)", "Employee + 1 Child (Vision)",
+                        "Employee + Spouse (Vision)", "Family (Vision)"]
+    vision_plans = ['Vision Service Plan', 'Vision INS City', 'None']
+    try:
+        health_coverages.remove(health_coverage)
+        health_plans.remove(health_plan)
+        dental_coverages.remove(dental_coverage)
+        dental_plans.remove(den_plan)
+        vision_coverages.remove(vision_coverage)
+        vision_plans.remove(vis_plan)
+        user_health_coverage = st.sidebar.selectbox("Health Coverage", [health_coverage, health_coverages])
+        user_health_plan = st.sidebar.selectbox("Health Plan", [health_plan, health_plans])
+        user_dental_coverage = st.sidebar.selectbox("Dental Coverage", [dental_coverage, dental_coverages])
+        user_dental_plan = st.sidebar.radio('Dental Plan', [den_plan, dental_plans])
+        user_vision_coverage = st.sidebar.selectbox("Vision Coverage", [vision_coverage, vision_coverages])
+        user_vision_plan = st.sidebar.radio("Vision Plan", [vis_plan, vision_plans])
+    except ValueError:
+        user_health_coverage = st.sidebar.selectbox("Health Coverage", health_coverages)
+        user_health_plan = st.sidebar.selectbox("Health Plan", health_plans)
+        user_dental_coverage = st.sidebar.selectbox("Dental Coverage", dental_coverages)
+        user_dental_plan = st.sidebar.radio('Dental Plan', dental_plans)
+        user_vision_coverage = st.sidebar.selectbox("Vision Coverage", vision_coverages)
+        user_vision_plan = st.sidebar.radio("Vision Plan", vision_plans)
+        pass
+
+
 
 
 elif user_type == "Prospective Employee":
@@ -137,6 +217,7 @@ elif user_type == "Prospective Employee":
     user_vision_coverage = st.sidebar.selectbox("Vision Coverage", (
         "Employee (Vision)", "Employee + 1 Child (Vision)", "Employee + Spouse (Vision)", "Family (Vision)"))
     user_vision_plan = st.sidebar.radio("Vision Plan", ['Vision Service Plan', 'Vision INS City', 'None'])
+
 
 
 button_clicked = st.sidebar.button("GO")
@@ -232,7 +313,6 @@ def employee():
         EIN = user_EIN
         for i in range(len(df)):
             if df.iloc[i].loc["Employee Number"] == EIN:
-                job_title = df.iloc[i].loc['Location Code Desc'].upper()
                 job_type = df.iloc[i].loc['Personnel Status Code Desc']
                 first_name = df.iloc[i].loc['Last Name']
                 last_name = df.iloc[i].loc['First Name']
@@ -281,6 +361,7 @@ def employee():
                     vis_plan = "Vision Service Plan"
                 if df.iloc[i].loc['Vision Plan'] == "VISION INS CITY":
                     vis_plan = "Vision INS City"
+                job_title = df.iloc[i].loc['Location Code Desc'].upper()
 
                 lt_dis_plan = 'Long Term Dis.'
                 ret_health_plan = 'RHS'
