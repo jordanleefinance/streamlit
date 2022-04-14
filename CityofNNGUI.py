@@ -59,9 +59,9 @@ if user_type == "Current Employee":
                 "\n\n\t• Understand how city-paid benefits factor into total compensation" \
                 "\n\n\t• Determine the total compensation of prospective employees" \
                 "\n\nTips:\n\n" \
-                "\n\t• Open left sidebar to make adjustments to the modeled employee" \
+                "\n\t• Open left sidebar and enter your EIN (Employee Identification Number) to view your current package" \
                 "\n\n\t• Hover your mouse over different pie pieces to view the benefit name and value" \
-                "\n\n\t• Click on the legend items to adjust the amount of benefits on the charts" \
+                "\n\n\t• Click on the legend items to adjust the amount of benefits on the pie chart" \
                 "\n\n\t• See the full breakdown by clicking the dropdown bar below the graph" \
                 "\n\n\t• See the additional benefits by clicking the dropdown bar below the full breakdown\n\n" \
                 "\n\n**This statement is designed to show how much your service is valued by us.**"
@@ -94,7 +94,7 @@ if user_type == "Current Employee":
     user_vision_plan = st.sidebar.radio("Vision Plan", ['Vision Service Plan', 'Vision INS City', 'None'])
 
 elif user_type == "Prospective Employee":
-    st.title("Calculate a model City of Newport News employee's Total Compensation")
+    st.title("Calculate a City of Newport News employee's Total Compensation")
     statement = "Below is a personalized statement prepared specifically for you. This statement shows the " \
                 "contributions made by the City of Newport News " \
                 "toward your total compensation package. As you " \
@@ -234,10 +234,16 @@ def employee():
         for i in range(len(df)):
             if df.iloc[i].loc["Employee Number"] == EIN:
                 job_title = df.iloc[i].loc['Location Code Desc']
+                job_type = df.iloc[i].loc['Personnel Status Code Desc']
                 first_name = df.iloc[i].loc['First Name']
                 last_name = df.iloc[i].loc['Last Name']
                 name = first_name + " " + last_name
-                salary = df.iloc[i].loc['Annual Pay']
+                if job_type == "ACTIVE FULL TIME":
+                    salary = df.iloc[i].loc['Annual Pay']
+                    job_type = "Full Time"
+                elif job_type == "ACTIVE PART TIME" or job_type == "ACTIVE TEMPORARY":
+                    salary = df.iloc[i].loc['Hourly Pay']
+                    job_type = "Part Time"
 
                 if df.iloc[i].loc['Health Coverage'] == "EMPLOYEE":
                     health_coverage = "Employee (Health)"
@@ -727,12 +733,7 @@ def employee():
     plots.update_layout(height=700, width=1500, legend_title="Legend", legend_font_size=14,
                         legend_title_font_size=19, legend=dict(orientation="v", x=1.25))
     plots.data[0].domain = {'x': [0.08, 0.98], 'y': [0.45, 0.98]}
-    # fig2 = px.bar(new_df, x=new_df.index, y=columns_list, barmode='stack', labels=labels)
 
-    # fig2.update_traces(textfont_size=12, textposition="outside")
-    # fig2.update_xaxes(title='Compensation')
-    # fig2.update_yaxes(title='Total Value ($)')
-    # fig2.update_layout(legend_title='Benefits')
 
     df_annual.loc['Total'] = value
 
