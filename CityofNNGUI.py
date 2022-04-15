@@ -78,8 +78,8 @@ if user_type == "Current Employee":
     name = ''
     health_coverages = ["Employee (Health)", "Employee + 1 Child (Health)",
                         "Employee + Spouse (Health)", "Family (Health)", "None"]
-    health_plans = ['Optima Health POS', 'Optima Health POS + FSA', 'Optima Equity HDHP',
-                    'Optima Equity HDHP + FSA', 'Optima Equity HDHP + HSA', 'None']
+    health_plans = ['Optima Health POS', 'Optima Equity HDHP',
+                    'Optima Equity HDHP + HSA', 'None']
     dental_coverages = ["Employee (Dental)", "Employee + 1 Child (Dental)",
                         "Employee + Spouse (Dental)", "Family (Dental)", "None"]
     dental_plans = ['Delta Dental', 'None']
@@ -228,8 +228,7 @@ elif user_type == "Prospective Employee":
 
     user_health_coverage = st.sidebar.selectbox("Health Coverage", (
         "Employee (Health)", "Employee + 1 Child (Health)", "Employee + Spouse (Health)", "Family (Health)"))
-    user_health_plan = st.sidebar.selectbox("Health Plan", ('Optima Health POS', 'Optima Health POS + FSA',
-                                                            'Optima Equity HDHP', 'Optima Equity HDHP + FSA',
+    user_health_plan = st.sidebar.selectbox("Health Plan", ('Optima Health POS', 'Optima Equity HDHP',
                                                             'Optima Equity HDHP + HSA', 'None'))
 
     user_dental_coverage = st.sidebar.selectbox("Dental Coverage", (
@@ -501,88 +500,6 @@ def employee():
             monthly_info_dict[health_plan] = 1076.19
             info_dict[health_plan] = 1076.19 * 12
 
-    if health_plan == 'Optima Health POS + FSA':
-        if health_coverage == 'Employee (Health)':
-            monthly_value += 479.43
-            monthly_value += (2750 * .22) / 13  # Tax Benefit
-            value += 479.43 * 12
-            value += (2750 * .22)
-            monthly_info_dict[health_plan] = 479.43 + ((2750 * .22) / 13)
-            monthly_info_dict['Flexible Spending Account (FSA)'] = (2750 * .22) / 13
-            info_dict[health_plan] = ((2750 * .22) + (479.43 * 12))
-            info_dict['Flexible Spending Account (FSA)'] = (2750 * .22)
-
-        elif health_coverage == 'Employee + 1 Child (Health)':
-            monthly_value += 861.69
-            monthly_value += (7750 * .22) / 13  # Tax Benefit
-            value += 861.69 * 12
-            value += (7750 * .22)
-            monthly_info_dict[health_plan] = 861.69 + ((7750 * .22) / 13)
-            monthly_info_dict['Flexible Spending Account (FSA)'] = (7750 * .22)
-            info_dict[health_plan] = ((861.69 * 12) + (7750 * .22))
-            info_dict['Flexible Spending Account (FSA)'] = (7750 * .22)
-
-        elif health_coverage == 'Family (Health)':
-            monthly_value += 1493.78
-            monthly_value += (7750 * .22) / 13  # Tax Benefit
-            value += 1493.78 * 12
-            value += (7750 * .22)
-            monthly_info_dict[health_plan] = 1493.78 + ((7750 * .22) / 13)
-            monthly_info_dict['Flexible Spending Account (FSA)'] = (7750 * .22) / 13
-            info_dict[health_plan] = ((7750 * .22) + (1493.78 * 12))
-            info_dict['Flexible Spending Account (FSA)'] = (7750 * .22)
-
-        elif health_coverage == 'Employee + Spouse (Health)':
-            monthly_value += 1114.82
-            monthly_value += (2750 * .22) / 13
-            value += 1114.82 * 12
-            value += (2750 * .22)
-            monthly_info_dict[health_plan] = 1114.82 + 62.50
-            monthly_info_dict['Flexible Spending Account (FSA)'] = (2750 * .22) / 13
-            info_dict[health_plan] = ((2750 * .22) + (1114.82 * 12))
-            info_dict['Flexible Spending Account (FSA)'] = (2750 * .22)
-
-    if health_plan == 'Optima Equity HDHP + FSA':
-        if health_coverage == 'Employee (Health)':
-            monthly_value += 527.54
-            monthly_value += (2750 * .22) / 13
-            value += 527.54 * 12
-            value += (2750 * .22)
-            monthly_info_dict[health_plan] = 527.54 + ((2750 * .22) / 13)
-            monthly_info_dict['Flexible Spending Account (FSA)'] = (2750 * .22) / 13
-            info_dict[health_plan] = ((2750 * .22) + (527.54 * 12))
-            info_dict['Flexible Spending Account (FSA)'] = (2750 * .22)
-
-        elif health_coverage == 'Employee + 1 Child (Health)':
-            monthly_value += 836.47
-            monthly_value += (7750 * .22) / 13
-            value += 836.47 * 12
-            value += (7750 * .22) / 13
-            monthly_info_dict[health_plan] = 836.47 + ((7750 * .22) / 13)
-            monthly_info_dict['Flexible Spending Account (FSA)'] = (7750 * .22) / 13
-            info_dict[health_plan] = ((836.47 * 12) + (7750 * .22))
-            info_dict['Flexible Spending Account (FSA)'] = (7750 * .22)
-
-        elif health_coverage == 'Family (Health)':
-            monthly_value += 1417.11
-            monthly_value += (7750 * .22) / 13  # Tax Benefit
-            value += 1417.11 * 12
-            value += (7750 * .22)
-            monthly_info_dict[health_plan] = 1417.11 + ((7750 * .22) / 13)
-            monthly_info_dict['Flexible Spending Account (FSA)'] = (7750 * .22) / 13
-            info_dict[health_plan] = ((7750 * .22) + (1417.11 * 12))
-            info_dict['Flexible Spending Account (FSA)'] = (7750 * .22)
-
-        elif health_coverage == 'Employee + Spouse (Health)':
-            monthly_value += 1076.19
-            monthly_value += (2750 * .22) / 13
-            value += 1076.19 * 12
-            value += (2750 * .22)
-            monthly_info_dict[health_plan] = 1076.19 + ((2750 * .22) / 13)
-            monthly_info_dict['Flexible Spending Account (FSA)'] = (2750 * .22) / 13
-            info_dict[health_plan] = ((2750 * .22) + (1076.19 * 12))
-            info_dict['Flexible Spending Account (FSA)'] = (2750 * .22)
-
     if health_plan == 'Optima Equity HDHP + HSA':
         if health_coverage == 'Employee (Health)':
             monthly_value += 527.54
@@ -800,8 +717,6 @@ def employee():
             monthly_info_dict.pop(mkey)
 
     for j in range(len(labels)):
-        if labels[j] == "Flexible Spending Account (FSA)":
-            labels[j] = "FSA"
         if labels[j] == "Health Savings Account (HSA)":
             labels[j] = "HSA"
         if labels[j] == health_plan:
@@ -816,8 +731,6 @@ def employee():
             labels[j] = "Life"
 
     for mj in range(len(monthly_labels)):
-        if monthly_labels[mj] == "Flexible Spending Account (FSA)":
-            monthly_labels[mj] = "FSA"
         if monthly_labels[mj] == "Health Savings Account (HSA)":
             monthly_labels[mj] = "HSA"
         if monthly_labels[mj] == health_plan:
