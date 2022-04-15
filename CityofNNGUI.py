@@ -107,7 +107,7 @@ if user_type == "Current Employee":
                 health_coverage = "Employee + Spouse (Health)"
             if df.iloc[i].loc['Health Coverage'] == "FAMILY":
                 health_coverage = "Family (Health)"
-            if df.iloc[i].loc['Health Coverage'] == "NONE" or \
+            elif df.iloc[i].loc['Health Coverage'] == "NONE" or \
                     df.iloc[i].loc['Health Coverage'] != any(health_coverages):
                 health_coverage = "None"
 
@@ -117,7 +117,7 @@ if user_type == "Current Employee":
                 dental_coverage = "Employee + Spouse (Dental)"
             if df.iloc[i].loc['Dental Coverage'] == "FAMILY":
                 dental_coverage = "Family (Dental)"
-            if df.iloc[i].loc['Dental Coverage'] == "NONE" or df.iloc[i].loc['Dental Coverage'] != any(dental_coverages):
+            elif df.iloc[i].loc['Dental Coverage'] == "NONE" or df.iloc[i].loc['Dental Coverage'] != any(dental_coverages):
                 dental_coverage = "None"
 
             if df.iloc[i].loc['Vision Coverage'] == "EMPLOYEE":
@@ -126,27 +126,27 @@ if user_type == "Current Employee":
                 vision_coverage = "Employee + Spouse (Vision)"
             if df.iloc[i].loc['Vision Coverage'] == "FAMILY":
                 vision_coverage = "Family (Vision)"
-            if df.iloc[i].loc['Vision Coverage'] == "NONE" or df.iloc[i].loc['Vision Coverage'] != any(vision_coverages):
+            elif df.iloc[i].loc['Vision Coverage'] == "NONE" or df.iloc[i].loc['Vision Coverage'] != any(vision_coverages):
                 vision_coverage = "None"
 
             if df.iloc[i].loc['Health Plan'] == "OPTIMA HEALTH POS":
                 health_plan = "Optima Health POS"
             if df.iloc[i].loc['Health Plan'] == "OPTIMA EQUITY HDHP":
                 health_plan = "Optima Equity HDHP"
-            if df.iloc[i].loc['Health Plan'] != any(health_plans) or df.iloc[i].loc['Health Plan'] == "NONE":
+            elif df.iloc[i].loc['Health Plan'] != any(health_plans) or df.iloc[i].loc['Health Plan'] == "NONE":
                 health_plan = "None"
 
             if df.iloc[i].loc['Dental Plan'] == "DENTAL":
                 den_plan = "Delta Dental"
-            if df.iloc[i].loc['Dental Plan'] == "NONE" or df.iloc[i].loc['Dental Plan'] != any(dental_plans):
+            elif df.iloc[i].loc['Dental Plan'] == "NONE" or df.iloc[i].loc['Dental Plan'] != any(dental_plans):
                 den_plan = "None"
 
-            if df.iloc[i].loc['Vision Plan'] == "NONE" or df.iloc[i].loc['Vision Plan'] != any(vision_plans):
-                vis_plan = "None"
             if df.iloc[i].loc['Vision Plan'] == "VISION SERVICE PLAN":
                 vis_plan = "Vision Service Plan"
             if df.iloc[i].loc['Vision Plan'] == "VISION INS CITY":
                 vis_plan = "Vision INS City"
+            elif df.iloc[i].loc['Vision Plan'] == "NONE" or df.iloc[i].loc['Vision Plan'] != any(vision_plans):
+                vis_plan = "None"
 
     user_name = st.sidebar.text_input("Name", name)
     job_titles = ["Treasurer", 'Fire', 'Police', 'Finance', 'Human resources',
