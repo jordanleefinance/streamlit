@@ -57,7 +57,7 @@ if user_type == "Current Employee":
                 "\n\n\t• Determine the total compensation of prospective employees" \
                 "\n\nTips:\n\n" \
                 "\n\t• Open left sidebar and enter your EIN (Employee Identification Number) \n" \
-                "\n\t and press enter to view your current package" \
+                "\n\t  and press enter to view your current package" \
                 "\n\n\t• Hover your mouse over different pie pieces to view the benefit name and value" \
                 "\n\n\t• Click on the legend items to adjust the amount of benefits on the pie chart" \
                 "\n\n\t• See the full breakdown by clicking the dropdown bar below the graph" \
@@ -68,14 +68,18 @@ if user_type == "Current Employee":
 
     user_EIN = st.sidebar.number_input("Enter your EIN", value=8963)
     salary = 0.0
+    job_title = "Treasurer"
     health_coverage = ''
     health_plan = ''
     dental_coverage = ''
     den_plan = ''
     vision_coverage = ''
     vis_plan = ''
+    name = ''
     for i in range(len(df)):
         if df.iloc[i].loc["Employee Number"] == user_EIN:
+            job_title = df.iloc[i].loc['Location Code Desc']
+            job_title = job_title.capitalize()
             job_type = df.iloc[i].loc['Personnel Status Code Desc']
             first_name = df.iloc[i].loc['Last Name']
             last_name = df.iloc[i].loc['First Name']
@@ -133,11 +137,18 @@ if user_type == "Current Employee":
             if df.iloc[i].loc['Vision Plan'] == "VISION INS CITY":
                 vis_plan = "Vision INS City"
 
-    user_name = st.sidebar.text_input("Name", "George Jetson")
-    user_jobtitle = st.sidebar.selectbox("Location/Department", ("Treasurer", 'Fire', 'Police',
-                                                                 'Finance', 'Human Resources',
-                                                                 'Engineering', 'Libraries',
-                                                                 'Information Technology'))
+    user_name = st.sidebar.text_input("Name", name)
+    job_titles = ["Treasurer", 'Fire', 'Police', 'Finance', 'Human Resources',
+                  'Engineering', 'Libraries', 'Information Technology']
+    try:
+        job_titles.remove(job_title)
+        job_titles.insert(0, job_title)
+        user_jobtitle = st.sidebar.selectbox("Location/Department", job_titles)
+    except ValueError:
+        pass
+    finally:
+        user_jobtitle = st.sidebar.selectbox("Location/Department", job_titles)
+
     user_jobtype = st.sidebar.radio("Job Type", ["Full Time", "Part Time"])
     if user_jobtype == "Full Time":
         user_salary = st.sidebar.number_input("Annual Base Pay:", value=salary, step=500.00)
