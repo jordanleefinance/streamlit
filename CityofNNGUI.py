@@ -65,8 +65,7 @@ if user_type == "Current Employee":
                 "\n\n**This statement is designed to show how much your service is valued by us.**"
 
     st.write(statement, unsafe_allow_html=False)
-
-    user_EIN = st.sidebar.number_input("Enter your EIN", value=8963, step=0, on_change=False)
+    user_EIN = st.sidebar.number_input("Enter your EIN")
     salary = 0.0
     job_title = "Treasurer"
     health_coverage = ''
