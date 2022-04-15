@@ -776,8 +776,6 @@ def employee():
     df_annual = pd.DataFrame.from_dict(data=info_dict, orient='index', columns=['Annual Compensation Package'])
     new_df = df_annual.drop([df_annual.index[0]])
 
-    # fig_df = fig_df.T
-
     plots = make_subplots(
         rows=2, cols=2,
         specs=[[{"colspan": 2, "type": "pie"}, None],
@@ -804,7 +802,6 @@ def employee():
     plots.update_layout(height=700, width=1500, legend_title="Legend", legend_font_size=14,
                         legend_title_font_size=19, legend=dict(orientation="v", x=1.25))
     plots.data[0].domain = {'x': [0.08, 0.98], 'y': [0.45, 0.98]}
-
 
     df_annual.loc['Total'] = value
 
@@ -958,8 +955,7 @@ finally:
         st.subheader("\n**VOLUNTARY TAX ADVANTAGE 457 DEFERRED COMPENSATION AND ROTH IRA PLAN OPTIONS**\n"
                      "Our third party vendor is committed to helping employees build retirement security through "
                      "retirement programs, investment products, and educational tools and services. ")
-    st.caption("**FSA: Flexible Spending Account\n\n"
-               "**HSA: Health Savings Account\n"
+    st.caption("**HSA: Health Savings Account\n"
                )
 
 if button_clicked == 'GO':
