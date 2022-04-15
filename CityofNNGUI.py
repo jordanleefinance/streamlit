@@ -66,7 +66,11 @@ if user_type == "Current Employee":
 
     st.write(statement, unsafe_allow_html=False)
 
-    user_EIN = st.sidebar.number_input("Enter your EIN", value=8963, step=0)
+    def val_change(EIN):
+        number = EIN
+        return number
+
+    user_EIN = st.sidebar.number_input("Enter your EIN", value=8963, step=0, on_change=val_change)
     salary = 0.0
     job_title = "Treasurer"
     health_coverage = ''
