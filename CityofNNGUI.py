@@ -66,7 +66,7 @@ if user_type == "Current Employee":
 
     st.write(statement, unsafe_allow_html=False)
 
-    user_EIN = st.sidebar.number_input("Enter your EIN", value=517810)
+    user_EIN = st.sidebar.number_input("Enter your EIN", value=8963)
     salary = 0.0
     job_title = "Treasurer"
     health_coverage = ''
