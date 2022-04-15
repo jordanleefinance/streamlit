@@ -66,7 +66,7 @@ if user_type == "Current Employee":
 
     st.write(statement, unsafe_allow_html=False)
 
-    user_EIN = st.sidebar.number_input("Enter your EIN", value=8963)
+    user_EIN = st.sidebar.number_input("Enter your EIN", value=8963, step=0)
     salary = 0.0
     job_title = "Treasurer"
     health_coverage = ''
@@ -207,7 +207,7 @@ elif user_type == "Prospective Employee":
                 "\n\n\t• Determine the total compensation of prospective employees" \
                 "\n\nTips:\n\n" \
                 "\n\t• Open left sidebar to make adjustments to the modeled employee"\
-                "\n\n\t• Change the Location/Department to view different mandatory benefit plans"\
+                "\n\n\t• Change the Location/Department to explore different mandatory benefit plans"\
                 "\n\n\t• Hover your mouse over different pie pieces to view the benefit name and value" \
                 "\n\n\t• Click on the legend items to adjust the amount of benefits on the pie chart" \
                 "\n\n\t• See the full breakdown by clicking the dropdown bar below the graph" \
