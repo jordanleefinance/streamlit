@@ -122,15 +122,15 @@ if user_type == "Current Employee":
                 health_plan = "Optima Health POS"
             if df.iloc[i].loc['Health Plan'] == "OPTIMA EQUITY HDHP":
                 health_plan = "Optima Equity HDHP"
-            if df.iloc[i].loc['Health Plan'] == "":
+            if df.iloc[i].loc['Health Plan'] == "" or df.iloc[i].loc['Health Plan'] == "NONE":
                 health_plan = "None"
 
             if df.iloc[i].loc['Dental Plan'] == "DENTAL":
                 den_plan = "Delta Dental"
-            if df.iloc[i].loc['Dental Plan'] == "NONE":
+            if df.iloc[i].loc['Dental Plan'] == "NONE" or df.iloc[i].loc['Dental Plan'] == "":
                 den_plan = "None"
 
-            if df.iloc[i].loc['Vision Plan'] == "NONE":
+            if df.iloc[i].loc['Vision Plan'] == "NONE" or df.iloc[i].loc['Vision Plan'] == "":
                 vis_plan = "None"
             if df.iloc[i].loc['Vision Plan'] == "VISION SERVICE PLAN":
                 vis_plan = "Vision Service Plan"
