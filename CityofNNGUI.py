@@ -66,7 +66,7 @@ if user_type == "Current Employee":
 
     st.write(statement, unsafe_allow_html=False)
 
-    user_EIN = st.sidebar.number_input("Enter your EIN", value=8963)
+    user_EIN = st.sidebar.number_input("Enter your EIN", value=520810)
     salary = 0.0
     job_title = "Treasurer"
     health_coverage = ''
@@ -138,8 +138,8 @@ if user_type == "Current Employee":
                 vis_plan = "Vision INS City"
 
     user_name = st.sidebar.text_input("Name", name)
-    job_titles = ["Treasurer", 'Fire', 'Police', 'Finance', 'Human Resources',
-                  'Engineering', 'Libraries', 'Information Technology']
+    job_titles = ["Treasurer", 'Fire', 'Police', 'Finance', 'Human resources',
+                  'Engineering', 'Libraries', 'Information technology']
     try:
         job_titles.remove(job_title)
         job_titles.insert(0, job_title)
