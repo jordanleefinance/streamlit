@@ -143,7 +143,6 @@ if user_type == "Current Employee":
     try:
         job_titles.remove(job_title)
         job_titles.insert(0, job_title)
-        user_jobtitle = st.sidebar.selectbox("Location/Department", job_titles)
     except ValueError:
         pass
     finally:
