@@ -190,8 +190,6 @@ if user_type == "Current Employee":
         user_vision_plan = st.sidebar.radio("Vision Plan", vision_plans)
 
 
-
-
 elif user_type == "Prospective Employee":
     st.title("Calculate a City of Newport News Employee's Total Compensation")
     statement = "Below is a personalized statement prepared specifically for you. This statement shows the " \
