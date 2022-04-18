@@ -867,7 +867,7 @@ finally:
                      "that provides regular active full-time employees of the City hired after February 28, 2010, "
                      "the ability to accumulate assets on a tax-free basis, for reimbursements of qualified medical "
                      "expenses during retirement.  The city contributes 3% of earnings on behalf of each eligible "
-                     "employee.  \n\n*Definition of Earnings: Average City full-time salary annualized and calculated"
+                     "employee.  \n\n*Definition of *Earnings*: Average City full-time salary annualized and calculated"
                      " at the beginning of each Fiscal Year.  For more information on the Retirement Health Savings "
                      "(RHS) Plan, please visit https://www.nnva.gov/2673/Retirement-Health-Savings-Plan-RHS. ")
 
