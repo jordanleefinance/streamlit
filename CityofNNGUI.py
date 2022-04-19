@@ -42,7 +42,7 @@ file_path = r'C:/Users/JordanLee/OneDrive/Documents/MFinA/' \
             r'NNPS - Capstone/Compensation Package.xlsx'
 
 st.sidebar.subheader("""**Total Compensation**""")
-user_type = st.sidebar.radio("Are you a...", ['Current Employee', 'Prospective Employee'])
+user_type = st.sidebar.radio("Are you a...", ['Prospective Employee', 'Current Employee'])
 if user_type == "Current Employee":
     st.title("Calculate Your Total Compensation")
     statement = "Below is a personalized statement prepared specifically for you. This statement shows the " \
