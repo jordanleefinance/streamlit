@@ -1,7 +1,10 @@
 import streamlit as st
+from PIL import Image
+image = Image.open(r"C:\Users\jorda\OneDrive\Documents\Pictures\nice_pic.jpg")
 
 st.header("Jordan Lee")
 st.subheader("Financial Analyst")
+st.image(image)
 st.write("Thank you for checking out my webpage! I am a recent graduate from Christopher Newport University with "
          "an entrepreneurial mindset and strong will to invest into building relationships."
          " In the next 5 years, I plan on pursing my CFA (Chartered Financial Analyst) and shortly after "
@@ -15,7 +18,11 @@ st.write("Thank you for checking out my webpage! I am a recent graduate from Chr
 with st.container():
     image_col, text_col = st.columns((1, 2))
     with image_col:
-        st.image(r"C:\Users\jorda\OneDrive\Documents\Pictures\nice_pic.jpg")
+        st.image("https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.squarespace-cdn.com%"
+                 "2Fcontent%2Fv1%2F58fffa62ebbd1a6b493a5cc2%2F1493231761575-WDH1W20PRMVBEFOZ4UE0%2FIMG_"
+                 "9293.JPG%3Fformat%3D1000w&imgrefurl=https%3A%2F%2Fwww.lacrossethenations.org%2F&tbnid=VIr89ozQdltT9M&"
+                 "vet=12ahUKEwjSsM78r7r3AhVvn3IEHT0eCDkQMygFegUIARDGAQ..i&docid=tEpMMga8-6AEZM&w=1000&h=667&q=lacrosse%2"
+                 "0the%20nations&ved=2ahUKEwjSsM78r7r3AhVvn3IEHT0eCDkQMygFegUIARDGAQ")
     with text_col:
         st.subheader("Grow the game")
         st.write("""CNU Men's lacrosse has given me th opportunity to go abroad to grow the game of lacrosse by going to
@@ -40,7 +47,9 @@ with st.container():
 with st.container():
     image_col, text_col = st.columns((1, 2))
     with image_col:
-        st.image("https://bit.ly/3OKXsDA")
+        st.image("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.alphasoftware.com%2Fblog%2Fwere-all-"
+                 "app-happy-people-spend-more-time-in-mobileapps-than-watching-tv&psig=AOvVaw3upkm9qRcEKuWe8I"
+                 "o_WvUl&ust=1651357073651000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCLigztemuvcCFQAAAAAdAAAAABAD")
     with text_col:
         st.subheader("Apps")
         st.write("""The Total Compensation Calculator was designed for the City of Newport News.""")
@@ -53,11 +62,14 @@ with st.container():
                     "(https://share.streamlit.io/jordanleefinance/streamlit/main/gitexample.py)")
 
 with st.container():
-    image_col, text_col = st.columns((1, 2))
+    image_col, text_col = st.columns((2, 1))
     with image_col:
-        st.image("https://bit.ly/3Lultg7")
+        st.image("https://www.google.com/url?sa=i&url=https%3A%2F%2Fadvantagefamily.com%2Fblog%2F19-blog-topics-to-"
+                 "attract-new-leads-to-your-financial-management-practice%2F&psig=AOvVaw0G6oW6jAKrwihK6CnOF3jI&ust="
+                 "1651356896390000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCIjYme6suvcCFQAAAAAdAAAAABAJ")
     with text_col:
         st.subheader("Blog")
-        st.write("""My blog is aimed to give people more knowledge on common financial tools/concepts.""")
+        st.write("""My blog is aimed to give people more knowledge on common financial tools/concepts. Also, this blog 
+        gives you an opportunity to provide any feedback on my website, strategies, etc.""")
         st.markdown("[JMM Blog] "
                     "(https://www.jmmgroupllc.xyz/templates/blog.html)")
