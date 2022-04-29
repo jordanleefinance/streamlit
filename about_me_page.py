@@ -15,7 +15,7 @@ st.write("Thank you for checking out my webpage! I am a recent graduate from Chr
 with st.container():
     image_col, text_col = st.columns((1, 2))
     with image_col:
-        st.image("C:\Users\jorda\OneDrive\Documents\Pictures\nice_pic.jpg")
+        st.image(r"C:\Users\jorda\OneDrive\Documents\Pictures\nice_pic.jpg")
     with text_col:
         st.subheader("Grow the game")
         st.write("""CNU Men's lacrosse has given me th opportunity to go abroad to grow the game of lacrosse by going to
@@ -46,8 +46,11 @@ with st.container():
         st.write("""The Total Compensation Calculator was designed for the City of Newport News.""")
         st.markdown("[Compensation Calculator...] "
                     "(https://share.streamlit.io/jordanleefinance/streamlit/main/CityofNNGUI.py)")
-        st.write("""Frontline is the first digital temp staffing platform tailored for green jobs.""")
+        st.write("""**Frontline** is the first digital temp staffing platform tailored for green jobs.""")
         st.markdown("[Independent Contractor Time Tracker...] (https://www.lacrossethenations.org/)")
+        st.write("""Personalize your stock search with this web app!""")
+        st.markdown("[Stock Search Web App...] "
+                    "(https://share.streamlit.io/jordanleefinance/streamlit/main/gitexample.py)")
 
 with st.container():
     image_col, text_col = st.columns((1, 2))
