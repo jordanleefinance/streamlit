@@ -1,22 +1,21 @@
 import streamlit as st
 
-
 st.header("Jordan Lee")
 st.subheader("Financial Analyst")
-st.write("Thank you for checking out my webpage! I am a recent graduate from Christopher Newport University with"
+st.write("Thank you for checking out my webpage! I am a recent graduate from Christopher Newport University with "
          "an entrepreneurial mindset and strong will to invest into building relationships."
          " In the next 5 years, I plan on pursing my CFA (Chartered Financial Analyst) and shortly after "
-         "register JMM Group, LLC as an RIA (Registerd Investment Advisor). "
-         "A major detail I learned from my masters is within businesses there are systems within systems and I believe a great"
+         "register JMM Group, LLC as an RIA (Registered Investment Advisor). "
+         "A major detail I learned from my masters is within businesses "
+         "there are systems within systems and I believe a great"
          " way to incorporate systems thinking into business decision making is through information science."
          "Below you can find some of my passions, goals, hobbies."
          )
 
-
 with st.container():
     image_col, text_col = st.columns((1, 2))
     with image_col:
-        st.image("https://www.cnusports.com/images/2021/9/24/Lee_Jordan.jpg?width=300")
+        st.image("C:\Users\jorda\OneDrive\Documents\Pictures\nice_pic.jpg")
     with text_col:
         st.subheader("Grow the game")
         st.write("""CNU Men's lacrosse has given me th opportunity to go abroad to grow the game of lacrosse by going to
@@ -37,3 +36,25 @@ with st.container():
                     "for a glimpse of a couple analysis tools.")
         st.markdown("Click [subscribe](https://www.jmmgroupllc.xyz/templates/subscribe.html) "
                     "to be redirected to the subscribe page.")
+
+with st.container():
+    image_col, text_col = st.columns((1, 2))
+    with image_col:
+        st.image("https://bit.ly/3OKXsDA")
+    with text_col:
+        st.subheader("Apps")
+        st.write("""The Total Compensation Calculator was designed for the City of Newport News.""")
+        st.markdown("[Compensation Calculator...] "
+                    "(https://share.streamlit.io/jordanleefinance/streamlit/main/CityofNNGUI.py)")
+        st.write("""Frontline is the first digital temp staffing platform tailored for green jobs.""")
+        st.markdown("[Independent Contractor Time Tracker...] (https://www.lacrossethenations.org/)")
+
+with st.container():
+    image_col, text_col = st.columns((1, 2))
+    with image_col:
+        st.image("https://bit.ly/3Lultg7")
+    with text_col:
+        st.subheader("Blog")
+        st.write("""My blog is aimed to give people more knowledge on common financial tools/concepts.""")
+        st.markdown("[JMM Blog] "
+                    "(https://www.jmmgroupllc.xyz/templates/blog.html)")
