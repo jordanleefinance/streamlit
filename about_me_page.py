@@ -1,5 +1,6 @@
 import streamlit as st
 from PIL import Image
+
 image = Image.open(r"C:\Users\jorda\OneDrive\Documents\Pictures\nice_pic.jpg")
 
 st.header("About Me")
