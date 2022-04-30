@@ -1,13 +1,11 @@
 import streamlit as st
-from PIL import Image
 
-image = Image.open(r"C:\Users\jorda\OneDrive\Documents\Pictures\nice_pic.jpg")
 
 st.header("About Me")
 with st.container():
     image_col, text_col = st.columns((1, 2))
     with image_col:
-        st.image(image)
+        st.image(r"C:\Users\jorda\OneDrive\Documents\Pictures\nice_pic.jpg")
     with text_col:
         st.subheader("Jordan Lee")
         st.write(
@@ -36,7 +34,6 @@ with st.container():
                     "for a glimpse of a couple analysis tools.")
         st.markdown("Click [subscribe](https://www.jmmgroupllc.xyz/templates/subscribe.html) "
                     "to be redirected to the subscribe page.")
-
 
 with st.container():
     image_col, text_col = st.columns((1, 2))
