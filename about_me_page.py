@@ -21,7 +21,7 @@ with st.container():
         )
 
 with st.container():
-    text_col, image_col = st.columns((2, 1))
+    text_col, image_col = st.columns((2, 2))
     with image_col:
         st.image("https://mediacloud.kiplinger.com/image/private/s--x2_BoIgn--/f_auto,t_primary-image-desktop"
                  "@1/v1604352227/Investing/stock-market-today-110220.jpg")
