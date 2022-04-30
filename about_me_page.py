@@ -1,14 +1,11 @@
 import streamlit as st
-from PIL import Image
-import os
 
-image = Image.open(r"C:\Users\jorda\OneDrive\Documents\GitHub\streamlit\nice_pic.jpg")
 
 st.header("About Me")
 with st.container():
     image_col, text_col = st.columns((1, 2))
     with image_col:
-        st.image(image)
+        st.image("https://www.cnusports.com/images/2021/9/24/Lee_Jordan.jpg?width=300")
     with text_col:
         st.subheader("Jordan Lee")
         st.write(
