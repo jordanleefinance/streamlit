@@ -29,11 +29,9 @@ with st.container():
         st.subheader("Stock Analysis")
         st.write("""Over time, I've noticed a lot of people don't know much about the stock market or even what a stock
         is in general. One of my goals is to create an avenue for the average person to be able to learn how to grow 
-        their income based on their own knowledge and confidence.""")
-        st.markdown("Click [here](https://www.jmmgroupllc.xyz/templates/products.html) "
-                    "for a glimpse of a couple analysis tools.")
-        st.markdown("Click [subscribe](https://www.jmmgroupllc.xyz/templates/subscribe.html) "
-                    "to be redirected to the subscribe page.")
+        their income based on their own knowledge and confidence. 
+        Click [here](https://www.jmmgroupllc.xyz/templates/products.html) for a glimpse of a couple analysis tools.
+        Click [subscribe](https://www.jmmgroupllc.xyz/templates/subscribe.html) to be redirected to the subscribe page.""")
 
 with st.container():
     image_col, text_col = st.columns((1, 2))
