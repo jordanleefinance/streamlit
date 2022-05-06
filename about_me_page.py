@@ -66,5 +66,7 @@ with st.container():
                  "/2018/06/financial-planner-blog-topics-1.png")
     with text_col:
         st.subheader("Blog")
-        st.write("""My [blog](https://www.jmmgroupllc.xyz/templates/blog.html) is aimed to give people more knowledge on common financial tools/concepts. Also, this blog 
-        gives you an opportunity to provide any feedback on my website, strategies, etc.""")
+        st.write("""This blog is aimed to give people more knowledge on common financial tools/concepts. Also, this blog 
+        gives you an opportunity to provide any feedback on my website, strategies, etc. I have yet to start posting due time
+        constraints, but I am gathering ideas for what topics to discuss and would love your input! 
+        [Coming soon...](https://www.jmmgroupllc.xyz/templates/blog.html)""")
