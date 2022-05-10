@@ -5,7 +5,8 @@ st.header("About Me")
 with st.container():
     image_col, text_col = st.columns((1, 2))
     with image_col:
-        st.image("https://www.cnusports.com/images/2021/9/24/Lee_Jordan.jpg?width=300")
+        st.image("https://media-exp1.licdn.com/dms/image/C4D03AQHVHSuW0T27FA/profile-displayphoto-shrink_200_200/0/16"
+                 "07095432597?e=1657756800&v=beta&t=uHa3mlVptW7LmWAoCxRbJEIk8AZ99MBuNHKyPy0wWNA")
     with text_col:
         st.subheader("Jordan Lee")
         st.write(
@@ -23,8 +24,7 @@ with st.container():
 with st.container():
     text_col, image_col = st.columns((2, 2))
     with image_col:
-        st.image("https://mediacloud.kiplinger.com/image/private/s--x2_BoIgn--/f_auto,t_primary-image-desktop"
-                 "@1/v1604352227/Investing/stock-market-today-110220.jpg")
+        st.image("https://mediacloud.kiplinger.com/image/private/s--x2_BoIgn--/f_auto,t_primary-image-desktop@1/v1604352227/Investing/stock-market-today-110220.jpg")
     with text_col:
         st.subheader("Stock Analysis")
         st.write("""Over time, I've noticed a lot of people don't know much about the stock market or even what a stock
