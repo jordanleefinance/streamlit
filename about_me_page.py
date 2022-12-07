@@ -9,7 +9,7 @@ with st.container():
     with text_col:
         st.write(
             "Thank you for checking out my webpage! "
-            "I am currently an Analyst for Ballast Consulting Group and recently graduated from "
+            "I am currently an analyst for a consulting group and recently graduated from "
             "Christopher Newport University with my Master's in Financial Analysis. "
             "A major detail I learned from my masters is within businesses "
             "there are systems within systems and translated tremendously "
@@ -27,8 +27,8 @@ with st.container():
          explore different ways to help, for example the 
          [Independent Contractor Time Tracker](https://www.appsheet.com/start/76c16fba-7e57-48a4-ad40-8d17850daa92) and 
          Park Litter Calculator (Purchased).
-        If you love to workout and hate the hassel of tracking your progress, try out 
-        [Mar Works Out](https://www.appsheet.com/start/198ae0e8-52d5-4428-927a-f0dc6770edaa), where you can personalize
+        If you love to workout and hate the hassel of tracking your progress, try 
+        [Mar Works Out](https://www.appsheet.com/start/198ae0e8-52d5-4428-927a-f0dc6770edaa) where you can personalize
          your schedule and track progress at your finger tips!""")
 
 
