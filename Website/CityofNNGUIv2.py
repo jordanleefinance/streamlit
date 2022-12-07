@@ -8,8 +8,8 @@ import os
 start = r"C:\Users\data\Sampledata.xlsx"
 path1 = r"C:\Users\data"
 
-path = r"C:\Users\jorda\OneDrive\Documents\GitHub\streamlit\Sampledata.xlsx"
-DB_path = os.path.join(path1, "Sampledata.xlsx")
+path = r"/Sampledata.xlsx"
+DB_path = os.path.join(path1, "../Sampledata.xlsx")
 
 
 @st.cache
