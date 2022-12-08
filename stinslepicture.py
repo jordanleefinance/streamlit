@@ -1,17 +1,22 @@
 import streamlit as st
 from PIL import Image
 import cv2
+import os
 
 
 def load_image(file):
     image = Image.open(file)
     return image
 
-
 image_file = st.file_uploader("Upload Images", type=["png", "jpg", "jpeg"])
 
+
 if image_file is not None:
-    img = cv2.imread(image_file.name, 1)
+
+    with open(os.path.join("C:/tempPhotoDir"), "wb") as f:
+        f.write(image_file.getbuffer())
+        img = cv2.imread(f, 1)
+        print(img)
 
     # Image to Gray Image
 
@@ -30,3 +35,5 @@ if image_file is not None:
     sketch = cv2.divide(gray_image, inverted_blurred_image, scale=256.0)
 
     st.image(load_image(sketch), width=250)
+
+
