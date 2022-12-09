@@ -12,7 +12,7 @@ start = r"C:\Users\data\Sampledata.xls"
 path1 = r"C:\Users\data"
 
 path = r"/Sampledata.xlsx"
-DB_path = os.path.join(path1, "../Sampledata.xlsx")
+DB_path = os.path.join(path1, "Sampledata.xlsx")
 
 @st.cache
 def load_data():
@@ -23,7 +23,7 @@ def load_data():
 
 
 try:
-    workbook = load_workbook(filename="../Sampledata.xlsx", data_only=True)
+    workbook = load_workbook(filename="Sampledata.xlsx", data_only=True)
     workbook = workbook['Sheet1']
     data = workbook.values
     df = pd.DataFrame(data)
