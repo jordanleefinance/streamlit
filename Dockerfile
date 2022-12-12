@@ -1,3 +1,15 @@
-RUN apt-get update
-RUN apt-get install ffmpeg libsm6 libxext6  -y
+FROM python:3.9-slim
 
+EXPOSE 8080
+
+WORKDIR /Github/streamlit
+
+COPY requirements.txt ./requirements.txt
+
+RUN pip install -r requirements.txt
+
+COPY stinslepicture.py ./stinslepicture.py
+
+ENTRYPOINT ["streamlit", "run"]
+
+CMD ["stinslepicture.py"]
