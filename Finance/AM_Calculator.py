@@ -4,7 +4,7 @@ import streamlit as st
 import datetime
 import scipy.optimize as opt
 
-
+source_file = r"C:\Users\jorda\OneDrive\Documents\GitHub\streamlit\Finance\AM_Calculator_buoy.xlsx"
 am_schedule_columns = ["Periods", "Date", "Beginning Balance", "Monthly Payment", "Principal", "Interest",
                        "Ending Balance"]
 
