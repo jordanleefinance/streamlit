@@ -1,58 +1,88 @@
+import datetime as datetime
 import pandas as pd
 import streamlit as st
 import datetime
-
-def get_monthly_pmt(loan_amt, r, n):
-    """ calculate monthly payment
-    loan_amt: initial loan amount
-    r: monthly interest
-    n: total number of payments
-    """
-    return loan_amt * r * (1 + r) ** n / ((1 + r) ** n - 1)
+import scipy.optimize as opt
 
 
+am_schedule_columns = ["Periods", "Date", "Beginning Balance", "Monthly Payment", "Principal", "Interest",
+                       "Ending Balance"]
 
 
+def AMbulid(data):
+    # Build formulas and fill down
+    for period in range(2, periods + 1):
+        data.at[period, "Beginning Balance"] = data.at[period - 1, "Ending Balance"]
+        data.at[period, "Monthly Payment"] = data.at[1, "Monthly Payment"]
+        data.at[period, "Interest"] = (data.at[period, "Beginning Balance"] * (ir / pper))
+        data.at[period, "Principal"] = data.at[period, "Monthly Payment"] - data.at[period, "Interest"]
+        data.at[period, "Ending Balance"] = data.at[period, "Beginning Balance"] - data.at[period, "Principal"]
 
+    return data
 
 
 
 with st.form("Loan Details"):
     st.write("Please provide the following:")
-    loan_amt = st.number_input("Loan Amount", step=1)
-    interest = st.number_input("Interest Rate", step=0.0001, format="%i")
-    pper = st.number_input("Payments per Period", value=12)
+    loan_amt = st.number_input("Loan Amount", step=1.00, value=100500.00, format="%.2f")
+    interest_rate = st.slider("Interest Rate", step=0.001, max_value=50.00, value=5.755, format="%.3f")
+    pper = st.number_input("Payments per year", value=12)
     start_date = st.date_input("Start Date")
-    end_date = st.date_input("End Date")
+    end_date = st.date_input("End Date", max_value=datetime.datetime(2150, 12, 31))
 
-    periods = end_date.year - start_date.year * pper
-    print(periods)
+    periods = len(pd.date_range(start_date, end_date - datetime.timedelta(days=1), freq="M"))
+    ir = interest_rate/100
+    interest = loan_amt * (ir/pper)
+
     button = st.form_submit_button("Submit")
     if button:
-        get_monthly_pmt(loan_amt, interest, periods)
+        payment = loan_amt * (ir/pper) * (1-(1/((1+(ir/pper))**periods)))
+        # DF creation
+        df = pd.DataFrame(columns=am_schedule_columns)
 
-def get_principle(loan_amt, A, r, t):
-    """ calculate principle for month t
-    loan_amt: intial loan amount
-    A: monthly payment
-    r: monthly intrest
-    t: number of payments
-    """
-    return loan_amt * ((1 + r) ** t) - A * ((1 + r) ** t - 1) / r
+        # Set index -- total periods
+        df["Periods"] = range(1, periods+1)
+        df.set_index(df["Periods"], inplace=True)
+        del(df["Periods"])
+
+        df["Date"] = [d.strftime('%B %d, %Y') for d in pd.date_range(start_date, end_date - datetime.timedelta(days=1),
+                                                                     freq="M")]
+        # Given
+        df.at[1, "Beginning Balance"] = loan_amt
+
+        # Placeholder monthly payment
+        df.at[1, "Monthly Payment"] = payment
+
+        # Calculate interest and principal
+        if interest>payment:
+            df.at[1, "Interest"] = interest # User error prevention placeholder
+            df.at[1, "Principal"] = (payment + interest)
+        else:
+            df.at[1, "Interest"] = interest
+            df.at[1, "Principal"] = (payment - interest)
+
+        # Calculate Ending balance
+        df.at[1, "Ending Balance"] = (loan_amt - float(df.at[1, "Principal"]))
+
+        # Build formulas and fill down
+        for period in range(2, periods + 1):
+            df.at[period, "Beginning Balance"] = df.at[period - 1, "Ending Balance"]
+            df.at[period, "Monthly Payment"] = df.at[1, "Monthly Payment"]
+            df.at[period, "Interest"] = (float(df.at[period, "Beginning Balance"]) * (ir / pper))
+            df.at[period, "Principal"] = float(df.at[period, "Monthly Payment"]) - float(df.at[period, "Interest"])
+            df.at[period, "Ending Balance"] = float(df.at[period, "Beginning Balance"]) - float(
+                df.at[period, "Principal"])
+
+        df["Beginning Balance"].apply(lambda x: "${:,.2f}".format(float(x)))
+        df["Monthly Payment"].apply(lambda x: "${:,.2f}".format(float(x)))
+        df["Interest"].apply(lambda x: "${:,.2f}".format(float(x)))
+        df["Principal"].apply(lambda x: "${:,.2f}".format(float(x)))
+        df["Ending Balance"].apply(lambda x: "${:,.2f}".format(float(x)))
+
+        st.dataframe(df, use_container_width=False)
+
+        #  df = opt.root(AMbuild(df), df.at[periods, "Ending Balance"]==0)
 
 
-def get_schedule(loan_amt, r, n):
-    """ calculate the amortization schedule
-    loan_amt: intial loan amount
-    r: monthly intrest
-    n: total number of payments
-    """
-    monthly = []
-    A = get_monthly_pmt(loan_amt, r, n)
-    last = loan_amt
-    for i in range(1, n + 1):
-        curr = get_principle(loan_amt, A, r, i)
-        p = last - curr
-        monthly.append([i, p, A - p, curr])
-        last = curr
-    return pd.DataFrame(monthly, columns=['month', 'principle_pmt', 'interest_pmt', 'principle'])
+        print(df)
+
