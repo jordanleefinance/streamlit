@@ -2,6 +2,8 @@ import datetime as datetime
 import pandas as pd
 import streamlit as st
 import datetime
+import numpy as np
+import numpy_financial as npf
 import scipy.optimize as opt
 
 source_file = r"C:\Users\jorda\OneDrive\Documents\GitHub\streamlit\Finance\AM_Calculator_buoy.xlsx"
@@ -36,7 +38,8 @@ with st.form("Loan Details"):
 
     button = st.form_submit_button("Submit")
     if button:
-        payment = loan_amt * (ir/pper) * (1-(1/((1+(ir/pper))**periods)))
+        # payment = loan_amt * (ir/pper) * (1-(1/((1+(ir/pper))**periods)))
+        payment = npf.pmt((ir/pper), periods, loan_amt)[0]
         # DF creation
         df = pd.DataFrame(columns=am_schedule_columns)
 
@@ -78,6 +81,17 @@ with st.form("Loan Details"):
         df["Interest"].apply(lambda x: "${:,.2f}".format(float(x)))
         df["Principal"].apply(lambda x: "${:,.2f}".format(float(x)))
         df["Ending Balance"].apply(lambda x: "${:,.2f}".format(float(x)))
+
+        df["Cumulative Principal"] = df["Principal"].cumsum()
+
+        writer = pd.ExcelWriter(source_file, engine='xlsxwriter')
+
+        with open(source_file, "rb") as f:
+
+            df.to_excel(writer, sheet_name="AM Schedule", startcol=4, startrow=6)
+
+        writer.save()
+        writer.close()
 
         st.dataframe(df, use_container_width=False)
 
