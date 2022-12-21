@@ -3,6 +3,7 @@ import pandas as pd
 import streamlit as st
 import datetime
 import numpy as np
+import xlsxwriter
 import numpy_financial as npf
 import scipy.optimize as opt
 
@@ -23,80 +24,178 @@ def AMbulid(data):
     return data
 
 
-
-with st.form("Loan Details"):
-    st.write("Please provide the following:")
-    loan_amt = st.number_input("Loan Amount", step=1.00, value=100500.00, format="%.2f")
-    interest_rate = st.slider("Interest Rate", step=0.001, max_value=50.00, value=5.755, format="%.3f")
-    pper = st.number_input("Payments per year", value=12)
-    start_date = st.date_input("Start Date")
-    end_date = st.date_input("End Date", max_value=datetime.datetime(2150, 12, 31))
+with st.sidebar.title("Loan Details"):
+    st.sidebar.write("Please provide the following:")
+    loan_amt = st.sidebar.number_input("Loan Amount", step=1.00, value=147920.00, format="%.2f")
+    interest_rate = st.sidebar.number_input("Interest Rate", step=0.001, max_value=50.00, value=7.125, format="%.3f")
+    pper = st.sidebar.number_input("Payments per year", value=12)
+    start_date = st.sidebar.date_input("Start Date")
+    end_date = st.sidebar.date_input("End Date", max_value=datetime.datetime(2150, 12, 31),
+                             value=datetime.datetime.now() + datetime.timedelta(days=30*365))
 
     periods = len(pd.date_range(start_date, end_date - datetime.timedelta(days=1), freq="M"))
     ir = interest_rate/100
+    ir_up = (interest_rate + 0.5)/100
+    ir_down = (interest_rate - 0.5)/100
+
     interest = loan_amt * (ir/pper)
+    interest_up = loan_amt * (ir_up/pper)
+    interest_down = loan_amt * (ir_down / pper)
 
-    button = st.form_submit_button("Submit")
-    if button:
-        # payment = loan_amt * (ir/pper) * (1-(1/((1+(ir/pper))**periods)))
-        payment = npf.pmt((ir/pper), periods, loan_amt)[0]
-        # DF creation
-        df = pd.DataFrame(columns=am_schedule_columns)
+    button = st.sidebar.button("Submit")
 
-        # Set index -- total periods
-        df["Periods"] = range(1, periods+1)
-        df.set_index(df["Periods"], inplace=True)
-        del(df["Periods"])
+if button:
+    payment = -npf.pmt((ir/pper), periods, loan_amt)
+    payment_up = -npf.pmt((ir_up/pper), periods, loan_amt)
+    payment_down = -npf.pmt((ir_down/pper), periods, loan_amt)
 
-        df["Date"] = [d.strftime('%B %d, %Y') for d in pd.date_range(start_date, end_date - datetime.timedelta(days=1),
-                                                                     freq="M")]
-        # Given
-        df.at[1, "Beginning Balance"] = loan_amt
+    # DF creation
+    df = pd.DataFrame(columns=am_schedule_columns)
+    df_up = pd.DataFrame(columns=am_schedule_columns)
+    df_down = pd.DataFrame(columns=am_schedule_columns)
 
-        # Placeholder monthly payment
-        df.at[1, "Monthly Payment"] = payment
+    # Set index -- total periods
+    df["Periods"] = range(1, periods+1)
+    df.set_index(df["Periods"], inplace=True)
+    del(df["Periods"])
 
-        # Calculate interest and principal
-        if interest>payment:
-            df.at[1, "Interest"] = interest # User error prevention placeholder
-            df.at[1, "Principal"] = (payment + interest)
-        else:
-            df.at[1, "Interest"] = interest
-            df.at[1, "Principal"] = (payment - interest)
+    df_up["Periods"] = range(1, periods + 1)
+    df_up.set_index(df_up["Periods"], inplace=True)
+    del (df_up["Periods"])
 
-        # Calculate Ending balance
-        df.at[1, "Ending Balance"] = (loan_amt - float(df.at[1, "Principal"]))
+    df_down["Periods"] = range(1, periods + 1)
+    df_down.set_index(df_down["Periods"], inplace=True)
+    del (df_down["Periods"])
 
-        # Build formulas and fill down
-        for period in range(2, periods + 1):
-            df.at[period, "Beginning Balance"] = df.at[period - 1, "Ending Balance"]
-            df.at[period, "Monthly Payment"] = df.at[1, "Monthly Payment"]
-            df.at[period, "Interest"] = (float(df.at[period, "Beginning Balance"]) * (ir / pper))
-            df.at[period, "Principal"] = float(df.at[period, "Monthly Payment"]) - float(df.at[period, "Interest"])
-            df.at[period, "Ending Balance"] = float(df.at[period, "Beginning Balance"]) - float(
-                df.at[period, "Principal"])
+    df["Date"] = [d.strftime('%B %d, %Y') for d in pd.date_range(start_date, end_date - datetime.timedelta(days=1),
+                                                                 freq="M")]
+    df_up["Date"] = [d.strftime('%B %d, %Y') for d in pd.date_range(start_date, end_date - datetime.timedelta(days=1),
+                                                                    freq="M")]
+    df_down["Date"] = [d.strftime('%B %d, %Y') for d in pd.date_range(start_date, end_date - datetime.timedelta(days=1),
+                                                                      freq="M")]
+    # Given
+    df.at[1, "Beginning Balance"] = loan_amt
+    df_up.at[1, "Beginning Balance"] = loan_amt
+    df_down.at[1, "Beginning Balance"] = loan_amt
 
-        df["Beginning Balance"].apply(lambda x: "${:,.2f}".format(float(x)))
-        df["Monthly Payment"].apply(lambda x: "${:,.2f}".format(float(x)))
-        df["Interest"].apply(lambda x: "${:,.2f}".format(float(x)))
-        df["Principal"].apply(lambda x: "${:,.2f}".format(float(x)))
-        df["Ending Balance"].apply(lambda x: "${:,.2f}".format(float(x)))
+    # Placeholder monthly payment
+    df.at[1, "Monthly Payment"] = payment
+    df_up.at[1, "Monthly Payment"] = payment_up
+    df_down.at[1, "Monthly Payment"] = payment_down
 
-        df["Cumulative Principal"] = df["Principal"].cumsum()
+    # Calculate interest and principal
+    if interest>payment:
+        df.at[1, "Interest"] = interest  # User error prevention placeholder
+        df.at[1, "Principal"] = (payment + interest)
 
-        writer = pd.ExcelWriter(source_file, engine='xlsxwriter')
+        df_up.at[1, "Interest"] = interest_up  # User error prevention placeholder
+        df_up.at[1, "Principal"] = (payment_up + interest_up)
 
-        with open(source_file, "rb") as f:
+        df_down.at[1, "Interest"] = interest_down  # User error prevention placeholder
+        df_down.at[1, "Principal"] = (payment_down + interest_down)
+    else:
+        df.at[1, "Interest"] = interest
+        df.at[1, "Principal"] = (payment - interest)
 
-            df.to_excel(writer, sheet_name="AM Schedule", startcol=4, startrow=6)
+        df_up.at[1, "Interest"] = interest_up
+        df_up.at[1, "Principal"] = (payment_up - interest_up)
 
+        df_down.at[1, "Interest"] = interest_down
+        df_down.at[1, "Principal"] = (payment_down - interest_down)
+
+    # Calculate Ending balance
+    df.at[1, "Ending Balance"] = (loan_amt - float(df.at[1, "Principal"]))
+    df_up.at[1, "Ending Balance"] = (loan_amt - float(df_up.at[1, "Principal"]))
+    df_down.at[1, "Ending Balance"] = (loan_amt - float(df_down.at[1, "Principal"]))
+
+    # Build formulas and fill down
+    for period in range(2, periods + 1):
+        df.at[period, "Beginning Balance"] = df.at[period - 1, "Ending Balance"]
+        df.at[period, "Monthly Payment"] = df.at[1, "Monthly Payment"]
+        df.at[period, "Interest"] = (float(df.at[period, "Beginning Balance"]) * (ir / pper))
+        df.at[period, "Principal"] = float(df.at[period, "Monthly Payment"]) - float(df.at[period, "Interest"])
+        df.at[period, "Ending Balance"] = float(df.at[period, "Beginning Balance"]) - float(
+            df.at[period, "Principal"])
+
+        df_up.at[period, "Beginning Balance"] = df_up.at[period - 1, "Ending Balance"]
+        df_up.at[period, "Monthly Payment"] = df_up.at[1, "Monthly Payment"]
+        df_up.at[period, "Interest"] = (float(df_up.at[period, "Beginning Balance"]) * (ir_up / pper))
+        df_up.at[period, "Principal"] = float(df_up.at[period, "Monthly Payment"]) - float(df_up.at[period, "Interest"])
+        df_up.at[period, "Ending Balance"] = float(df_up.at[period, "Beginning Balance"]) - float(
+            df_up.at[period, "Principal"])
+
+        df_down.at[period, "Beginning Balance"] = df_down.at[period - 1, "Ending Balance"]
+        df_down.at[period, "Monthly Payment"] = df_down.at[1, "Monthly Payment"]
+        df_down.at[period, "Interest"] = (float(df_down.at[period, "Beginning Balance"]) * (ir_down / pper))
+        df_down.at[period, "Principal"] = float(df_down.at[period, "Monthly Payment"]) - float(df_down.at[period, "Interest"])
+        df_down.at[period, "Ending Balance"] = float(df_down.at[period, "Beginning Balance"]) - float(
+            df_down.at[period, "Principal"])
+
+    df["Cumulative Interest"] = df["Interest"].cumsum()
+    df["Cumulative Principal"] = df["Principal"].cumsum()
+
+    df_up["Cumulative Interest"] = df_up["Interest"].cumsum()
+    df_up["Cumulative Principal"] = df_up["Principal"].cumsum()
+
+    df_down["Cumulative Interest"] = df_down["Interest"].cumsum()
+    df_down["Cumulative Principal"] = df_down["Principal"].cumsum()
+
+    info = {"Loan Amount": loan_amt, "Interest Rate": ir, "Periods": periods,
+            "Total Interest": df.at[periods, "Cumulative Interest"]}
+    info_df = pd.DataFrame.from_dict(data=info, orient='index')
+    info_df.columns = ["Normal"]
+
+    info_up = {"Loan Amount": loan_amt, "Interest Rate": ir_up, "Periods": periods,
+               "Total Interest": df_up.at[periods, "Cumulative Interest"]}
+    info_df_up = pd.DataFrame.from_dict(data=info_up, orient='index')
+    info_df_up.columns = ["50 basis points up"]
+
+    info_down = {"Loan Amount": loan_amt, "Interest Rate": ir_down, "Periods": periods,
+                 "Total Interest": df_down.at[periods, "Cumulative Interest"]}
+    info_df_down = pd.DataFrame.from_dict(data=info_down, orient='index')
+    info_df_down.columns = ["50 basis points down"]
+
+
+    @st.cache
+    def convert_df(df):
+        # IMPORTANT: Cache the conversion to prevent computation on every rerun
+        return df.to_csv().encode('utf-8')
+
+    writer = pd.ExcelWriter(source_file, engine='xlsxwriter')
+
+    with open(source_file, "rb") as f:
+        info_df.to_excel(writer, sheet_name="AM Schedule", startcol=1, startrow=1)
+        df.to_excel(writer, sheet_name="AM Schedule", startcol=3, startrow=6)
+
+        info_df_up.to_excel(writer, sheet_name="AM Schedule - Higher Interest", startcol=1, startrow=1)
+        df_up.to_excel(writer, sheet_name="AM Schedule - Higher Interest", startcol=3, startrow=6)
+
+        info_df_down.to_excel(writer, sheet_name="AM Schedule - Lower Interest", startcol=1, startrow=1)
+        df_down.to_excel(writer, sheet_name="AM Schedule - Lower Interest", startcol=3, startrow=6)
         writer.save()
-        writer.close()
 
-        st.dataframe(df, use_container_width=False)
+        bookie = xlsxwriter.Workbook(f)
 
-        #  df = opt.root(AMbuild(df), df.at[periods, "Ending Balance"]==0)
+        workbook = writer.book
+        accounting_format = workbook.add_format({'num_format': '$#,##0.00'})
+        percentage_format = workbook.add_format({'num_format': '0%'})
+        sheet = bookie.worksheets()
+
+        sheet.set_column(6, 12, None, cell_format=accounting_format)
+        '''for sheet in workbook.worksheets():
+            sheet('F8:L{}'.format(periods), cell_format=accounting_format)
+            sheet.write("C3", cell_format=accounting_format)
+            sheet.write("C6", cell_format=accounting_format)'''
+        writer.save()
+        #workbook.close()
+
+    writer.save()
+    writer.close()
 
 
-        print(df)
+    st.dataframe(df, use_container_width=False)
 
+    with open(source_file, "rb") as final:
+        st.download_button("Upload variance analysis", data=final, file_name="AM Schedule.xlsx", mime='xlsx')
+
+    #  df = opt.root(AMbuild(df), df.at[periods, "Ending Balance"]==0)
