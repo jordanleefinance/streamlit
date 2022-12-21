@@ -174,7 +174,7 @@ if button:
         df_down.to_excel(writer, sheet_name="AM Schedule - Lower Interest", startcol=3, startrow=6)
         writer.save()
 
-        bookie = xlsxwriter.Workbook(f)
+        '''bookie = xlsxwriter.Workbook(f)
 
         workbook = writer.book
         accounting_format = workbook.add_format({'num_format': '$#,##0.00'})
@@ -182,7 +182,7 @@ if button:
         sheet = bookie.worksheets()
 
         sheet.set_column(6, 12, None, cell_format=accounting_format)
-        '''for sheet in workbook.worksheets():
+        for sheet in workbook.worksheets():
             sheet('F8:L{}'.format(periods), cell_format=accounting_format)
             sheet.write("C3", cell_format=accounting_format)
             sheet.write("C6", cell_format=accounting_format)'''
