@@ -181,12 +181,12 @@ if button:
     writer.save()
     writer.close()
 
-
-    st.table(df)
+    st.table(info_df)
 
     with open(source_file, "rb") as final:
         st.download_button("Upload variance analysis", data=final, file_name="AM Schedule.xlsx", mime='xlsx')
 
+    st.dataframe(df, use_container_width=False)
     #  df = opt.root(AMbuild(df), df.at[periods, "Ending Balance"]==0)
 
 
