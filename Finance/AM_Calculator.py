@@ -182,7 +182,7 @@ if button:
     writer.close()
 
 
-    st.table(df, use_container_width=False)
+    st.table(df)
 
     with open(source_file, "rb") as final:
         st.download_button("Upload variance analysis", data=final, file_name="AM Schedule.xlsx", mime='xlsx')
