@@ -30,7 +30,9 @@ with st.container():
         If you love to workout and hate the hassel of tracking your progress, try 
         [Mar Works Out](https://www.appsheet.com/start/198ae0e8-52d5-4428-927a-f0dc6770edaa) where you can personalize
          your schedule and track progress at your finger tips! Want a sketch of a picture, I have the perfect tool for you
-          [Memory Sketcher](https://jordanleefinance-streamlit-stinslepicture-9gdtbv.streamlit.app/)""")
+          [Memory Sketcher](https://jordanleefinance-streamlit-stinslepicture-9gdtbv.streamlit.app/). I've always been a
+           strong advocator for having full transperancy with your debt, please try out my amortization schedule calculator
+           [AM Schedule]()""")
 
 
 with st.container():
