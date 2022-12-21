@@ -74,14 +74,14 @@ if button:
     df_down["Date"] = [d.strftime('%B %d, %Y') for d in pd.date_range(start_date, end_date - datetime.timedelta(days=1),
                                                                       freq="M")]
     # Given
-    df.at[1, "Beginning Balance"] = loan_amt
-    df_up.at[1, "Beginning Balance"] = loan_amt
-    df_down.at[1, "Beginning Balance"] = loan_amt
+    df.at[1, "Beginning Balance"] = round(loan_amt, 2)
+    df_up.at[1, "Beginning Balance"] = round(loan_amt, 2)
+    df_down.at[1, "Beginning Balance"] = round(loan_amt, 2)
 
     # Placeholder monthly payment
-    df.at[1, "Monthly Payment"] = payment
-    df_up.at[1, "Monthly Payment"] = payment_up
-    df_down.at[1, "Monthly Payment"] = payment_down
+    df.at[1, "Monthly Payment"] = round(payment, 2)
+    df_up.at[1, "Monthly Payment"] = round(payment_up, 2)
+    df_down.at[1, "Monthly Payment"] = round(payment_down, 2)
 
     # Calculate interest and principal
     if interest>payment:
@@ -174,20 +174,9 @@ if button:
         df_down.to_excel(writer, sheet_name="AM Schedule - Lower Interest", startcol=3, startrow=6)
         writer.save()
 
-        '''bookie = xlsxwriter.Workbook(f)
-
-        workbook = writer.book
-        accounting_format = workbook.add_format({'num_format': '$#,##0.00'})
-        percentage_format = workbook.add_format({'num_format': '0%'})
-        sheet = bookie.worksheets()
-
-        sheet.set_column(6, 12, None, cell_format=accounting_format)
-        for sheet in workbook.worksheets():
-            sheet('F8:L{}'.format(periods), cell_format=accounting_format)
-            sheet.write("C3", cell_format=accounting_format)
-            sheet.write("C6", cell_format=accounting_format)'''
         writer.save()
         #workbook.close()
+
 
     writer.save()
     writer.close()
@@ -199,3 +188,16 @@ if button:
         st.download_button("Upload variance analysis", data=final, file_name="AM Schedule.xlsx", mime='xlsx')
 
     #  df = opt.root(AMbuild(df), df.at[periods, "Ending Balance"]==0)
+'''bookie = xlsxwriter.Workbook(f)
+
+        workbook = writer.book
+        accounting_format = workbook.add_format({'num_format': '$#,##0.00'})
+        percentage_format = workbook.add_format({'num_format': '0%'})
+        sheet = bookie.worksheets()
+
+        sheet.set_column(6, 12, None, cell_format=accounting_format)
+        for sheet in workbook.worksheets():
+            sheet('F8:L{}'.format(periods), cell_format=accounting_format)
+            sheet.write("C3", cell_format=accounting_format)
+            sheet.write("C6", cell_format=accounting_format)'''
+
