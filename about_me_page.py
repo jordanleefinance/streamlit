@@ -31,8 +31,8 @@ with st.container():
         [Mar Works Out](https://www.appsheet.com/start/198ae0e8-52d5-4428-927a-f0dc6770edaa) where you can personalize
          your schedule and track progress at your finger tips! Want a sketch of a picture, I have the perfect tool for you
           [Memory Sketcher](https://jordanleefinance-streamlit-stinslepicture-9gdtbv.streamlit.app/). I've always been a
-           strong advocator for having full transperancy with your debt, please try out my amortization schedule calculator
-           [AM Schedule]()""")
+           strong advocate of having full transparency with how much you are paying the bank in interest when taking out a loan,
+            please try out [Loan AM Schedule Calculator](https://jordanleefinance-streamlit-financeam-calculator-ty3xw0.streamlit.app/)""")
 
 
 with st.container():
