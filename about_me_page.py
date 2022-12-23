@@ -56,7 +56,8 @@ with st.container():
         st.write("""One of my goals is to create an avenue for the average person to be able to learn how to grow 
         their income based on their own knowledge and confidence. Personalize your stock search with my 
         [Stock Search Web App](https://share.streamlit.io/jordanleefinance/streamlit/main/gitexample.py)! 
-        Click [here](https://www.jmmgroupllc.xyz/templates/products.html) for a glimpse of a couple macro-economic analysis tools.""")
+        Click [here](https://jordanleefinance-streamlit-marcella-1c4vww.streamlit.app/) for a dashboard of a couple 
+        macro-economic analysis tools in the recent US economy. """)
 
 
 with st.container():

@@ -128,7 +128,9 @@ header= st.beta_container()
 
 with header:
     st.header('Key Economic Indicators Dashboard')
-    st.subheader('The dashboard consists of 7 key indicators to analyse the economic and financial context: Gdp growth, unemployment rate, inflation, Us retail, P/E Shiller, Treasury yield, Vix volatility index and brent oil price')
+    st.subheader('The dashboard consists of 7 key indicators to analyse the economic and financial context: '
+                 'GDP Growth, Unemployment Rate, Inflation, US Retail, P/E Shiller, Treasury Yield, Vix Volatility Index'
+                 ' and Brent Oil Price')
 
 ### First row of indicators: GDP, unemployment, inflation
 
@@ -137,7 +139,7 @@ gdp, unchart, inflchart = st.columns(3)
 plt.style.use('ggplot')
 
 with gdp:
-    st.header('   GDP growth rate data by quarter')
+    st.header('   GDP Growth Rate Data by Quarter')
     fig1, ax = plt.subplots()
     ax.set_xlabel('Date', labelpad=3.5)
     ax.set_ylabel('Value in %')
@@ -146,7 +148,7 @@ with gdp:
     st.pyplot(fig1)
 
 with unchart:
-    st.header('   US unemployment data by month')
+    st.header('   US Unemployment Data by Month')
     fig2, ax = plt.subplots()
     ax.set_xlabel('Date')
     ax.set_ylabel('Value in %')
@@ -154,7 +156,7 @@ with unchart:
     st.pyplot(fig2)
 
 with inflchart:
-    st.header('  US inflation rate monthly data by month')
+    st.header('  US Inflation Rate Monthly Data by Month')
     fig3, ax = plt.subplots()
     ax.set_xlabel('Date')
     ax.set_ylabel('Value in %')
@@ -169,7 +171,7 @@ st.markdown('<hr>', unsafe_allow_html=True)
 retus, shiller, treas = st.columns(3)
 
 with retus:
-    st.header('US retail monthly data')
+    st.header('US Retail Monthly Data')
     fig4, ax = plt.subplots()
     ax.set_xlabel('Date')
     ax.set_ylabel('Value')

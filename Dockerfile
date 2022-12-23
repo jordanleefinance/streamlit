@@ -8,7 +8,7 @@ COPY requirements.txt ./requirements.txt
 
 RUN pip install -r requirements.txt
 
-COPY stinslepicture.py ./stinslepicture.py
+COPY Website/stinslepicture.py ./stinslepicture.py
 
 ENTRYPOINT ["streamlit", "run"]
 
