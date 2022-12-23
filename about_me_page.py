@@ -1,7 +1,7 @@
 import streamlit as st
 
 
-st.header("About Me")
+st.markdown("<h1 style='text-align: center;'>About Me</h1>", unsafe_allow_html=True)
 with st.container():
     image_col, text_col = st.columns((1, 2))
     with image_col:
@@ -12,12 +12,12 @@ with st.container():
             "I am currently an analyst for a consulting group and recently graduated from "
             "Christopher Newport University with my Master's in Financial Analysis. "
             "A major detail I learned from my masters is within businesses "
-            "there are systems within systems and translated tremendously "
+            "there are systems within systems which translated tremendously "
             "into my understanding of how to manage clients' needs. "
             "I have an entrepreneurial mindset and strong will to invest into building relationships."
             " In the next 5 years, I plan on pursing my CFA and shortly after "
             "pursue my Series 63, 65, 66, and 79. "
-            "Below you can find some of my apps/projects, passions, goals, hobbies."
+            "Below you can find some of my apps/projects, passions, goals."
         )
 
 with st.container():
@@ -29,21 +29,23 @@ with st.container():
          Park Litter Calculator (Purchased).
         If you love to workout and hate the hassel of tracking your progress, try 
         [Mar Works Out](https://www.appsheet.com/start/198ae0e8-52d5-4428-927a-f0dc6770edaa) where you can personalize
-         your schedule and track progress at your finger tips! Want a sketch of a picture, I have the perfect tool for you
-          [Memory Sketcher](https://jordanleefinance-streamlit-stinslepicture-9gdtbv.streamlit.app/). I've always been a
-           strong advocate of having full transparency with how much you are paying the bank in interest when taking out a loan,
-            please try out [Loan AM Schedule Calculator](https://jordanleefinance-streamlit-financeam-calculator-ty3xw0.streamlit.app/)""")
-
+         your schedule and track progress at your finger tips! I've always been a strong advocate of having full 
+         transparency with how much you are paying the bank in interest when taking out a loan, 
+         please try out [Loan AM Schedule Calculator](https://jordanleefinance-streamlit-financeam-calculator-ty3xw0.streamlit.app/).
+         """)
+# Want a sketch of a picture, I have the perfect tool for you [Memory Sketcher](https://jordanleefinance-streamlit-stinslepicture-9gdtbv.streamlit.app/).
 
 with st.container():
     image_col, text_col = st.columns((1, 2))
     with image_col:
         st.image("https://images.squarespace-cdn.com/content/v1/58fffa62ebbd1a6b493a5cc2/1493231727410-J4VQU30C6G2FW1L7EIRH/DSC_0964.JPG?format=1000w")
     with text_col:
-        st.write(""""To become truly a great leader, you must become a servant leader" 
+        st.write(""" 
         CNU Men's lacrosse has given me the opportunity to go abroad to grow the game of lacrosse by going to
-        places where they never heard of it before. [Read more...](https://www.lacrossethenations.org/)
-        A greater passion of mine is to increase the diversity in lacrosse, please take time to consider donating.""")
+        places where they never heard of it before. A greater passion of mine is to increase the diversity in lacrosse, 
+        please take time to consider donating. [Read more...](https://www.lacrossethenations.org/)
+        "To become truly a great leader, you must become a servant leader."
+        """)
 
 
 with st.container():
@@ -60,6 +62,6 @@ with st.container():
 with st.container():
     st.write("""[Research & Investment blog coming soon...](https://www.jmmgroupllc.xyz/templates/blog.html)
     This blog is aimed to give people more knowledge on common financial tools/concepts. Also, this blog 
-        gives you an opportunity to provide any feedback on my website, strategies, etc. I have yet to start posting due time
-        constraints, but I am gathering ideas for what topics to discuss and would love your input! 
+        gives you an opportunity to provide any feedback on my website, strategies, etc. I am gathering ideas for what 
+        topics to discuss and would love your input!
         """)
