@@ -57,7 +57,8 @@ with st.container():
         their income based on their own knowledge and confidence. Personalize your stock search with my 
         [Stock Search Web App](https://share.streamlit.io/jordanleefinance/streamlit/main/gitexample.py)! 
         Click [here](https://jordanleefinance-streamlit-marcella-1c4vww.streamlit.app/) for a dashboard of a couple 
-        macro-economic analysis tools in the recent US economy. """)
+        macro-economic analysis tools in the recent US economy. Make better decisions with your portfolio by using the 
+        [Portfolio Optimizer](https://jordanleefinance-streamlit-dfdemo-hftefy.streamlit.app/)""")
 
 
 with st.container():

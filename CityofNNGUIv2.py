@@ -9,7 +9,7 @@ start = r"C:\Users\data\Sampledata.xlsx"
 path1 = r"C:\Users\data"
 
 path = r"/Sampledata.xlsx"
-DB_path = os.path.join(path1, "../Sampledata.xlsx")
+DB_path = os.path.join(path1, "Sampledata.xlsx")
 
 
 @st.cache
