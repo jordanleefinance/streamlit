@@ -9,6 +9,7 @@ from openpyxl import load_workbook
 import os
 
 start = r"C:\Users\data\Sampledata.xlsx"
+start = r"C:\Users\jorda\OneDrive\Documents\GitHub\streamlit\Website\Sampledata.xlsx"
 path1 = r"C:\Users\data"
 
 path = r"../Sampledata.xlsx"
