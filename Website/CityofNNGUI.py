@@ -12,6 +12,8 @@ start = r"C:\Users\data\Sampledata.xlsx"
 start = r"C:\Users\jorda\OneDrive\Documents\GitHub\streamlit\Website\Sampledata.xlsx"
 path1 = r"C:\Users\data"
 
+cwd = os.getcwd()
+print(cwd)
 path = r"../Sampledata.xlsx"
 DB_path = os.path.join(path1, "../Sampledata.xlsx")
 
