@@ -10,22 +10,13 @@ import os
 from io import BytesIO
 import requests as rq
 
-url = "https://raw.githubusercontent.com/jordanleefinance/streamlit/main/Sampledata.xlsx"
-raw = rq.get(url).content
-
-# start = r"C:\Users\data\Sampledata.xlsx"
-start = r"C:\Users\jorda\OneDrive\Documents\GitHub\streamlit\Website\Sampledata.xlsx"
+start = r"C:\Users\data\Sampledata.xlsx"
+# start = r"C:\Users\jorda\OneDrive\Documents\GitHub\streamlit\Website\Sampledata.xlsx"
 path1 = r"C:\Users\data"
 
-cwd = os.getcwd()
-print(cwd)
 path = r"../Sampledata.xlsx"
 DB_path = os.path.join(path1, "../Sampledata.xlsx")
 
-test = pd.read_excel(BytesIO(raw), index_col=[1, 2], header=[2])
-df1 = pd.concat(test.values, axis=0)
-df1 = df1[:8]
-print(df1)
 @st.cache
 def load_data():
     df = pd.read_excel(start, index_col=[1, 2], header=[2], sheet_name='Sheet1')
