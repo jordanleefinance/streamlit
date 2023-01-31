@@ -24,7 +24,7 @@ def load_data():
     print(df1)
     return df1
 
-load_data()
+# load_data()
 try:
     workbook = load_workbook(filename=start, data_only=True)
     workbook = workbook['Sheet1']
