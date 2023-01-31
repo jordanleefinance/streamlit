@@ -217,8 +217,8 @@ elif user_type == "Prospective Employee":
 
     st.write(statement, unsafe_allow_html=False)
 
-    user_name = st.sidebar.text_input("Name", "George Jetson")
-    user_jobtitle = st.sidebar.selectbox("Position", ("Treasurer", 'Fire', 'Police',
+    user_name = st.sidebar.text_input("Name", "Jordan Lee")
+    user_jobtitle = st.sidebar.selectbox("Position", ("Analyst", 'Associate', 'Police',
                                                                  'Finance', 'Human Resources',
                                                                  'Engineering', 'Libraries', 'Information Technology'))
     user_jobtype = st.sidebar.radio("Job Type", ["Full Time", "Part Time"])
