@@ -37,7 +37,8 @@ try:
     df.columns = header[:]
 
 except FileNotFoundError:
-    df = load_data()
+    # df = load_data()
+    print("help")
 
 
 file_path = r'C:/Users/JordanLee/OneDrive/Documents/MFinA/' \
