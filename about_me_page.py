@@ -5,7 +5,7 @@ st.markdown("<h1 style='text-align: center;'>About Me</h1>", unsafe_allow_html=T
 with st.container():
     image_col, text_col = st.columns((1, 2))
     with image_col:
-        st.image("https://media-exp1.licdn.com/dms/image/D4E03AQGiCmy0yRdqag/profile-displayphoto-shrink_800_800/0/1667658333213?e=1675900800&v=beta&t=M74I47KgX40ZrtsYObWoR4-ISAQB8cZ3-RGBXRGsao0")
+        st.image("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.ballastconsultinggroup.com%2Four-team&psig=AOvVaw1q_zXz9zmZPXiXzroQMit8&ust=1683508095455000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCIjzhMKC4v4CFQAAAAAdAAAAABAE")
     with text_col:
         st.write(
             "Thank you for checking out my webpage! "
@@ -22,7 +22,7 @@ with st.container():
 
 with st.container():
         st.write("""The Total [Compensation Calculator](https://share.streamlit.io/jordanleefinance/streamlit/main/CityofNNGUI.py)
-         was designed for the City of Newport News to attract new employees as well as give current employees a visual of their total compensation.
+         (must request access) was designed for the City of Newport News to attract new employees as well as give current employees a visual of their total compensation.
          Frontline is the first digital temp staffing platform tailored for green jobs. I was able to
          explore different ways to help, for example the 
          [Independent Contractor Time Tracker](https://www.appsheet.com/start/76c16fba-7e57-48a4-ad40-8d17850daa92) and 
