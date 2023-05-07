@@ -5,23 +5,22 @@ st.markdown("<h1 style='text-align: center;'>About Me</h1>", unsafe_allow_html=T
 with st.container():
     image_col, text_col = st.columns((1, 2))
     with image_col:
-        st.image("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.ballastconsultinggroup.com%2Four-team&psig=AOvVaw1q_zXz9zmZPXiXzroQMit8&ust=1683508095455000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCIjzhMKC4v4CFQAAAAAdAAAAABAE")
+        st.image("https://images.squarespace-cdn.com/content/v1/60be58fa133ce37a9d039d31/0f886309-0ec5-4bc7-bbfd-11fb2045044d/JL+-+Website+Select.jpg?format=750w")
     with text_col:
         st.write(
             "Thank you for checking out my webpage! "
             "I am currently an analyst for a consulting group and recently graduated from "
             "Christopher Newport University with my Master's in Financial Analysis. "
-            "A major detail I learned from my masters is within businesses "
-            "there are systems within systems which translated tremendously "
-            "into my understanding of how to manage clients' needs. "
             "I have an entrepreneurial mindset and strong will to invest into building relationships."
             " In the next 5 years, I plan on pursing my CFA and shortly after "
-            "pursue my Series 63, 65, 66, and 79. "
+            "Series 63, 65, 66, and 79. "
             "Below you can find some of my apps/projects, passions, goals."
         )
 
 with st.container():
-        st.write("""The Total [Compensation Calculator](https://share.streamlit.io/jordanleefinance/streamlit/main/CityofNNGUI.py)
+        st.write("""A major detail I learned from my masters is within businesses
+            there are systems within systems which translated tremendously
+        into my understanding of how to manage clients' needs. The Total [Compensation Calculator](https://share.streamlit.io/jordanleefinance/streamlit/main/CityofNNGUI.py)
          (must request access) was designed for the City of Newport News to attract new employees as well as give current employees a visual of their total compensation.
          Frontline is the first digital temp staffing platform tailored for green jobs. I was able to
          explore different ways to help, for example the 
