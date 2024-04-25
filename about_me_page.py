@@ -5,7 +5,7 @@ st.markdown("<h1 style='text-align: center;'>About Me</h1>", unsafe_allow_html=T
 with st.container():
     image_col, text_col = st.columns((1, 2))
     with image_col:
-        st.image("nice_pic.jpg")
+        st.image("https://i.im.ge/2024/04/25/Z0O8SM.nice-pic.jpeg")
     with text_col:
         st.write(
     "Thank you for visiting my webpage. I am financial enthusiast and a partner at a business systems and process consulting firm. I obtained my Bachelor's degree in Finance and Information Science, as well as a Master's degree in Financial Analysis from Christopher Newport University. My primary objective is to empower entrepreneurs by supporting them in conceptualizing, synthesizing, and achieving their business objectives, assuming the roles of financial quarterback, stress reliever, and advocate for growth."
@@ -31,7 +31,7 @@ with st.container():
 # Want a sketch of a picture, I have the perfect tool for you [Memory Sketcher](https://jordanleefinance-streamlit-stinslepicture-9gdtbv.streamlit.app/).
 
 with st.container():
-    image_col, text_col = st.columns((1, 2))
+    image_col, text_col = st.columns((2, 1))
     with image_col:
         st.image("https://images.squarespace-cdn.com/content/v1/58fffa62ebbd1a6b493a5cc2/1493231727410-J4VQU30C6G2FW1L7EIRH/DSC_0964.JPG?format=1000w")
     with text_col:
@@ -44,11 +44,7 @@ with st.container():
 
 
 with st.container():
-    text_col, image_col = st.columns((2, 2))
-    with image_col:
-        st.image("https://mediacloud.kiplinger.com/image/private/s--x2_BoIgn--/f_auto,t_primary-image-desktop@1/v1604352227/Investing/stock-market-today-110220.jpg")
-    with text_col:
-        st.write("""One of my goals is to create an avenue for the average entreprenuer/investor to be able to learn how to grow 
+    st.write("""One of my goals is to create an avenue for the average entreprenuer/investor to be able to learn how to grow 
         their income based on their own knowledge and confidence. Personalize your stock search with my 
         [Stock Search Web App](https://share.streamlit.io/jordanleefinance/streamlit/main/gitexample.py)! 
         Click [here](https://jordanleefinance-streamlit-marcella-1c4vww.streamlit.app/) for a dashboard of a couple 
