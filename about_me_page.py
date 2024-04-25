@@ -5,7 +5,7 @@ st.markdown("<h1 style='text-align: center;'>About Me</h1>", unsafe_allow_html=T
 with st.container():
     image_col, text_col = st.columns((1, 2))
     with image_col:
-        st.image("https://images.squarespace-cdn.com/content/v1/60be58fa133ce37a9d039d31/0f886309-0ec5-4bc7-bbfd-11fb2045044d/JL+-+Website+Select.jpg?format=750w")
+        st.image("nice_pic.jpg")
     with text_col:
         st.write(
     "Thank you for visiting my webpage. I am financial enthusiast and a partner at a business systems and process consulting firm. I obtained my Bachelor's degree in Finance and Information Science, as well as a Master's degree in Financial Analysis from Christopher Newport University. My primary objective is to empower entrepreneurs by supporting them in conceptualizing, synthesizing, and achieving their business objectives, assuming the roles of financial quarterback, stress reliever, and advocate for growth."
