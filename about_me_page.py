@@ -1,11 +1,12 @@
 import streamlit as st
+from PIL import Image
 
 
 st.markdown("<h1 style='text-align: center;'>About Me</h1>", unsafe_allow_html=True)
 with st.container():
     image_col, text_col = st.columns((1, 2))
     with image_col:
-        st.image("https://i.im.ge/2024/04/25/Z0O8SM.nice-pic.jpeg")
+        st.image("https://i.ibb.co/VCF2fHY/nice-pic.jpg")
     with text_col:
         st.write(
     "Thank you for visiting my webpage. I am financial enthusiast and a partner at a business systems and process consulting firm. I obtained my Bachelor's degree in Finance and Information Science, as well as a Master's degree in Financial Analysis from Christopher Newport University. My primary objective is to empower entrepreneurs by supporting them in conceptualizing, synthesizing, and achieving their business objectives, assuming the roles of financial quarterback, stress reliever, and advocate for growth."
