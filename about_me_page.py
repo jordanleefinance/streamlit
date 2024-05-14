@@ -32,12 +32,12 @@ with st.container():
 # Want a sketch of a picture, I have the perfect tool for you [Memory Sketcher](https://jordanleefinance-streamlit-stinslepicture-9gdtbv.streamlit.app/).
 
 with st.container():
-    image_col, text_col = st.columns((2, 1))
+    image_col, text_col = st.columns((1, 1))
     with image_col:
         st.image("https://images.squarespace-cdn.com/content/v1/58fffa62ebbd1a6b493a5cc2/1493231727410-J4VQU30C6G2FW1L7EIRH/DSC_0964.JPG?format=1000w")
     with text_col:
         st.write(""" 
-        CNU Men's lacrosse has given me the opportunity to go abroad to grow the game of lacrosse by going to
+        The CNU Men's lacrosse team has given me the opportunity to go abroad to grow the game of lacrosse by going to
         places where they never heard of it before. A greater passion of mine is to increase the diversity in lacrosse, 
         please take time to consider donating. [Read more...](https://www.lacrossethenations.org/)
         "To become truly a great leader, you must become a servant leader." If you're looking.. another way to make an impact is by joining your local
