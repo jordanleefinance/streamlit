@@ -10,7 +10,7 @@ with st.container():
     with text_col:
         st.write(
     "Thank you for visiting my webpage. I am financial enthusiast and a partner at a business systems and process consulting firm. I obtained my Bachelor's degree in Finance and Information Science, as well as a Master's degree in Financial Analysis from Christopher Newport University. My primary objective is to empower entrepreneurs by supporting them in conceptualizing, synthesizing, and achieving their business objectives, assuming the roles of financial quarterback, stress reliever, and advocate for growth."
-    "With an entrepreneurial mindset and a firm commitment to cultivating relationships, I approach every problem with diligence and a willingness to invest my abilities to make complex issues, simple. As a lifelong learner, I am dedicated to furthering my education by pursuing certifications such as the CFA, Series 63, 65, 66, and 79. Below, you will find a selection of my APIs/projects, and insights into my passions and life goals."
+    " Growing up with an entrepreneurial mindset and desire to build healthy relationships, I approach every problem with diligence and a willingness to invest my abilities to make complex issues, simple. As a lifelong learner, I am dedicated to furthering my education by pursuing certifications such as the Series 63, 65, 66, 79, and CFA. Below, you will find a selection of my APIs/projects, and insights into my passions and life goals."
 )
 
 
@@ -40,7 +40,9 @@ with st.container():
         CNU Men's lacrosse has given me the opportunity to go abroad to grow the game of lacrosse by going to
         places where they never heard of it before. A greater passion of mine is to increase the diversity in lacrosse, 
         please take time to consider donating. [Read more...](https://www.lacrossethenations.org/)
-        "To become truly a great leader, you must become a servant leader."
+        "To become truly a great leader, you must become a servant leader." If you're looking.. another way to make an impact is by joining your local
+        Habitat for Humanity non-profit and volunteer at a restore near you, their mission is to build strength, stability and self-reliance through shelter.
+                  (This embodies similar values I strive to embed into my clients!) [For more information...](https://www.habitat.org)
         """)
 
 
