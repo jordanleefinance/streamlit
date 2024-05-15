@@ -23,9 +23,7 @@ with st.container():
          explore different ways to help, for example the 
          [Independent Contractor Time Tracker](https://www.appsheet.com/start/76c16fba-7e57-48a4-ad40-8d17850daa92) and 
          Park Litter Calculator (Purchased).
-        If you love to workout and hate the hassel of tracking your progress, try 
-        [MAR (My Average Routine) Works Out](https://www.appsheet.com/start/198ae0e8-52d5-4428-927a-f0dc6770edaa) where you can personalize
-         your schedule and track progress at your finger tips! I've always been a strong advocate of having full 
+         I've always been a strong advocate of having full 
          transparency with how much you are paying the banks in interest when taking out a loan, 
          please try out [Loan AM Schedule Calculator](https://jordanleefinance-streamlit-financeam-calculator-ty3xw0.streamlit.app/).
          """)
