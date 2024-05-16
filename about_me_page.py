@@ -30,7 +30,7 @@ with st.container():
 # Want a sketch of a picture, I have the perfect tool for you [Memory Sketcher](https://jordanleefinance-streamlit-stinslepicture-9gdtbv.streamlit.app/).
 
 with st.container():
-    image_col, text_col = st.columns((1, 1))
+    text_col, image_col = st.columns((1, 1))
     with image_col:
         st.image("https://images.squarespace-cdn.com/content/v1/58fffa62ebbd1a6b493a5cc2/1493231727410-J4VQU30C6G2FW1L7EIRH/DSC_0964.JPG?format=1000w")
     with text_col:
@@ -40,7 +40,7 @@ with st.container():
         please take time to consider donating. [Read more...](https://www.lacrossethenations.org/)
         "To become truly a great leader, you must become a servant leader." Another great way to make an impact is by joining your local
         Habitat for Humanity non-profit and volunteer at a restore near you, their mission is to build strength, stability and self-reliance through shelter.
-                  (This embodies similar values I strive to embed into our clients!) [For more information...](https://www.habitat.org)
+                  (This organization embodies similar values I strive to embed into our clients!) [For more information...](https://www.habitat.org)
         """)
 
 
@@ -50,7 +50,7 @@ with st.container():
         [Stock Search Web App](https://share.streamlit.io/jordanleefinance/streamlit/main/gitexample.py)! 
         Click [here](https://jordanleefinance-streamlit-marcella-1c4vww.streamlit.app/) for a dashboard of a couple 
         macro-economic analysis tools in the recent US economy. Make better decisions with your portfolio by using the 
-        [Portfolio Optimizer](https://jordanleefinance-streamlit-dfdemo-hftefy.streamlit.app/)""")
+        [Portfolio Optimizer](https://jordanleefinance-streamlit-dfdemo-hftefy.streamlit.app/).""")
 
 
 with st.container():
