@@ -35,7 +35,7 @@ with st.container():
         st.image("https://images.squarespace-cdn.com/content/v1/58fffa62ebbd1a6b493a5cc2/1493231727410-J4VQU30C6G2FW1L7EIRH/DSC_0964.JPG?format=1000w")
     with text_col:
         st.write(""" 
-        In my second and third years of undergrad, thanks to the CNU Men's lacrosse team, I was fortunate enough to be given me an opportunity to go abroad to grow the game of lacrosse to
+        In my second and third years of undergrad, I was fortunate enough to be given me an opportunity to go abroad to grow the game of lacrosse to
         places where they never heard of the game before. A greater passion of mine is to increase the diversity in lacrosse, 
         please take time to consider donating. [Read more...](https://www.lacrossethenations.org/)
         "To become truly a great leader, you must become a servant leader." Another great way to make an impact is by joining your local
