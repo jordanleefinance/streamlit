@@ -31,7 +31,7 @@ with st.container():
 with st.container():
     text_col, image_col = st.columns((1, 1))
     with image_col:
-        st.image("https://images.squarespace-cdn.com/content/v1/58fffa62ebbd1a6b493a5cc2/1493231727410-J4VQU30C6G2FW1L7EIRH/DSC_0964.JPG?format=1000w")
+        st.image("https://images.squarespace-cdn.com/content/v1/58fffa62ebbd1a6b493a5cc2/1493231727410-J4VQU30C6G2FW1L7EIRH/DSC_0964.JPG?format=1000w", caption="Photo from www.lacrossthenations.org")
     with text_col:
         st.write(""" 
         In my second and third years of undergrad, I was fortunate enough to be given me an opportunity to go abroad to grow the game of lacrosse to
