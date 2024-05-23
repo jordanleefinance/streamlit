@@ -9,7 +9,7 @@ with st.container():
         st.image("https://i.ibb.co/VCF2fHY/nice-pic.jpg")
     with text_col:
         st.write(
-    "Thank you for your time! My name is Jordan Lee, I am a financial enthusiast, owner of [JMM Group](https://www.jmmgrp.com/index.html), an investor and a partner at a business information systems and process consulting firm. I obtained my Bachelor's degree in Finance and Information Science, as well as a Master's degree in Financial Analysis from Christopher Newport University. My primary objective is to empower entrepreneurs by supporting them in conceptualizing, synthesizing, and achieving their business objectives, assuming the roles of financial quarterback, stress reliever, and advocate for growth."
+    "Thank you for your time! My name is Jordan Lee, I am a financial enthusiast, owner of [JMM Group](https://www.jmmgrp.com/index.html), an investor and a partner at a business information systems and process consulting firm. I obtained my Bachelor's degree in Finance and Information Science, as well as a Masters in Financial Analysis from Christopher Newport University. My primary objective is to empower entrepreneurs by supporting them in conceptualizing, synthesizing, and achieving their business objectives, assuming the roles of financial quarterback, stress reliever, and advocate for growth."
     " Growing up with an entrepreneurial mindset and desire to build healthy relationships, I approach every problem with diligence and a willingness to invest my abilities to make complex issues, simple. As a lifelong learner, I am dedicated to furthering my education by pursuing certifications such as the Series 63, 65, 66, 79, and CFA. Below, you will find a selection of my APIs/projects, and insights into my passions and life goals."
 )
 
@@ -21,8 +21,7 @@ with st.container():
          (must request access) was designed for the City of Newport News to attract new employees as well as give current employees a visual of their total compensation.
          Frontline is the first digital temp staffing platform tailored for green jobs. I was able to
          explore different ways to help, for example the 
-         [Independent Contractor Time Tracker](https://www.appsheet.com/start/76c16fba-7e57-48a4-ad40-8d17850daa92) and 
-         Park Litter Calculator (Purchased).
+         [Independent Contractor Time Tracker](https://www.appsheet.com/start/76c16fba-7e57-48a4-ad40-8d17850daa92).
          I've always been a strong advocate of having full 
          transparency with how much you are paying the banks in interest when taking out a loan, 
          please try out [Loan AM Schedule Calculator](https://jordanleefinance-streamlit-financeam-calculator-ty3xw0.streamlit.app/).
