@@ -9,7 +9,7 @@ with st.container():
         st.image("https://i.ibb.co/VCF2fHY/nice-pic.jpg")
     with text_col:
         st.write(
-    "Thank you for your time! My name is Jordan Lee, I am a financial enthusiast, owner of [JMM Group](https://www.jmmgrp.com/index.html), an investor and a partner at a business information systems and process consulting firm. I obtained my Bachelor's degree in Finance and Information Science, as well as a Masters in Financial Analysis from Christopher Newport University. My primary objective is to empower entrepreneurs by supporting them in conceptualizing, synthesizing, and achieving their business objectives, assuming the roles of financial quarterback, stress reliever, and advocate for growth."
+    "My name is Jordan Lee, I am a financial enthusiast, owner of [JMM Group](https://www.jmmgrp.com/index.html), an investor and a partner at a business information systems and process consulting firm. I obtained my Bachelor's degree in Finance and Information Science, as well as a Masters in Financial Analysis from Christopher Newport University. My primary objective is to empower entrepreneurs by supporting them in conceptualizing, synthesizing, and achieving their business objectives, assuming the roles of financial quarterback, stress reliever, and advocate for growth."
     " My motivation is driven by my desire to build healthy relationships and an entrepreneurial mindset, I approach every problem with diligence and a willingness to invest my abilities to make complex issues, simple. As a lifelong learner, I am dedicated to furthering my education by pursuing certifications such as the Series 63, 65, 66, 79, and CFA. Below, you will find a selection of my APIs/projects, and insights into my passions and life goals."
 )
 
@@ -38,12 +38,6 @@ with st.container():
         [Stock Search Web App](https://share.streamlit.io/jordanleefinance/streamlit/main/gitexample.py)! 
         Click [here](https://jordanleefinance-streamlit-marcella-1c4vww.streamlit.app/) for a dashboard of a couple 
         macro-economic analysis tools in the recent US economy. Make better decisions with your portfolio by using the 
-        [Portfolio Optimizer](https://jordanleefinance-streamlit-dfdemo-hftefy.streamlit.app/).""")
+        [Portfolio Optimizer](https://jordanleefinance-streamlit-dfdemo-hftefy.streamlit.app/). Thank you for your time!""")
 
 
-'''with st.container():
-    st.write("""[Research & Investment blog coming soon...](https://jmmgroupllc.blogspot.com/)
-    This blog is aimed to give people more knowledge on common financial tools/concepts. Also, this blog 
-        gives you an opportunity to provide any feedback on my website, strategies, etc. I am gathering ideas for what 
-        topics to discuss and would love your input!
-        """)'''

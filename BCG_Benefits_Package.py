@@ -963,3 +963,11 @@ if button_clicked == 'GO':
     employee()
 
 #repo
+
+
+'''with st.container():
+    st.write("""[Research & Investment blog coming soon...](https://jmmgroupllc.blogspot.com/)
+    This blog is aimed to give people more knowledge on common financial tools/concepts. Also, this blog 
+        gives you an opportunity to provide any feedback on my website, strategies, etc. I am gathering ideas for what 
+        topics to discuss and would love your input!
+        """)'''
