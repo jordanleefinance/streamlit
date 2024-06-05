@@ -29,7 +29,7 @@ with st.container():
     with text_col:
         st.write(""" 
         During my second and third years of undergrad, I had the incredible opportunity to go abroad and introduce lacrosse to regions where the game was virtually unknown. One of my greatest passions is increasing diversity within the sport. I kindly ask you to consider donating to support this cause. [Read more...](https://www.lacrossethenations.org/)
-        "To become a truly great leader, you must embrace the principles of servant leadership." One impactful way to give back is by volunteering with your local Habitat for Humanity nonprofit at a nearby ReStore. Their mission to build strength, stability, and self-reliance through shelter aligns with the values I strive to instill in our clients. [For more information...](https://www.habitat.org)
+        "To become a truly great leader, you must embrace the principles of servant leadership." Another impactful way I love to give back and encourage others to do the same is by volunteering with your local Habitat for Humanity nonprofit at a nearby ReStore. Their mission to build strength, stability, and self-reliance through shelter aligns with the values I strive to instill in our clients. [For more information...](https://www.habitat.org)
         """)
 
 
