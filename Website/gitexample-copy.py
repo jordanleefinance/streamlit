@@ -72,6 +72,56 @@ def main():
         else:
             st.write(display_shareholders)
 
+            
+    # checkbox to display quarterly financials for the searched ticker
+    financials = st.sidebar.checkbox("Quarterly Financials")
+    if financials:
+        st.subheader("""**Quarterly financials** for """ + selected_stock)
+        display_financials = (stock_data.quarterly_financials)
+        if display_financials.empty == True:
+            st.write("No data available at the moment")
+        else:
+            st.write(display_financials)
+
+    # checkbox to display quarterly balance sheet for searched ticker
+    balance_sheet = st.sidebar.checkbox("Quarterly Balance Sheet")
+    if balance_sheet:
+        st.subheader("""**Quarterly balance sheet** for """ + selected_stock)
+        display_balancesheet = (stock_data.quarterly_balance_sheet)
+        if display_balancesheet.empty == True:
+            st.write("No data available at the moment")
+        else:
+            st.write(display_balancesheet)
+
+    # checkbox to display quarterly cashflow for searched ticker
+    cashflow = st.sidebar.checkbox("Quarterly Cashflow")
+    if cashflow:
+        st.subheader("""**Quarterly cashflow** for """ + selected_stock)
+        display_cashflow = (stock_data.quarterly_cashflow)
+        if display_cashflow.empty == True:
+            st.write("No data available at the moment")
+        else:
+            st.write(display_cashflow)
+
+    # checkbox to display quarterly earnings for searched ticker
+    earnings = st.sidebar.checkbox("Quarterly Earnings")
+    if earnings:
+        st.subheader("""**Quarterly earnings** for """ + selected_stock)
+        display_earnings = (stock_data.quarterly_earnings)
+        if display_earnings.empty == True:
+            st.write("No data available at the moment")
+        else:
+            st.write(display_earnings)
+
+    # checkbox to display list of analysts recommendation for searched ticker
+    analyst_recommendation = st.sidebar.checkbox("Analysts Recommendation")
+    if analyst_recommendation:
+        st.subheader("""**Analysts recommendation** for """ + selected_stock)
+        display_analyst_rec = (stock_data.recommendations)
+        if display_analyst_rec.empty == True:
+            st.write("No data available at the moment")
+        else:
+            st.write(display_analyst_rec)
 
 if button_clicked == "GO":
     main()
