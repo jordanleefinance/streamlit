@@ -67,35 +67,8 @@ if 'authenticated' in st.session_state and st.session_state.authenticated:
     file_path = os.path.join(folder_path, file_name)
     
     if os.path.exists(file_path):
-        try:
-            # Attempt to load the workbook using the password
-            excel = win32com.client.Dispatch("Excel.Application")
-            excel.Visible = False  # Set to True if you want to see Excel
-            workbook = excel.Workbooks.Open(file_path, Password=client_password)
-
-            #new_file_path = os.path.join(folder_path, f'{client_id}_FFM_no_passowrd.xlsx')
-            new_file_path = folder_path + f'{client_id}_FFM_no_password.xlsx'
-            # Save a new copy without password protection
-            workbook.SaveAs(new_file_path, Password='', FileFormat=51)  # 51 for .xlsx
-            print(f"Password removed successfully. New file saved as: {new_file_path}")
-            '''if os.path.exists(new_file_path)==False:
-
-                # Save a new copy without password protection
-                workbook.SaveAs(new_file_path, Password='', FileFormat=51)  # 51 for .xlsx
-                print(f"Password removed successfully. New file saved as: {new_file_path}")
-            else:
-                # Save a new copy without password protection
-                workbook.Save(new_file_path)  # 51 for .xlsx
-                print(f"Password removed successfully. New file saved as: {new_file_path}")'''
-            
-            workbook.Close(SaveChanges=True)
-            excel.Quit()
-
-            #excel = win32com.client.Dispatch("Excel.Application")
-            #excel.Visible = False
-            #new_workbook = excel.Workbooks.Open(new_file_path)
-            #new_workbook.Close(SaveChanges=True)
-            new_workbook = load_workbook(filename=new_file_path, data_only=True, read_only=True, keep_vba=True)
+        try:            
+            new_workbook = load_workbook(filename=file_path, data_only=True, read_only=True, keep_vba=True)
             
             st.success(f"Successfully opened {file_name}")
             
@@ -104,13 +77,15 @@ if 'authenticated' in st.session_state and st.session_state.authenticated:
             st.write(f"Available sheets: {sheet_names}")
             
             # Let the user select a sheet to view
-            selected_sheet = st.selectbox("Select a sheet to view:", sheet_names)
+            selected_sheet = st.sidebar.selectbox("Select a sheet to view:", sheet_names)
             
             # Load the selected sheet into a DataFrame
             active_sheet = new_workbook[selected_sheet]
             data = active_sheet.values
             sheet_data = pd.DataFrame(data)
-            # sheet_data = pd.read_excel(new_file_path, sheet_name=selected_sheet)
+            
+            sheet_data = pd.read_excel(file_path, sheet_name=selected_sheet)
+            sheet_data.dropna(inplace=True)
             #active_workbook.Close(SaveChanges=True)
             
             # Display the sheet data
