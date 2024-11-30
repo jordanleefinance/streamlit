@@ -84,8 +84,8 @@ if 'authenticated' in st.session_state and st.session_state.authenticated:
             data = active_sheet.values
             sheet_data = pd.DataFrame(data)
             
-            sheet_data = pd.read_excel(file_path, sheet_name=selected_sheet)
-            sheet_data.dropna(inplace=True)
+            #sheet_data = pd.read_excel(file_path, sheet_name=selected_sheet)
+            #sheet_data.dropna(inplace=True)
             #active_workbook.Close(SaveChanges=True)
             
             # Display the sheet data
